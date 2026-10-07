@@ -229,7 +229,7 @@ healthy
 - Connection configuration implemented
 - Database path configurable
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 

@@ -1,16 +1,27 @@
+from contextlib import asynccontextmanager
 import logging
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from backend.app.core.config import settings
 from backend.app.api.routes.health import router as health_router
+from backend.app.database.engine import init_db
 
 logger = logging.getLogger("bhasha2code")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize database on startup
+    init_db()
+    yield
+
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description="Offline Multilingual AI Coding & Study Assistant",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 
