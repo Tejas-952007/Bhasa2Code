@@ -282,30 +282,35 @@ Example NLP result:
 
 # 9. NLP Preprocessing
 
-Preprocessing may include:
+Implemented in `backend/app/nlp/preprocessing/text_preprocessor.py`.
 
-- Whitespace normalization
-- Unicode normalization
-- Code block separation
-- Text normalization
-- Basic tokenization
-- Noise reduction where appropriate
+Preprocessing operations:
+- **Unicode NFC Normalization**: Canonical composition preserving Devanagari (Marathi, Hindi), Latin, technical symbols, and emoji.
+- **Canonical Line Endings**: Converts `\r\n` and `\r` to `\n`.
+- **Harmless Whitespace Normalization**: Collapses repeated internal spaces while strictly preserving code indentation and multi-line structures.
+- **Code Boundary Preservation**: Extracts Markdown fenced blocks (```` ``` ````, `~~~`) and detects unfenced raw code/stack traces without altering indentation or newlines.
+- **Multilingual Preservation**: Does NOT translate, stem, or lowercase mixed-language text.
 
-The system must avoid over-normalizing code.
+### Preprocessing Schema (`backend/app/nlp/schemas.py`):
 
-For example:
+```python
+class CodeSegment(BaseModel):
+    content: str
+    language_hint: Optional[str] = None
 
-```text
-Natural Language
+class PreprocessedText(BaseModel):
+    original_text: str
+    normalized_text: str
+    text_segments: List[str]
+    code_segments: List[CodeSegment]
+    classifier_text: str
+    is_empty: bool
 ```
 
-and:
-
-```text
-Code Block
-```
-
-must be treated separately.
+Guarantees:
+- **Idempotent**: `preprocess(preprocess(text).normalized_text).normalized_text == preprocess(text).normalized_text`
+- **Deterministic**: Identical inputs yield identical outputs.
+- **Non-destructive**: Preserves `original_text` for context and debugging.
 
 ---
 
