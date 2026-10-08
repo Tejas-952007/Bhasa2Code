@@ -163,8 +163,35 @@ class TextPreprocessor:
         original_text: str,
         clean_input: str,
     ) -> PreprocessedText:
-        """Handle unfenced code or stack trace input without altering structure."""
+        """Handle unfenced code or stack trace input, separating preceding natural language if present."""
         stripped = clean_input.strip()
+        lines = stripped.split("\n")
+
+        # Find the line index where code or traceback begins
+        split_idx = 0
+        for i, line in enumerate(lines):
+            if TRACEBACK_PATTERN.search(line) or PYTHON_DEF_CLASS.search(line):
+                split_idx = i
+                break
+
+        if split_idx > 0:
+            pre_lines = lines[:split_idx]
+            code_lines = lines[split_idx:]
+            norm_pre = self._normalize_whitespace("\n".join(pre_lines))
+            code_content = "\n".join(code_lines).strip()
+            code_segment = CodeSegment(content=code_content, language_hint=None)
+            text_segments = [norm_pre] if norm_pre else []
+            normalized_text = f"{norm_pre}\n\n{code_content}" if norm_pre else code_content
+            classifier_text = norm_pre if norm_pre else code_content
+            return PreprocessedText(
+                original_text=original_text,
+                normalized_text=normalized_text,
+                text_segments=text_segments,
+                code_segments=[code_segment],
+                classifier_text=classifier_text,
+                is_empty=False,
+            )
+
         code_segment = CodeSegment(content=stripped, language_hint=None)
         return PreprocessedText(
             original_text=original_text,

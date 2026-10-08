@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import Any, List, Optional
 from pydantic import BaseModel, Field
 
@@ -33,4 +34,35 @@ class PreprocessedText(BaseModel):
 
     def __getitem__(self, item: str) -> Any:
         """Allow dict-like subscripting for convenience."""
+        return getattr(self, item)
+
+
+class Language(str, Enum):
+    """Supported conversational language classifications in Bhasha2Code."""
+
+    ENGLISH = "ENGLISH"
+    HINDI = "HINDI"
+    MARATHI = "MARATHI"
+    HINGLISH = "HINGLISH"
+    MARATHI_ENGLISH = "MARATHI_ENGLISH"
+    HINDI_ENGLISH = "HINDI_ENGLISH"
+    UNKNOWN = "UNKNOWN"
+
+
+class LanguageDetectionResult(BaseModel):
+    """Result of deterministic conversational language detection."""
+
+    language: Language
+    confidence: float = Field(ge=0.0, le=1.0)
+    evidence: List[str] = Field(default_factory=list)
+
+    def to_dict(self) -> dict:
+        """Serialize result to a dictionary."""
+        return {
+            "language": self.language.value,
+            "confidence": round(self.confidence, 2),
+            "evidence": self.evidence,
+        }
+
+    def __getitem__(self, item: str) -> Any:
         return getattr(self, item)

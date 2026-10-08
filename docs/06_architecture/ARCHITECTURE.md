@@ -316,39 +316,59 @@ Guarantees:
 
 # 10. Language Detection
 
-The Language Detection component identifies:
+Implemented in `backend/app/nlp/language_detection/language_detector.py`.
 
-- English
-- Hindi
-- Marathi
-- Hinglish
-- Hindi-English
-- Marathi-English
+The Language Detection component determines the conversational language from the normalized output of Text Preprocessing (`PreprocessedText`).
 
-Possible flow:
+### Pipeline Architecture:
 
 ```text
-Input
- ↓
-Script Detection
- ↓
-Language Detector
- ↓
-Project Rules
- ↓
-Confidence
- ↓
-Language Result
+PreprocessedText
+      ↓
+LanguageDetector
+      ├── Script Analysis (Devanagari vs Latin characters)
+      ├── Lexical Analysis (Native Devanagari Hindi & Marathi)
+      ├── Transliteration Detection (Latin Hindi & Marathi)
+      ├── Technical Vocabulary Filtering (Neutral programming terms)
+      └── Mixed-Language Decision (Homograph resolution & code-mixing)
+      ↓
+LanguageDetectionResult
 ```
 
-Short or ambiguous input may produce:
+### Supported Labels:
+- `ENGLISH`: Natural English conversational inquiries without Indian language markers.
+- `HINDI`: Dominant Hindi vocabulary in Devanagari or Latin transliteration.
+- `MARATHI`: Dominant Marathi vocabulary in Devanagari or Latin transliteration.
+- `HINGLISH`: Colloquial Hindi-English phrasing patterns or mixed Indian markers in Latin script.
+- `HINDI_ENGLISH`: Hindi conversational grammar mixed with English conversational or technical vocabulary.
+- `MARATHI_ENGLISH`: Marathi conversational grammar mixed with English conversational or technical vocabulary.
+- `UNKNOWN`: Code-only inputs, stack traces without inquiry, numbers, URLs, file paths, or insufficient linguistic evidence.
 
-```text
-language = UNKNOWN
-confidence = LOW
+### Schema (`backend/app/nlp/language_detection/schemas.py`):
+
+```python
+class Language(str, Enum):
+    ENGLISH = "ENGLISH"
+    HINDI = "HINDI"
+    MARATHI = "MARATHI"
+    HINGLISH = "HINGLISH"
+    MARATHI_ENGLISH = "MARATHI_ENGLISH"
+    HINDI_ENGLISH = "HINDI_ENGLISH"
+    UNKNOWN = "UNKNOWN"
+
+class LanguageDetectionResult(BaseModel):
+    language: Language
+    confidence: float
+    evidence: list[str] = Field(default_factory=list)
 ```
 
-instead of forcing a wrong classification.
+### Key Guarantees & Features:
+- **Technical-Vocabulary Neutrality**: Programming keywords (e.g. `python`, `code`, `function`, `debug`, `error`, `exception`, `calculator`) are classified as neutral technical vocabulary and do not inappropriately skew classification toward pure English.
+- **Transliteration Support**: Robust centralized lexical resources support common Latin-script transliterated Marathi (e.g. `mala`, `madhe`, `aahe`, `samjat`, `karaycha`) and Hindi (e.g. `mujhe`, `samajh`, `karna`, `chahiye`, `banao`).
+- **Devanagari & Cross-Script Detection**: Handles native Devanagari script for Marathi and Hindi, including mixed Devanagari-Latin inputs (e.g. `mala हा program debug karaycha aahe`).
+- **Code & Traceback Weighting**: Code segments and Python tracebacks receive low influence; the user's natural language inquiry determines the detected conversational language. Code-only inputs safely receive `UNKNOWN` with low confidence.
+- **Deterministic & 100% Offline**: Zero external network, cloud API, or LLM dependencies. Repeated runs on the same input produce identical language labels, confidence scores, and evidence lists.
+- **Calibrated Confidence**: Confidence scores range from `0.0` to `1.0` reflecting the strength of linguistic evidence, with ambiguous or noise inputs receiving low confidence rather than false certainty.
 
 ---
 

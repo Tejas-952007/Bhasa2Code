@@ -321,7 +321,7 @@ Hindi-English
 - Mixed input handled reasonably
 - Confidence available where practical
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 
