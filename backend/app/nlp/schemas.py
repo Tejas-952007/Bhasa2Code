@@ -97,3 +97,45 @@ class ToneClassificationResult(BaseModel):
     def __getitem__(self, item: str) -> Any:
         return getattr(self, item)
 
+
+class Intent(str, Enum):
+    """Supported user intent classes in Bhasha2Code."""
+
+    GENERATE_CODE = "GENERATE_CODE"
+    DEBUG_CODE = "DEBUG_CODE"
+    EXPLAIN_CODE = "EXPLAIN_CODE"
+    OPTIMIZE_CODE = "OPTIMIZE_CODE"
+    CONVERT_CODE = "CONVERT_CODE"
+    ALGORITHM = "ALGORITHM"
+    CONCEPT = "CONCEPT"
+    CODE_REVIEW = "CODE_REVIEW"
+    CODE_SUGGESTION = "CODE_SUGGESTION"
+    PERFORMANCE_ANALYSIS = "PERFORMANCE_ANALYSIS"
+    ERROR_EXPLANATION = "ERROR_EXPLANATION"
+    APPROACH_SUGGESTION = "APPROACH_SUGGESTION"
+    BEST_PRACTICE = "BEST_PRACTICE"
+    ARCHITECTURE_SUGGESTION = "ARCHITECTURE_SUGGESTION"
+    FEATURE_SUGGESTION = "FEATURE_SUGGESTION"
+    TEST_CASE_GENERATION = "TEST_CASE_GENERATION"
+    SECURITY_ANALYSIS = "SECURITY_ANALYSIS"
+    SEARCH = "SEARCH"
+
+
+class IntentClassificationResult(BaseModel):
+    """Result of user intent classification."""
+
+    intent: str
+    confidence: float = Field(ge=0.0, le=1.0)
+    probabilities: dict[str, float] = Field(default_factory=dict)
+
+    def to_dict(self) -> dict:
+        """Serialize result to a dictionary."""
+        return {
+            "intent": self.intent,
+            "confidence": round(self.confidence, 4),
+            "probabilities": {k: round(v, 4) for k, v in self.probabilities.items()},
+        }
+
+    def __getitem__(self, item: str) -> Any:
+        return getattr(self, item)
+

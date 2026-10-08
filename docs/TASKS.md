@@ -423,21 +423,25 @@ SEARCH
 Preferred approach:
 
 ```text
-TF-IDF
+TF-IDF (Word n-grams 1-2 + Char n-grams 3-5 char_wb)
 +
-Logistic Regression
+Logistic Regression (C=3.0, balanced, random_state=42)
 ```
 
 **Dependencies:** T12
 
 **Acceptance Criteria:**
 
-- Model trains successfully
-- Evaluation performed
-- Model saved locally
-- Low-confidence fallback defined
+- Model trains successfully on `intent_train.csv` (756 samples)
+- Validation evaluation meets quality thresholds: Accuracy **91.36%** (target $\ge 80\%$), Macro F1 **0.9114** (target $\ge 0.80$)
+- Final holdout test evaluation meets quality thresholds: Accuracy **92.59%** (target $\ge 78\%$), Macro F1 **0.9239** (target $\ge 0.78$)
+- Model saved locally at `models/intent/intent_classifier.joblib` (3.9 MB) with metadata at `models/intent/metadata.json`
+- Standalone inference wrapper implemented in `backend/app/nlp/intent_classification/`
+- Comprehensive error analysis, language breakdown, and confidence analysis executed (`scripts/evaluate_intent_classifier.py`)
+- Low-confidence and empty input fallback defined and tested
+- Unit tests (`tests/unit/nlp/test_intent_classifier.py`) pass with 100% success
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 

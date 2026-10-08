@@ -438,15 +438,17 @@ Intent detection determines what action or deliverable the user wants the system
 ### Pipeline Progression:
 
 ```text
+T08 Text Preprocessing
+        ↓
 T09 Language Detection
         ↓
-T10 Tone Dataset
-        ↓
-T11 Tone Classifier
+T11 Tone Classification
         ↓
 T12 Intent Dataset
         ↓
-Future Intent Classifier (T13)
+T13 Intent Classification
+        ↓
+Future NLP Orchestration (T14)
 ```
 
 ### Semantic Separation of Core NLP Responsibilities:
@@ -492,14 +494,26 @@ Intent   = EXPLAIN_CODE
 17. `SECURITY_ANALYSIS`: User asks for vulnerability discovery, injection risks, or security audits.
 18. `SEARCH`: User asks to locate previously saved code, conversation history, notes, or project items.
 
-### Labeled Intent Dataset (T12):
-- **Location**: `data/datasets/intent/`
-  - `intent_dataset.csv` / `intent_dataset.jsonl` (1080 samples, 60 per intent, 180 per language)
-  - `intent_train.csv` (756 samples, 70% stratified split)
-  - `intent_validation.csv` (162 samples, 15% stratified split)
-  - `intent_test.csv` (162 samples, 15% stratified split)
-- **Validation**: Deterministic split isolation, zero data leakage, verified via `scripts/validate_intent_dataset.py`.
-- **Classification Output (Future T13)**: Intent label + Confidence score with fallback for low-confidence inputs.
+### Intent Classifier Implementation (T13):
+- **Implementation**: `backend/app/nlp/intent_classification/intent_classifier.py`
+- **Model Choice**: Classical Offline NLP (FeatureUnion of Word TF-IDF `(1, 2)` + Subword Character TF-IDF `(3, 5, char_wb)` + Multi-class Logistic Regression with `C=3.0`, `class_weight='balanced'`).
+- **Input Features**: Text only (zero dependence on ground-truth language or tone metadata to maintain clean baseline).
+- **Artifacts**: Persisted at `models/intent/intent_classifier.joblib` (3.9 MB) and `models/intent/metadata.json`.
+- **Performance**:
+  - Validation Accuracy: **91.36%** | Validation Macro F1: **0.9114**
+  - Holdout Test Accuracy: **92.59%** | Holdout Test Macro F1: **0.9239**
+  - Hinglish, Marathi-English, Hindi-English holdout accuracy: **100.0%**
+  - English, Hindi, Marathi holdout accuracy: **> 82.6%**
+- **Inference Wrapper**:
+  ```python
+  from backend.app.nlp.intent_classification import predict_intent
+
+  result = predict_intent("ha code debug karun de na")
+  # result.intent == "DEBUG_CODE"
+  # result.confidence == 0.8842
+  # result.probabilities == {"DEBUG_CODE": 0.8842, ...}
+  ```
+- **Future Orchestration Role**: Provides the primary operational directive (`intent`) to the Prompt Builder and Code Engine, combined orthogonally with detected language (`T09`) and desired tone (`T11`).
 
 ---
 
