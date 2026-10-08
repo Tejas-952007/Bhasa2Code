@@ -433,33 +433,73 @@ class ToneClassificationResult(BaseModel):
 
 # 12. Intent Engine
 
-Intent detection determines what the user is trying to accomplish.
+Intent detection determines what action or deliverable the user wants the system to perform.
 
-Example:
-
-```text
-"python madhe calculator banav"
-→ GENERATE_CODE
-
-"हा code error ka detoy?"
-→ DEBUG_CODE
-
-"simple Marathi madhe samjav"
-→ EXPLAIN_CODE
-
-"हा code slow ka aahe?"
-→ PERFORMANCE_ANALYSIS
-```
-
-The classifier must produce:
+### Pipeline Progression:
 
 ```text
-Intent
-+
-Confidence
+T09 Language Detection
+        ↓
+T10 Tone Dataset
+        ↓
+T11 Tone Classifier
+        ↓
+T12 Intent Dataset
+        ↓
+Future Intent Classifier (T13)
 ```
 
-Low-confidence cases should use a fallback path.
+### Semantic Separation of Core NLP Responsibilities:
+- **Language** = *What language or linguistic style is the user using?* (e.g., `ENGLISH`, `HINDI`, `MARATHI`, `HINGLISH`, `MARATHI_ENGLISH`, `HINDI_ENGLISH`)
+- **Tone** = *How should the response sound or be formatted?* (e.g., `CASUAL`, `FORMAL`, `SIMPLE`, `TECHNICAL`, `SHORT`, `DETAILED`)
+- **Intent** = *What does the user want the system to do or provide?* (e.g., `GENERATE_CODE`, `DEBUG_CODE`, `EXPLAIN_CODE`, etc.)
+
+### Orthogonality Examples:
+```text
+"bro ha code debug kar na"
+Language = MARATHI_ENGLISH
+Tone     = CASUAL
+Intent   = DEBUG_CODE
+
+"Please explain this algorithm in detail."
+Language = ENGLISH
+Tone     = DETAILED
+Intent   = ALGORITHM
+
+"simple language madhe ha code samjhav"
+Language = MARATHI_ENGLISH
+Tone     = SIMPLE
+Intent   = EXPLAIN_CODE
+```
+
+### Supported Intent Taxonomy (18 Labels):
+1. `GENERATE_CODE`: User wants new implementation created from scratch.
+2. `DEBUG_CODE`: User provides code or error and wants it fixed.
+3. `EXPLAIN_CODE`: User wants existing code logic or behavior explained.
+4. `OPTIMIZE_CODE`: User wants existing code made faster, cleaner, or less memory-intensive.
+5. `CONVERT_CODE`: User wants code translated into another programming language.
+6. `ALGORITHM`: User asks about algorithm behavior, design, or algorithmic selection.
+7. `CONCEPT`: User asks to understand a general computer science or programming concept.
+8. `CODE_REVIEW`: User requests an overall code quality, style, and maintainability critique.
+9. `CODE_SUGGESTION`: User asks for incremental coding-level tips or improvements.
+10. `PERFORMANCE_ANALYSIS`: User wants performance profiling, bottleneck detection, or latency analysis.
+11. `ERROR_EXPLANATION`: User wants the meaning and root cause of an error/exception explained.
+12. `APPROACH_SUGGESTION`: User asks for high-level strategy or methodology before writing code.
+13. `BEST_PRACTICE`: User asks for recommended conventions, standards, or idioms.
+14. `ARCHITECTURE_SUGGESTION`: User asks for system-level design, tier layout, or component architecture.
+15. `FEATURE_SUGGESTION`: User asks for feature ideas or capability additions for a project.
+16. `TEST_CASE_GENERATION`: User wants test cases, unit tests, mock scenarios, or edge cases.
+17. `SECURITY_ANALYSIS`: User asks for vulnerability discovery, injection risks, or security audits.
+18. `SEARCH`: User asks to locate previously saved code, conversation history, notes, or project items.
+
+### Labeled Intent Dataset (T12):
+- **Location**: `data/datasets/intent/`
+  - `intent_dataset.csv` / `intent_dataset.jsonl` (1080 samples, 60 per intent, 180 per language)
+  - `intent_train.csv` (756 samples, 70% stratified split)
+  - `intent_validation.csv` (162 samples, 15% stratified split)
+  - `intent_test.csv` (162 samples, 15% stratified split)
+- **Validation**: Deterministic split isolation, zero data leakage, verified via `scripts/validate_intent_dataset.py`.
+- **Classification Output (Future T13)**: Intent label + Confidence score with fallback for low-confidence inputs.
 
 ---
 

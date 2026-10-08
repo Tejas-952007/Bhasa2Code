@@ -1,0 +1,163 @@
+id,text,intent,language,domain
+2,Create a FastAPI endpoint that handles user registration.,GENERATE_CODE,English,coding
+6,Create an SQL script to create a normalized schema for an e-commerce store.,GENERATE_CODE,English,coding
+17,लिंक्ड लिस्ट को रिवर्स करने का जावा प्रोग्राम बनाओ।,GENERATE_CODE,Hindi,coding
+27,बायनरी सर्च अल्गोरिदमचा संपूर्ण जावा कोड लिहून दे.,GENERATE_CODE,Marathi,coding
+31,ek python script banao jo website se data scrape kare,GENERATE_CODE,Hinglish,coding
+48,java madhe singleton design pattern cha class banav,GENERATE_CODE,Marathi-English,coding
+49,c++ madhe queue implementation cha complete code de,GENERATE_CODE,Marathi-English,coding
+54,fastapi me file upload handle karne ka code generate karo,GENERATE_CODE,Hindi-English,coding
+59,express me rate limiter middleware ka code generate kijiye,GENERATE_CODE,Hindi-English,coding
+65,Identify and correct the off-by-one error in this binary search implementation.,DEBUG_CODE,English,coding
+78,"पायथन में यह रिकर्शन स्टैक ओवरफ्लो दे रहा है, इसे फिक्स करो।",DEBUG_CODE,Hindi,coding
+83,"हा जावा कोड कंपाइल होत नाहीये, यातील एरर दुरुस्त करून दे.",DEBUG_CODE,Marathi,coding
+86,"या फंक्शनचे आऊटपुट चुकीचे येत आहे, कोड डीबग कर.",DEBUG_CODE,Marathi,coding
+93,mera c program segmentation fault de raha hai fix karo,DEBUG_CODE,Hinglish,coding
+102,ha c++ pointer crash debug karun code theek kar na,DEBUG_CODE,Marathi-English,coding
+104,ya sql query madhe syntax issue aahe correct karun de,DEBUG_CODE,Marathi-English,coding
+110,docker build fail hotoy dockerfile madhla error fix kar,DEBUG_CODE,Marathi-English,coding
+116,is sorting logic me galat output aa raha hai bug fix karo,DEBUG_CODE,Hindi-English,coding
+124,What does this complex SQL window function query accomplish?,EXPLAIN_CODE,English,coding
+128,Walk through the state transitions in this Redux reducer function.,EXPLAIN_CODE,English,coding
+132,"यह रिकर्सिव फंक्शन कैसे काम कर रहा है, विस्तार से समझाइए।",EXPLAIN_CODE,Hindi,coding
+136,इस कोड में यह लैम्ब्डा फंक्शन क्या कर रहा है?,EXPLAIN_CODE,Hindi,coding
+150,या डेटा स्ट्रक्चरच्या कोडमधील प्रत्येक पायरी समजावून सांगा.,EXPLAIN_CODE,Marathi,coding
+154,ye sql window function query kaise kaam kar rahi hai explain karo,EXPLAIN_CODE,Hinglish,coding
+156,ye javascript promise chain kaise execute hoti hai explain karo,EXPLAIN_CODE,Hinglish,coding
+165,ha c++ class hierarchy code detail madhe samjav,EXPLAIN_CODE,Marathi-English,coding
+172,ye recursive algorithm step by step explain karo,EXPLAIN_CODE,Hindi-English,coding
+185,Improve the runtime efficiency of this recursive Fibonacci calculation.,OPTIMIZE_CODE,English,coding
+202,या एसक्यूएल क्वेरीचा एक्झिक्युशन वेळ कमी करण्यासाठी बदल करा.,OPTIMIZE_CODE,Marathi,coding
+203,या लूपची टाइम कॉम्प्लेक्सिटी ओ(एन) मध्ये आणण्यासाठी कोड सुधारा.,OPTIMIZE_CODE,Marathi,coding
+204,या फंक्शनचा मेमरी वापर कमी करण्यासाठी ऑप्टिमायझेशन करा.,OPTIMIZE_CODE,Marathi,coding
+208,या पायथन स्क्रिप्टचा परफॉर्मन्स वाढवण्यासाठी कोड सुधारा.,OPTIMIZE_CODE,Marathi,coding
+213,is nested loop ko O(n) me optimize kar do,OPTIMIZE_CODE,Hinglish,coding
+215,react component unnecessary re-render ho raha hai optimize kijiye,OPTIMIZE_CODE,Hinglish,coding
+222,ya sql query la optimize karun fast banav na,OPTIMIZE_CODE,Marathi-English,coding
+223,nested loop remove karun time complexity optimize kar,OPTIMIZE_CODE,Marathi-English,coding
+241,Convert this Python function to an idiomatic TypeScript equivalent.,CONVERT_CODE,English,coding
+245,Convert this Bash deployment script into a Python automation script.,CONVERT_CODE,English,coding
+248,Translate this NumPy array processing logic into PyTorch tensor operations.,CONVERT_CODE,English,coding
+250,Translate this Go struct and method into an equivalent Rust implementation.,CONVERT_CODE,English,coding
+268,या नेहमीच्या लूपचे लिस्ट कॉम्प्रिहेन्शन मध्ये रूपांतर करा.,CONVERT_CODE,Marathi,coding
+276,promises wale code ko async await me convert karo,CONVERT_CODE,Hinglish,coding
+285,c program la python script madhe convert kar,CONVERT_CODE,Marathi-English,coding
+286,promise chain la async await madhe convert karun de,CONVERT_CODE,Marathi-English,coding
+300,yaml configuration ko python dictionary me convert karo,CONVERT_CODE,Hindi-English,coding
+302,Explain the difference between depth-first search and breadth-first search.,ALGORITHM,English,coding
+308,Explain the working principle of the A* search heuristic function.,ALGORITHM,English,coding
+309,How does topological sorting work using Kahn's in-degree algorithm?,ALGORITHM,English,coding
+315,प्रिम्स और क्रुस्कल एल्गोरिदम में क्या अंतर है?,ALGORITHM,Hindi,coding
+316,बाइनरी सर्च की टाइम कॉम्प्लेक्सिटी क्या होती है?,ALGORITHM,Hindi,coding
+318,केएमपी स्ट्रिंग मैचिंग एल्गोरिदम कैसे कार्य करता है?,ALGORITHM,Hindi,coding
+341,binary search algorithm cha core concept kay ahe,ALGORITHM,Marathi-English,coding
+348,topological sort sathi konta algorithm use karava,ALGORITHM,Marathi-English,coding
+357,a star pathfinding heuristic algorithm kaise kaam karta hai,ALGORITHM,Hindi-English,coding
+361,What is polymorphism in object-oriented programming?,CONCEPT,English,coding
+365,What is the difference between concurrency and parallelism?,CONCEPT,English,coding
+369,What is the difference between monolithic and microservices architecture?,CONCEPT,English,coding
+380,इनहेरिटेंस और कम्पोज़िशन में क्या अंतर है?,CONCEPT,Hindi,coding
+381,ऑब्जेक्ट ओरिएंटेड प्रोग्रामिंगमध्ये पॉलिमॉर्फिझम म्हणजे नक्की काय?,CONCEPT,Marathi,coding
+390,रेस्ट एपीआय मध्ये स्टेटलेस असणे म्हणजे काय?,CONCEPT,Marathi,coding
+402,process aani thread madhla conceptual farak sang,CONCEPT,Marathi-English,coding
+403,database acid properties mhanje kay te explain kar,CONCEPT,Marathi-English,coding
+409,oop madhe abstraction vs encapsulation farak sang,CONCEPT,Marathi-English,coding
+429,Review this Dockerfile for layer caching and size optimization concerns.,CODE_REVIEW,English,coding
+434,इस एसक्यूएल स्क्रिप्ट की समीक्षा करें और गलतियां इंगित करें।,CODE_REVIEW,Hindi,coding
+436,इस कोड को क्लीन कोड के सिद्धांतों के अनुसार रिव्यू करो।,CODE_REVIEW,Hindi,coding
+451,is python code ka overall code review karke feedback do,CODE_REVIEW,Hinglish,coding
+455,java backend code ka clean code standards pe review do,CODE_REVIEW,Hinglish,coding
+457,auth implementation ka review karke missing edge cases batao,CODE_REVIEW,Hinglish,coding
+467,auth handler implementation cha thorough review dya,CODE_REVIEW,Marathi-English,coding
+471,is python module ka comprehensive code review kijiye,CODE_REVIEW,Hindi-English,coding
+476,code formatting and readability standards par review dijiye,CODE_REVIEW,Hindi-English,coding
+497,इस रिएक्ट कोड को और अधिक पठनीय बनाने का सुझाव दें।,CODE_SUGGESTION,Hindi,coding
+499,इस जावास्क्रिप्ट कोड को आधुनिक सिंटैक्स में लिखने का सुझाव दो।,CODE_SUGGESTION,Hindi,coding
+505,हा क्लास अधिक मॉड्यूलर बनवण्यासाठी काय सल्ले द्याल?,CODE_SUGGESTION,Marathi,coding
+508,या फंक्शनमधील त्रुटी हाताळणी अधिक सक्षम करण्याचे उपाय सुचवा.,CODE_SUGGESTION,Marathi,coding
+510,या डेटाबेस फंक्शनमध्ये सुधारणा करण्यासाठी काय सुचवाल?,CODE_SUGGESTION,Marathi,coding
+525,ya class la modular banavnyasathi kay suggestions dyaal,CODE_SUGGESTION,Marathi-English,coding
+527,error handling strong karnyache suggestions provide kar,CODE_SUGGESTION,Marathi-English,coding
+531,is python code ko refactor karne ke suggestions dijiye,CODE_SUGGESTION,Hindi-English,coding
+538,typescript type definitions organize karne ke suggestions do,CODE_SUGGESTION,Hindi-English,coding
+556,मेमोरी प्रोफाइल देखकर बताइए कि मेमोरी कहाँ खर्च हो रही है।,PERFORMANCE_ANALYSIS,Hindi,coding
+571,ye python script itna slow kyu chal rahi hai performance analyze karo,PERFORMANCE_ANALYSIS,Hinglish,coding
+572,database query me bottleneck kaha hai analyze karke batao,PERFORMANCE_ANALYSIS,Hinglish,coding
+576,memory profile dekh ke batao bottleneck kidhar hai,PERFORMANCE_ANALYSIS,Hinglish,coding
+582,database query execution plan madhe bottleneck analyze karun sang,PERFORMANCE_ANALYSIS,Marathi-English,coding
+585,api endpoint response latency evdhi high ka ahe check kar,PERFORMANCE_ANALYSIS,Marathi-English,coding
+586,memory profile madhe memory leak bottleneck kuthe aahe te dakhva,PERFORMANCE_ANALYSIS,Marathi-English,coding
+589,server response time slow asnyache reason diagnose kar,PERFORMANCE_ANALYSIS,Marathi-English,coding
+600,disk I/O wait spike ka performance impact analyze karo,PERFORMANCE_ANALYSIS,Hindi-English,coding
+612,'IndexError: list index out of range' क्यों आता है समझाइए।,ERROR_EXPLANATION,Hindi,coding
+620,एसक्यूएल में 'foreign key constraint fails' का क्या मतलब है?,ERROR_EXPLANATION,Hindi,coding
+625,सी लँग्वेजमध्ये 'Segmentation fault' का येतो ते समजावून सांगा.,ERROR_EXPLANATION,Marathi,coding
+626,डेटाबेसमध्ये 'deadlock detected' ही त्रुटी का निर्माण होते?,ERROR_EXPLANATION,Marathi,coding
+637,HTTP 429 Too Many Requests error ka kya purpose hai,ERROR_EXPLANATION,Hinglish,coding
+640,sql me foreign key constraint fail hone ka kya reason hai,ERROR_EXPLANATION,Hinglish,coding
+643,java NullPointerException ka trigger hoto te explain kar,ERROR_EXPLANATION,Marathi-English,coding
+644,browser madhe CORS error kay denote karto sang na,ERROR_EXPLANATION,Marathi-English,coding
+648,python recursion depth exceeded error cha meaning kay ahe,ERROR_EXPLANATION,Marathi-English,coding
+673,एलआरयू कैश बनाने के लिए किस तरह शुरुआत करनी चाहिए?,APPROACH_SUGGESTION,Hindi,coding
+684,ग्राफमधील सायकल शोधण्याचा योग्य अप्रोच कोणता आहे?,APPROACH_SUGGESTION,Marathi,coding
+697,offline data synchronization ka approach kaise design kare,APPROACH_SUGGESTION,Hinglish,coding
+700,is complex feature ko implement karne ka road map aur approach batao,APPROACH_SUGGESTION,Hinglish,coding
+701,ya coding problem la solve karnyacha best approach kay asel,APPROACH_SUGGESTION,Marathi-English,coding
+706,million records paginate karnyacha correct approach dya,APPROACH_SUGGESTION,Marathi-English,coding
+714,websocket vs polling chat application architecture approach batao,APPROACH_SUGGESTION,Hindi-English,coding
+716,event sourcing based data synchronization approach explain kijiye,APPROACH_SUGGESTION,Hindi-English,coding
+717,token bucket vs leaky bucket rate limiting approach discuss karo,APPROACH_SUGGESTION,Hindi-English,coding
+722,What is the recommended best practice for storing API secrets in Docker?,BEST_PRACTICE,English,coding
+724,What are the best practices for indexing PostgreSQL relational tables?,BEST_PRACTICE,English,coding
+728,What are the best practices for writing clean and maintainable unit tests?,BEST_PRACTICE,English,coding
+736,पायथन में लॉगिंग सेटअप करने के मानक तरीके क्या हैं?,BEST_PRACTICE,Hindi,coding
+740,प्रोडक्शन में कोर्स हेडर कॉन्फ़िगर करने की सही प्रैक्टिस क्या है?,BEST_PRACTICE,Hindi,coding
+744,पोस्टग्रेस डेटाबेसमध्ये इंडेक्स तयार करण्याच्या सर्वोत्तम पद्धती सांगा.,BEST_PRACTICE,Marathi,coding
+752,api keys aur secrets store karne ki industry best practice kya hai,BEST_PRACTICE,Hinglish,coding
+772,environment variables manage karne ke 12 factor app best practices kya hain,BEST_PRACTICE,Hindi-English,coding
+774,database connection pool configuration ke best practice parameters kya hain,BEST_PRACTICE,Hindi-English,coding
+797,"सीडीएन, रेडिस और डेटाबेस के बीच कैशिंग आर्किटेक्चर कैसे बनाएं?",ARCHITECTURE_SUGGESTION,Hindi,coding
+806,रिअल-टाइम गेम सर्व्हरसाठी योग्य सिस्टीम आर्किटेक्चर सुचवा.,ARCHITECTURE_SUGGESTION,Marathi,coding
+808,वेबहुक पाठवण्यासाठी आणि पुन्हा प्रयत्न करण्यासाठी सिस्टीम आर्किटेक्चर सुचवा.,ARCHITECTURE_SUGGESTION,Marathi,coding
+815,clean architecture pattern me fastapi project kaise structure kare,ARCHITECTURE_SUGGESTION,Hinglish,coding
+816,real time game server ke liye websocket architecture suggest karo,ARCHITECTURE_SUGGESTION,Hinglish,coding
+818,webhook retry mechanism ke liye queue architecture suggest kijiye,ARCHITECTURE_SUGGESTION,Hinglish,coding
+828,webhook event delivery system sathi resilient architecture suggest kar,ARCHITECTURE_SUGGESTION,Marathi-English,coding
+835,database read replicas and sharding architecture design kaise kare,ARCHITECTURE_SUGGESTION,Hindi-English,coding
+840,disaster recovery and multi region failover architecture design batao,ARCHITECTURE_SUGGESTION,Hindi-English,coding
+842,Suggest interesting features to build into a personal expense tracker app.,FEATURE_SUGGESTION,English,coding
+854,एआई कोडिंग असिस्टेंट में कौन से नए और इनोवेटिव फीचर्स होने चाहिए?,FEATURE_SUGGESTION,Hindi,coding
+865,मार्कडाउन डॉक्युमेंटेशन ॲपमध्ये कोणती नवीन कार्ये जोडता येतील?,FEATURE_SUGGESTION,Marathi,coding
+867,विद्यार्थी व्यवस्थापन प्रणालीत अजून कोणती उपयुक्त वैशिष्ट्ये जोडता येतील?,FEATURE_SUGGESTION,Marathi,coding
+878,real time collaborative whiteboard tool me kon se features chahiye,FEATURE_SUGGESTION,Hinglish,coding
+885,markdown documentation viewer madhe useful features suggest kara,FEATURE_SUGGESTION,Marathi-English,coding
+889,api testing tool sathi developer friendly features dya,FEATURE_SUGGESTION,Marathi-English,coding
+890,automated code reviewer bot madhe konati features implement karavi,FEATURE_SUGGESTION,Marathi-English,coding
+894,ai programming companion me context retention features suggest karo,FEATURE_SUGGESTION,Hindi-English,coding
+903,Generate JUnit 5 test cases testing success and failure scenarios for this service.,TEST_CASE_GENERATION,English,coding
+912,बाइनरी सर्च के लिए सभी एज कंडीशंस कवर करते हुए टेस्ट केसेस लिखो।,TEST_CASE_GENERATION,Hindi,coding
+929,या शॉपिंग कार्ट फंक्शनसाठी संपूर्ण एकत्रीकरण (इंटेग्रेशन) टेस्ट केसेस लिहा.,TEST_CASE_GENERATION,Marathi,coding
+931,is email validation function ke liye pytest unit test cases generate karo,TEST_CASE_GENERATION,Hinglish,coding
+934,react async api call ke liye jest test cases generate kijiye,TEST_CASE_GENERATION,Hinglish,coding
+937,database repository ke liye mock test cases bana kar do,TEST_CASE_GENERATION,Hinglish,coding
+942,binary search chya saglya edge cases cover karnare tests lihi,TEST_CASE_GENERATION,Marathi-English,coding
+949,cart total calculation sathi integration test cases generate kar,TEST_CASE_GENERATION,Marathi-English,coding
+958,arithmetic calculation overflow test cases provide kijiye,TEST_CASE_GENERATION,Hindi-English,coding
+961,Analyze this Python Flask route for SQL injection and cross-site scripting vulnerabilities.,SECURITY_ANALYSIS,English,coding
+965,Audit this password hashing implementation against current cryptography standards.,SECURITY_ANALYSIS,English,coding
+971,इस फ्लास्क कोड में एसक्यूएल इंजेक्शन और सुरक्षा कमियां ढूंढिए।,SECURITY_ANALYSIS,Hindi,coding
+987,या वेब ॲप्लिकेशनमधील कोर्स आणि सीएसआरएफ सुरक्षेचे परीक्षण करा.,SECURITY_ANALYSIS,Marathi,coding
+989,या डॉकर फाईलमध्ये सुरक्षेच्या दृष्टीने काही त्रुटी आहेत का ते सांगा.,SECURITY_ANALYSIS,Marathi,coding
+991,is python code me sql injection vulnerabilities analyze karo,SECURITY_ANALYSIS,Hinglish,coding
+996,react component me xss cross site scripting risk analyze karo,SECURITY_ANALYSIS,Hinglish,coding
+999,dockerfile me security issues aur root user risk analyze karo,SECURITY_ANALYSIS,Hinglish,coding
+1005,password hashing algorithm secure ahe ka audit kara,SECURITY_ANALYSIS,Marathi-English,coding
+1024,Search my saved notes for the explanation of binary search trees.,SEARCH,English,coding
+1027,Search my conversation notes for the definition of polymorphism.,SEARCH,English,coding
+1029,Find the code where we handled divide-by-zero exceptions in FastAPI.,SEARCH,English,coding
+1039,वह पायथन कोड खोजो जहाँ हमने जीरो से भाग वाली एरर ठीक की थी।,SEARCH,Hindi,coding
+1052,chat history me postgresql indexing wali discussion search karo,SEARCH,Hinglish,coding
+1056,pehle likhi hui monthly revenue wali sql query dhoond ke do,SEARCH,Hinglish,coding
+1061,majha previous python calculator wala code search karun dya,SEARCH,Marathi-English,coding
+1065,aapan docker optimization var aadhi kuth bola hoto search kar,SEARCH,Marathi-English,coding
+1069,fastapi divide by zero code kuthe ahe to shodhun kadh,SEARCH,Marathi-English,coding

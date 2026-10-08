@@ -379,7 +379,7 @@ Logistic Regression
 
 ### T12 — Create Intent Dataset
 
-Initial classes:
+Initial classes (18 intent labels):
 
 ```text
 GENERATE_CODE
@@ -399,18 +399,22 @@ ARCHITECTURE_SUGGESTION
 FEATURE_SUGGESTION
 TEST_CASE_GENERATION
 SECURITY_ANALYSIS
+SEARCH
 ```
 
 **Dependencies:** T08
 
 **Acceptance Criteria:**
 
-- All classes represented
-- Dataset documented
-- Examples include code-related natural language
-- Mixed-language examples included
+- All 18 classes represented (balanced at exactly 60 samples each, 1080 total)
+- Dataset documented (`data/datasets/intent/README.md`)
+- Balanced across 6 language varieties: English, Hindi, Marathi, Hinglish, Marathi-English, Hindi-English
+- Mixed-language and transliterated queries included
+- Orthogonality from Tone verified
+- Deterministic 70% train / 15% val / 15% test splits with zero data leakage
+- Comprehensive validation script (`scripts/validate_intent_dataset.py`) passes
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 

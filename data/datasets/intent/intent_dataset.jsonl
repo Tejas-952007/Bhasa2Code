@@ -1,0 +1,1080 @@
+{"id": 1, "text": "Write a Python program to calculate the factorial of a number.", "intent": "GENERATE_CODE", "language": "English", "domain": "coding"}
+{"id": 2, "text": "Create a FastAPI endpoint that handles user registration.", "intent": "GENERATE_CODE", "language": "English", "domain": "coding"}
+{"id": 3, "text": "Implement a binary search tree in Java with insert and delete operations.", "intent": "GENERATE_CODE", "language": "English", "domain": "coding"}
+{"id": 4, "text": "Generate a React hook for fetching data with loading and error states.", "intent": "GENERATE_CODE", "language": "English", "domain": "coding"}
+{"id": 5, "text": "Write a C function to reverse a singly linked list in place.", "intent": "GENERATE_CODE", "language": "English", "domain": "coding"}
+{"id": 6, "text": "Create an SQL script to create a normalized schema for an e-commerce store.", "intent": "GENERATE_CODE", "language": "English", "domain": "coding"}
+{"id": 7, "text": "Implement a debounce utility function in TypeScript.", "intent": "GENERATE_CODE", "language": "English", "domain": "coding"}
+{"id": 8, "text": "Write a Python script using pandas to clean and deduplicate CSV rows.", "intent": "GENERATE_CODE", "language": "English", "domain": "coding"}
+{"id": 9, "text": "Generate a Dockerfile for a production Node.js application.", "intent": "GENERATE_CODE", "language": "English", "domain": "coding"}
+{"id": 10, "text": "Write a C++ class representing a thread-safe circular queue.", "intent": "GENERATE_CODE", "language": "English", "domain": "coding"}
+{"id": 11, "text": "एक पायथन प्रोग्राम लिखो जो दी गई स्ट्रिंग को रिवर्स करे।", "intent": "GENERATE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 12, "text": "मुझे एक जावास्क्रिप्ट फंक्शन चाहिए जो फॉर्म वैलिडेशन करे।", "intent": "GENERATE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 13, "text": "दो मैट्रिक्स को जोड़ने का सी भाषा में कोड बनाओ।", "intent": "GENERATE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 14, "text": "एक एसक्यूएल क्वेरी लिखो जो दूसरी सबसे अधिक सैलरी निकाले।", "intent": "GENERATE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 15, "text": "पायथन में रेस्ट एपीआई बनाने का बेसिक कोड तैयार करो।", "intent": "GENERATE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 16, "text": "प्राइम नंबर्स प्रिंट करने का कोड लिख के दो।", "intent": "GENERATE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 17, "text": "लिंक्ड लिस्ट को रिवर्स करने का जावा प्रोग्राम बनाओ।", "intent": "GENERATE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 18, "text": "बाइनरी सर्च का एक पूरा प्रोग्राम तैयार कीजिए।", "intent": "GENERATE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 19, "text": "पायथन में कैलकुलेटर बनाने का कोड लिखो।", "intent": "GENERATE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 20, "text": "फाइल पढ़ने और लिखने का सी++ प्रोग्राम बनाओ।", "intent": "GENERATE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 21, "text": "दिलेल्या संख्येचा फॅक्टोरियल काढणारा पायथन कोड तयार कर.", "intent": "GENERATE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 22, "text": "स्ट्रिंग पॅलिंड्रोम आहे का तपासण्यासाठी सी प्रोग्राम लिहून दे.", "intent": "GENERATE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 23, "text": "विद्यार्थ्यांचे गुण साठवण्यासाठी एसक्यूएल टेबल बनवणारी क्वेरी तयार कर.", "intent": "GENERATE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 24, "text": "जावास्क्रिप्टमध्ये लॉगिन फॉर्म व्हॅलिडेट करणारा कोड हवा आहे.", "intent": "GENERATE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 25, "text": "दोन मॅट्रिक्सचा गुणाकार करणारा सी++ कोड बनव.", "intent": "GENERATE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 26, "text": "फायलींमधील मजकूर वाचण्यासाठी पायथन स्क्रिप्ट तयार करा.", "intent": "GENERATE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 27, "text": "बायनरी सर्च अल्गोरिदमचा संपूर्ण जावा कोड लिहून दे.", "intent": "GENERATE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 28, "text": "फ्लास्क वापरून साधी रेस्ट एपीआय तयार करणारा कोड दे.", "intent": "GENERATE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 29, "text": "लिंक्ड लिस्टमध्ये नवीन नोड जोडणारा कोड तयार करा.", "intent": "GENERATE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 30, "text": "पायथनमध्ये कॅल्क्युलेटर बनवण्याचा कोड दे.", "intent": "GENERATE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 31, "text": "ek python script banao jo website se data scrape kare", "intent": "GENERATE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 32, "text": "mujhe ek linked list reverse karne ka c code chahiye", "intent": "GENERATE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 33, "text": "calculator ka program bana do python me", "intent": "GENERATE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 34, "text": "ek fast api backend endpoint generate karke do", "intent": "GENERATE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 35, "text": "react me dark mode toggle karne ka hook bana do", "intent": "GENERATE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 36, "text": "sql me employees table create karne ka script de do", "intent": "GENERATE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 37, "text": "javascript me array se duplicates remove karne ka code do", "intent": "GENERATE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 38, "text": "c++ me binary search tree implement karne ka program banao", "intent": "GENERATE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 39, "text": "python me json file parse karne ka simple code de", "intent": "GENERATE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 40, "text": "express js me jwt authentication ka middleware create karo", "intent": "GENERATE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 41, "text": "python madhe calculator cha clean program bana na", "intent": "GENERATE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 42, "text": "mala linked list reverse karnara c code pahije", "intent": "GENERATE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 43, "text": "react madhe custom dropdown component cha code generate kar", "intent": "GENERATE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 44, "text": "fastapi madhe database connection sathi script tayar kar", "intent": "GENERATE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 45, "text": "sql madhe top 5 highest salary sathi query lihun de", "intent": "GENERATE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 46, "text": "javascript madhe email validation sathi function create kar", "intent": "GENERATE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 47, "text": "python madhe csv file read karun process karnara code dya", "intent": "GENERATE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 48, "text": "java madhe singleton design pattern cha class banav", "intent": "GENERATE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 49, "text": "c++ madhe queue implementation cha complete code de", "intent": "GENERATE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 50, "text": "django madhe user model extend karnara code banav", "intent": "GENERATE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 51, "text": "python me factorial calculate karne ka code provide karo", "intent": "GENERATE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 52, "text": "mujhe react me modal component ka code chahiye", "intent": "GENERATE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 53, "text": "c++ me quick sort implement karne ka code likh do", "intent": "GENERATE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 54, "text": "fastapi me file upload handle karne ka code generate karo", "intent": "GENERATE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 55, "text": "sql query banao jo monthly sales aggregate kare", "intent": "GENERATE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 56, "text": "javascript me debounce function ka implementation de do", "intent": "GENERATE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 57, "text": "java me thread safe counter class ka code banao", "intent": "GENERATE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 58, "text": "python me recursive fibonacci series ka code chahiye", "intent": "GENERATE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 59, "text": "express me rate limiter middleware ka code generate kijiye", "intent": "GENERATE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 60, "text": "pandas me missing values fill karne ka code create karo", "intent": "GENERATE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 61, "text": "Fix this Python script because it throws an IndexError on empty lists.", "intent": "DEBUG_CODE", "language": "English", "domain": "coding"}
+{"id": 62, "text": "Debug this React component that is causing an infinite re-render loop.", "intent": "DEBUG_CODE", "language": "English", "domain": "coding"}
+{"id": 63, "text": "Resolve the segmentation fault occurring in this C memory allocation function.", "intent": "DEBUG_CODE", "language": "English", "domain": "coding"}
+{"id": 64, "text": "Fix the NullPointerException in this Java Spring Boot service layer.", "intent": "DEBUG_CODE", "language": "English", "domain": "coding"}
+{"id": 65, "text": "Identify and correct the off-by-one error in this binary search implementation.", "intent": "DEBUG_CODE", "language": "English", "domain": "coding"}
+{"id": 66, "text": "Debug why this SQL query is returning duplicate joined rows.", "intent": "DEBUG_CODE", "language": "English", "domain": "coding"}
+{"id": 67, "text": "Fix this asynchronous JavaScript function where promises never resolve.", "intent": "DEBUG_CODE", "language": "English", "domain": "coding"}
+{"id": 68, "text": "Resolve the type mismatch error in this TypeScript interface implementation.", "intent": "DEBUG_CODE", "language": "English", "domain": "coding"}
+{"id": 69, "text": "Debug this multithreaded Python worker that deadlocks on termination.", "intent": "DEBUG_CODE", "language": "English", "domain": "coding"}
+{"id": 70, "text": "Fix the syntax and indentation errors in this nested dictionary comprehension.", "intent": "DEBUG_CODE", "language": "English", "domain": "coding"}
+{"id": 71, "text": "मेरे इस पायथन कोड में एरर आ रहा है, इसे ठीक करो।", "intent": "DEBUG_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 72, "text": "इस जावा प्रोग्राम में नल पॉइंटर एरर आ रहा है, बग फिक्स कीजिए।", "intent": "DEBUG_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 73, "text": "यह सी प्रोग्राम सेगफौल्ट दे रहा है, इसे सही करो।", "intent": "DEBUG_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 74, "text": "इस एसक्यूएल क्वेरी का सिंटैक्स एरर सुधार कर दो।", "intent": "DEBUG_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 75, "text": "मेरा लूप इनफिनिट हो गया है, इसे डीबग करके सही करो।", "intent": "DEBUG_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 76, "text": "इस फंक्शन में रिटर्न वैल्यू गलत आ रही है, कोड ठीक करो।", "intent": "DEBUG_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 77, "text": "इस जावास्क्रिप्ट कोड में अनडिफाइंड एरर आ रहा है, ठीक कीजिए।", "intent": "DEBUG_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 78, "text": "पायथन में यह रिकर्शन स्टैक ओवरफ्लो दे रहा है, इसे फिक्स करो।", "intent": "DEBUG_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 79, "text": "इस डेटाबेस कनेक्शन एरर को मेरे कोड में ठीक करो।", "intent": "DEBUG_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 80, "text": "यह कंडीशन कभी ट्रू नहीं हो रही, कोड डीबग करो।", "intent": "DEBUG_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 81, "text": "माझ्या पायथन कोडमध्ये इंडेक्स एरर येत आहे, तो दुरुस्त कर.", "intent": "DEBUG_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 82, "text": "या सी प्रोग्राममधील मेमरी लीक आणि सेगफॉल्ट फिक्स करा.", "intent": "DEBUG_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 83, "text": "हा जावा कोड कंपाइल होत नाहीये, यातील एरर दुरुस्त करून दे.", "intent": "DEBUG_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 84, "text": "या एसक्यूएल क्वेरीमध्ये सिंटॅक्स चूक आहे, ती दुरुस्त करा.", "intent": "DEBUG_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 85, "text": "हा लूप कधीच संपत नाहीये, कोड तपासून योग्य बदल कर.", "intent": "DEBUG_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 86, "text": "या फंक्शनचे आऊटपुट चुकीचे येत आहे, कोड डीबग कर.", "intent": "DEBUG_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 87, "text": "जावास्क्रिप्ट कोडमध्ये प्रॉमिस एरर येत आहे, तो ठीक करा.", "intent": "DEBUG_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 88, "text": "पायथनमध्ये टाईप एरर येत आहे, कोड फिक्स करून दाखव.", "intent": "DEBUG_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 89, "text": "या रिकर्सिव्ह फंक्शनमध्ये स्टॅक ओवरफ्लो होतोय, तो सोडव.", "intent": "DEBUG_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 90, "text": "हा रिएक्ट कॉम्पोनंट क्रॅश होतोय, यातला बग काढून दे.", "intent": "DEBUG_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 91, "text": "bro ye code me error aa raha hai ise fix kar do", "intent": "DEBUG_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 92, "text": "is python script ko debug karke bug hata do please", "intent": "DEBUG_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 93, "text": "mera c program segmentation fault de raha hai fix karo", "intent": "DEBUG_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 94, "text": "ye react state update nahi ho rahi bug solve kardo", "intent": "DEBUG_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 95, "text": "is sql join me duplicate data aa raha hai query theek karo", "intent": "DEBUG_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 96, "text": "java code me null pointer exception aa raha hai resolve karo", "intent": "DEBUG_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 97, "text": "is loop me off by one bug hai ise correct kar do", "intent": "DEBUG_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 98, "text": "ye async await call reject ho rahi hai debug kijiye", "intent": "DEBUG_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 99, "text": "django model migration fail ho raha hai error fix karo", "intent": "DEBUG_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 100, "text": "ye function galat output return kar raha hai ise fix karo", "intent": "DEBUG_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 101, "text": "ya python code madhla index out of range error fix kar", "intent": "DEBUG_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 102, "text": "ha c++ pointer crash debug karun code theek kar na", "intent": "DEBUG_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 103, "text": "react hook madhe infinite loop zalay bug solve kar", "intent": "DEBUG_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 104, "text": "ya sql query madhe syntax issue aahe correct karun de", "intent": "DEBUG_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 105, "text": "majha flask api 500 internal server error detoy fix kar", "intent": "DEBUG_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 106, "text": "java method madhla type cast error debug kar", "intent": "DEBUG_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 107, "text": "ya function madhla logic bug find karun code fix kar", "intent": "DEBUG_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 108, "text": "javascript promise unhandled rejection solve kar", "intent": "DEBUG_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 109, "text": "ya binary search code madhla boundary condition bug fix kar", "intent": "DEBUG_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 110, "text": "docker build fail hotoy dockerfile madhla error fix kar", "intent": "DEBUG_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 111, "text": "is python code ko debug karke issue fix kijiye", "intent": "DEBUG_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 112, "text": "ye express route crash ho raha hai bug solve karo", "intent": "DEBUG_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 113, "text": "c++ memory leak error ko code me se fix karo", "intent": "DEBUG_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 114, "text": "sql query execution timeout de rahi hai ise correct karo", "intent": "DEBUG_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 115, "text": "react component render issue debug karke theek karo", "intent": "DEBUG_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 116, "text": "is sorting logic me galat output aa raha hai bug fix karo", "intent": "DEBUG_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 117, "text": "pandas dataframe key error throw kar raha hai fix karo", "intent": "DEBUG_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 118, "text": "java class compilation error solve karke code do", "intent": "DEBUG_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 119, "text": "fastapi pydantic validation error debug karo", "intent": "DEBUG_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 120, "text": "is recursive function me base case missing hai fix karo", "intent": "DEBUG_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 121, "text": "Explain what this Python generator function is doing line by line.", "intent": "EXPLAIN_CODE", "language": "English", "domain": "coding"}
+{"id": 122, "text": "Walk me through the logic of this recursive tree traversal snippet.", "intent": "EXPLAIN_CODE", "language": "English", "domain": "coding"}
+{"id": 123, "text": "Explain how this React useEffect dependency array handles cleanup.", "intent": "EXPLAIN_CODE", "language": "English", "domain": "coding"}
+{"id": 124, "text": "What does this complex SQL window function query accomplish?", "intent": "EXPLAIN_CODE", "language": "English", "domain": "coding"}
+{"id": 125, "text": "Explain the working of this C bitwise manipulation macro.", "intent": "EXPLAIN_CODE", "language": "English", "domain": "coding"}
+{"id": 126, "text": "Clarify the purpose of this Java synchronized block implementation.", "intent": "EXPLAIN_CODE", "language": "English", "domain": "coding"}
+{"id": 127, "text": "Explain how this regular expression matches domain names.", "intent": "EXPLAIN_CODE", "language": "English", "domain": "coding"}
+{"id": 128, "text": "Walk through the state transitions in this Redux reducer function.", "intent": "EXPLAIN_CODE", "language": "English", "domain": "coding"}
+{"id": 129, "text": "Explain this Docker multi-stage build configuration step by step.", "intent": "EXPLAIN_CODE", "language": "English", "domain": "coding"}
+{"id": 130, "text": "What is happening inside this JavaScript async generator function?", "intent": "EXPLAIN_CODE", "language": "English", "domain": "coding"}
+{"id": 131, "text": "इस पायथन कोड का प्रत्येक स्टेप समझाइए।", "intent": "EXPLAIN_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 132, "text": "यह रिकर्सिव फंक्शन कैसे काम कर रहा है, विस्तार से समझाइए।", "intent": "EXPLAIN_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 133, "text": "इस जावास्क्रिप्ट कोड का क्या मतलब है, मुझे बताओ।", "intent": "EXPLAIN_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 134, "text": "यह एसक्यूएल क्वेरी क्या परिणाम देगी, समझाइए।", "intent": "EXPLAIN_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 135, "text": "इस सी++ क्लास की कार्यप्रणाली स्पष्ट कीजिए।", "intent": "EXPLAIN_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 136, "text": "इस कोड में यह लैम्ब्डा फंक्शन क्या कर रहा है?", "intent": "EXPLAIN_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 137, "text": "यह बाइनरी ट्री ट्रैवर्सल कोड मुझे लाइन दर लाइन समझाओ।", "intent": "EXPLAIN_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 138, "text": "इस डेकोरेटर का काम क्या है, कोड देखकर समझाइए।", "intent": "EXPLAIN_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 139, "text": "इस रिएक्ट हुक के काम करने का तरीका समझाइए।", "intent": "EXPLAIN_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 140, "text": "यह बिटवाइज़ ऑपरेटर वाला कोड कैसे काम करता है समझाइए।", "intent": "EXPLAIN_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 141, "text": "हा पायथन कोड नक्की काय करतो ते सविस्तर समजावून सांगा.", "intent": "EXPLAIN_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 142, "text": "या रिकर्सिव्ह फंक्शनची कार्यपद्धती ओळीनुसार स्पष्ट करा.", "intent": "EXPLAIN_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 143, "text": "हा जावास्क्रिप्ट कोड कसा चालतो ते मला समजावून सांग.", "intent": "EXPLAIN_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 144, "text": "या एसक्यूएल क्वेरीचा अर्थ आणि परिणाम स्पष्ट करा.", "intent": "EXPLAIN_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 145, "text": "या सी++ क्लासमधील लॉजिक काय आहे ते सांगा.", "intent": "EXPLAIN_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 146, "text": "या कोडमध्ये लॅम्बडा फंक्शन कशासाठी वापरले आहे ते स्पष्ट करा.", "intent": "EXPLAIN_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 147, "text": "हा बायनरी सर्च कोड कसा काम करतो ते समजावून सांगा.", "intent": "EXPLAIN_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 148, "text": "या पायथन डेकोरेटरचे कार्य समजावून सांगा.", "intent": "EXPLAIN_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 149, "text": "या रिएक्ट हुकचा कोड ओळीनुसार स्पष्ट करा.", "intent": "EXPLAIN_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 150, "text": "या डेटा स्ट्रक्चरच्या कोडमधील प्रत्येक पायरी समजावून सांगा.", "intent": "EXPLAIN_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 151, "text": "ye python code line by line explain karke samjhao", "intent": "EXPLAIN_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 152, "text": "is recursive function ka working logic explain karo", "intent": "EXPLAIN_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 153, "text": "batao ye react useEffect hook kya kar raha hai", "intent": "EXPLAIN_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 154, "text": "ye sql window function query kaise kaam kar rahi hai explain karo", "intent": "EXPLAIN_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 155, "text": "is c pointer code ka matlab samjhao step by step", "intent": "EXPLAIN_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 156, "text": "ye javascript promise chain kaise execute hoti hai explain karo", "intent": "EXPLAIN_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 157, "text": "is regex pattern ka meaning detail me explain kijiye", "intent": "EXPLAIN_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 158, "text": "ye django middleware function kya kar raha hai samjhao", "intent": "EXPLAIN_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 159, "text": "is binary search tree code ka logic explain karo", "intent": "EXPLAIN_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 160, "text": "batao ye lambda function yaha kya calculate kar raha hai", "intent": "EXPLAIN_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 161, "text": "ha python code line by line explain kar na please", "intent": "EXPLAIN_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 162, "text": "ya recursive tree traversal cha logic samjavun sang", "intent": "EXPLAIN_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 163, "text": "ha react custom hook kasa work karto explain kar", "intent": "EXPLAIN_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 164, "text": "ya sql query madhe join kasa hoto te explain kar", "intent": "EXPLAIN_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 165, "text": "ha c++ class hierarchy code detail madhe samjav", "intent": "EXPLAIN_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 166, "text": "ya javascript async function cha execution flow explain kar", "intent": "EXPLAIN_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 167, "text": "ha regex pattern kasha match karto te explain karun sang", "intent": "EXPLAIN_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 168, "text": "ya pandas groupby operation cha logic samjav", "intent": "EXPLAIN_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 169, "text": "ha sorting function internal kashi array change karto sang", "intent": "EXPLAIN_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 170, "text": "ya docker compose file madhle services explain kar", "intent": "EXPLAIN_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 171, "text": "is python snippet ka functionality explain kijiye", "intent": "EXPLAIN_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 172, "text": "ye recursive algorithm step by step explain karo", "intent": "EXPLAIN_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 173, "text": "is react reducer code ka flow samjhao", "intent": "EXPLAIN_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 174, "text": "ye sql query kya fetch kar rahi hai explain karo", "intent": "EXPLAIN_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 175, "text": "is c memory management snippet ka logic explain kijiye", "intent": "EXPLAIN_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 176, "text": "ye javascript closure function kaise kaam karta hai explain karo", "intent": "EXPLAIN_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 177, "text": "is java interface implementation ko explain karke batao", "intent": "EXPLAIN_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 178, "text": "ye list comprehension code kaise evaluate hota hai explain karo", "intent": "EXPLAIN_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 179, "text": "is express authentication flow ka code explain kijiye", "intent": "EXPLAIN_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 180, "text": "ye binary search boundary conditions explain karo", "intent": "EXPLAIN_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 181, "text": "Optimize this nested loop in Python to run in O(N) time complexity.", "intent": "OPTIMIZE_CODE", "language": "English", "domain": "coding"}
+{"id": 182, "text": "Refactor this SQL query to reduce execution time and avoid full table scans.", "intent": "OPTIMIZE_CODE", "language": "English", "domain": "coding"}
+{"id": 183, "text": "Optimize this React component to prevent redundant re-renders.", "intent": "OPTIMIZE_CODE", "language": "English", "domain": "coding"}
+{"id": 184, "text": "Reduce the memory consumption of this large pandas dataframe processing code.", "intent": "OPTIMIZE_CODE", "language": "English", "domain": "coding"}
+{"id": 185, "text": "Improve the runtime efficiency of this recursive Fibonacci calculation.", "intent": "OPTIMIZE_CODE", "language": "English", "domain": "coding"}
+{"id": 186, "text": "Optimize this C++ string concatenation loop using preallocated buffers.", "intent": "OPTIMIZE_CODE", "language": "English", "domain": "coding"}
+{"id": 187, "text": "Refactor this bulky if-else chain into a clean pattern-matching structure.", "intent": "OPTIMIZE_CODE", "language": "English", "domain": "coding"}
+{"id": 188, "text": "Optimize this database connection pooling code for higher throughput.", "intent": "OPTIMIZE_CODE", "language": "English", "domain": "coding"}
+{"id": 189, "text": "Make this asynchronous data pipeline process batches in parallel.", "intent": "OPTIMIZE_CODE", "language": "English", "domain": "coding"}
+{"id": 190, "text": "Optimize this image resizing script to utilize multi-core CPU processing.", "intent": "OPTIMIZE_CODE", "language": "English", "domain": "coding"}
+{"id": 191, "text": "इस पायथन कोड को ऑप्टिमाइज़ करके इसका रनटाइम कम करो।", "intent": "OPTIMIZE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 192, "text": "इस एसक्यूएल क्वेरी को तेज बनाने के लिए सुधार कीजिए।", "intent": "OPTIMIZE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 193, "text": "इस लूप की टाइम कॉम्प्लेक्सिटी कम करने के लिए कोड ऑप्टिमाइज़ करो।", "intent": "OPTIMIZE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 194, "text": "इस फंक्शन की मेमोरी खपत कम करने का तरीका कोड में लागू करो।", "intent": "OPTIMIZE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 195, "text": "इस रिएक्ट कंपोनेंट को री-रेंडर कम करने के लिए ऑप्टिमाइज़ कीजिए।", "intent": "OPTIMIZE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 196, "text": "इस भारी इफ-एल्स कोड को साफ और तेज बनाइए।", "intent": "OPTIMIZE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 197, "text": "इस रिकर्सिव कोड को डायनामिक प्रोग्रामिंग से ऑप्टिमाइज़ करो।", "intent": "OPTIMIZE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 198, "text": "इस डेटा प्रोसेसिंग कोड को समानांतर में चलाने के लिए सुधारें।", "intent": "OPTIMIZE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 199, "text": "इस सी++ कोड की परफॉरमेंस बढ़ाने के लिए ऑप्टिमाइज़ेशन करो।", "intent": "OPTIMIZE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 200, "text": "इस डेटाबेस क्वेरी को इंडेक्स के साथ ऑप्टिमाइज़ कीजिए।", "intent": "OPTIMIZE_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 201, "text": "हा पायथन कोड अधिक गतिमान करण्यासाठी ऑप्टिमाइझ करा.", "intent": "OPTIMIZE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 202, "text": "या एसक्यूएल क्वेरीचा एक्झिक्युशन वेळ कमी करण्यासाठी बदल करा.", "intent": "OPTIMIZE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 203, "text": "या लूपची टाइम कॉम्प्लेक्सिटी ओ(एन) मध्ये आणण्यासाठी कोड सुधारा.", "intent": "OPTIMIZE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 204, "text": "या फंक्शनचा मेमरी वापर कमी करण्यासाठी ऑप्टिमायझेशन करा.", "intent": "OPTIMIZE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 205, "text": "हा रिएक्ट कॉम्पोनंट वारंवार रिरेंडर न होण्यासाठी ऑप्टिमाइझ करा.", "intent": "OPTIMIZE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 206, "text": "या कोडमधील नेस्टेड लूप काढून अधिक कार्यक्षम कोड बनवा.", "intent": "OPTIMIZE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 207, "text": "रिकर्शन ऐवजी डायनॅमिक प्रोग्रामिंग वापरून कोड ऑप्टिमाइझ करा.", "intent": "OPTIMIZE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 208, "text": "या पायथन स्क्रिप्टचा परफॉर्मन्स वाढवण्यासाठी कोड सुधारा.", "intent": "OPTIMIZE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 209, "text": "या सी++ अल्गोरिदमचा वेग वाढवण्यासाठी ऑप्टिमायझेशन करा.", "intent": "OPTIMIZE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 210, "text": "या डेटाबेस ऑपरेशनचा वेळ कमी करण्यासाठी कोड ऑप्टिमाइझ करा.", "intent": "OPTIMIZE_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 211, "text": "is python code ko optimize karke fast bana do", "intent": "OPTIMIZE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 212, "text": "ye sql query bohot slow hai ise optimize karke speed badhao", "intent": "OPTIMIZE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 213, "text": "is nested loop ko O(n) me optimize kar do", "intent": "OPTIMIZE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 214, "text": "memory usage kam karne ke liye is script ko optimize karo", "intent": "OPTIMIZE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 215, "text": "react component unnecessary re-render ho raha hai optimize kijiye", "intent": "OPTIMIZE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 216, "text": "recursion ko memoization use karke optimize kar do", "intent": "OPTIMIZE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 217, "text": "is heavy database call ko optimize karke execution time ghatao", "intent": "OPTIMIZE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 218, "text": "c++ code me string copying avoid karke optimize karo", "intent": "OPTIMIZE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 219, "text": "pandas dataframe processing ko optimize karke parallelize karo", "intent": "OPTIMIZE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 220, "text": "is bulky logic ko clean aur efficient optimize kar do", "intent": "OPTIMIZE_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 221, "text": "ha python code optimize karun tyachi speed vadhva", "intent": "OPTIMIZE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 222, "text": "ya sql query la optimize karun fast banav na", "intent": "OPTIMIZE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 223, "text": "nested loop remove karun time complexity optimize kar", "intent": "OPTIMIZE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 224, "text": "ya function cha memory footprint optimize karun dya", "intent": "OPTIMIZE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 225, "text": "react rendering optimize karun performance improve kar", "intent": "OPTIMIZE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 226, "text": "recursive solution la dynamic programming ne optimize kar", "intent": "OPTIMIZE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 227, "text": "large dataset process karnyasathi ya code la optimize kar", "intent": "OPTIMIZE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 228, "text": "c++ code madhe unnecessary allocations optimize kar", "intent": "OPTIMIZE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 229, "text": "database query plan optimize karun execution fast kar", "intent": "OPTIMIZE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 230, "text": "ya data pipeline madhe batching add karun optimize kar", "intent": "OPTIMIZE_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 231, "text": "is python script ko time complexity reduce karke optimize karo", "intent": "OPTIMIZE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 232, "text": "sql query execution plan improve karke optimize kijiye", "intent": "OPTIMIZE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 233, "text": "is algorithm implementation ko memoize karke optimize karo", "intent": "OPTIMIZE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 234, "text": "memory overhead minimize karne ke liye code optimize kijiye", "intent": "OPTIMIZE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 235, "text": "react functional component performance optimize karo", "intent": "OPTIMIZE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 236, "text": "file I/O operations ko asynchronous banakar optimize kijiye", "intent": "OPTIMIZE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 237, "text": "large loop operations ko vectorized banakar optimize karo", "intent": "OPTIMIZE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 238, "text": "database indexing leverage karke query optimize karo", "intent": "OPTIMIZE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 239, "text": "multiprocessing use karke is script ko optimize kijiye", "intent": "OPTIMIZE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 240, "text": "c++ algorithm memory cache locality optimize karo", "intent": "OPTIMIZE_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 241, "text": "Convert this Python function to an idiomatic TypeScript equivalent.", "intent": "CONVERT_CODE", "language": "English", "domain": "coding"}
+{"id": 242, "text": "Translate this C++ class implementation into Java.", "intent": "CONVERT_CODE", "language": "English", "domain": "coding"}
+{"id": 243, "text": "Convert this raw SQL query into a SQLAlchemy ORM expression.", "intent": "CONVERT_CODE", "language": "English", "domain": "coding"}
+{"id": 244, "text": "Rewrite this JavaScript promise chain using modern async/await syntax.", "intent": "CONVERT_CODE", "language": "English", "domain": "coding"}
+{"id": 245, "text": "Convert this Bash deployment script into a Python automation script.", "intent": "CONVERT_CODE", "language": "English", "domain": "coding"}
+{"id": 246, "text": "Translate this imperative for-loop into a functional map and filter pipeline.", "intent": "CONVERT_CODE", "language": "English", "domain": "coding"}
+{"id": 247, "text": "Convert this Flask route handler into a FastAPI path operation.", "intent": "CONVERT_CODE", "language": "English", "domain": "coding"}
+{"id": 248, "text": "Translate this NumPy array processing logic into PyTorch tensor operations.", "intent": "CONVERT_CODE", "language": "English", "domain": "coding"}
+{"id": 249, "text": "Convert this JSON schema into a Pydantic model representation.", "intent": "CONVERT_CODE", "language": "English", "domain": "coding"}
+{"id": 250, "text": "Translate this Go struct and method into an equivalent Rust implementation.", "intent": "CONVERT_CODE", "language": "English", "domain": "coding"}
+{"id": 251, "text": "इस पायथन कोड को सी++ में बदल दीजिए।", "intent": "CONVERT_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 252, "text": "इस जावास्क्रिप्ट फंक्शन को टाइपस्क्रिप्ट में कन्वर्ट करो।", "intent": "CONVERT_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 253, "text": "इस एसक्यूएल क्वेरी को पायथन पांडास कोड में बदलो।", "intent": "CONVERT_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 254, "text": "इस जावा क्लास को कोटलिन में कन्वर्ट कीजिए।", "intent": "CONVERT_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 255, "text": "इस सी प्रोग्राम को पायथन में ट्रांसलेट करो।", "intent": "CONVERT_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 256, "text": "इस प्रॉमिस वाले कोड को असिंक/अवाइट में बदलिए।", "intent": "CONVERT_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 257, "text": "इस फ्लास्क कोड को फास्टएपीआई में कन्वर्ट करो।", "intent": "CONVERT_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 258, "text": "इस लूप वाले कोड को लिस्ट कॉम्प्रिहेंशन में बदलो।", "intent": "CONVERT_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 259, "text": "इस बैश स्क्रिप्ट को पायथन स्क्रिप्ट में बदल दीजिए।", "intent": "CONVERT_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 260, "text": "इस जेसन डेटा को पाइडैंटिक मॉडल में कन्वर्ट करो।", "intent": "CONVERT_CODE", "language": "Hindi", "domain": "coding"}
+{"id": 261, "text": "हा पायथन कोड सी++ भाषेत रूपांतरित करा.", "intent": "CONVERT_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 262, "text": "या जावास्क्रिप्ट फंक्शनचे टाईपस्क्रिप्टमध्ये रूपांतर करा.", "intent": "CONVERT_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 263, "text": "ही एसक्यूएल क्वेरी पायथन पांडास कोडमध्ये बदला.", "intent": "CONVERT_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 264, "text": "या जावा क्लासचे कोटलिन कोडमध्ये रूपांतर करून द्या.", "intent": "CONVERT_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 265, "text": "हा सी प्रोग्राम पायथन भाषेत ट्रान्सलेट करा.", "intent": "CONVERT_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 266, "text": "या प्रॉमिस आधारित कोडचे असिंक/अवाईट मध्ये रूपांतर करा.", "intent": "CONVERT_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 267, "text": "हा फ्लास्क कोड फास्टएपीआय मध्ये रूपांतरित करा.", "intent": "CONVERT_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 268, "text": "या नेहमीच्या लूपचे लिस्ट कॉम्प्रिहेन्शन मध्ये रूपांतर करा.", "intent": "CONVERT_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 269, "text": "ही बॅश स्क्रिप्ट पायथन ऑटोमेशन स्क्रिप्टमध्ये बदला.", "intent": "CONVERT_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 270, "text": "या जेसन संरचनेचे पाइडँटिक मॉडेलमध्ये रूपांतर करा.", "intent": "CONVERT_CODE", "language": "Marathi", "domain": "coding"}
+{"id": 271, "text": "is python code ko c++ me convert kar do", "intent": "CONVERT_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 272, "text": "ye javascript function ko typescript me translate karo", "intent": "CONVERT_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 273, "text": "sql query ko sqlalchemy orm code me convert kijiye", "intent": "CONVERT_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 274, "text": "is java class ko python me convert karke do", "intent": "CONVERT_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 275, "text": "c program ko go language me translate kar do", "intent": "CONVERT_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 276, "text": "promises wale code ko async await me convert karo", "intent": "CONVERT_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 277, "text": "flask endpoint ko fastapi path operation me convert karo", "intent": "CONVERT_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 278, "text": "is for loop ko list comprehension me convert kar do", "intent": "CONVERT_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 279, "text": "bash script ko python automation code me badlo", "intent": "CONVERT_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 280, "text": "json response ko pydantic schema me convert karo", "intent": "CONVERT_CODE", "language": "Hinglish", "domain": "coding"}
+{"id": 281, "text": "ha python code c++ madhe convert karun dya", "intent": "CONVERT_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 282, "text": "ya javascript function la typescript madhe convert kar", "intent": "CONVERT_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 283, "text": "sql query la pandas code madhe convert kar na", "intent": "CONVERT_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 284, "text": "ya java class la kotlin madhe translate kar", "intent": "CONVERT_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 285, "text": "c program la python script madhe convert kar", "intent": "CONVERT_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 286, "text": "promise chain la async await madhe convert karun de", "intent": "CONVERT_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 287, "text": "flask route la fastapi endpoint madhe convert kar", "intent": "CONVERT_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 288, "text": "imperative loop la functional stream madhe convert kar", "intent": "CONVERT_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 289, "text": "bash script la python madhe rewrite kar", "intent": "CONVERT_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 290, "text": "json schema la pydantic model madhe convert kar", "intent": "CONVERT_CODE", "language": "Marathi-English", "domain": "coding"}
+{"id": 291, "text": "is python code ko rust me convert kijiye", "intent": "CONVERT_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 292, "text": "ye javascript logic java me translate karo", "intent": "CONVERT_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 293, "text": "raw sql query ko django orm query me convert karo", "intent": "CONVERT_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 294, "text": "c++ data structure ko python me rewrite kijiye", "intent": "CONVERT_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 295, "text": "react class component ko functional hooks me convert karo", "intent": "CONVERT_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 296, "text": "callback based code ko promise syntax me convert kijiye", "intent": "CONVERT_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 297, "text": "pandas code ko pyspark dataframe code me convert karo", "intent": "CONVERT_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 298, "text": "express js routes ko nest js controller me convert karo", "intent": "CONVERT_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 299, "text": "shell script ko cross platform python me translate kijiye", "intent": "CONVERT_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 300, "text": "yaml configuration ko python dictionary me convert karo", "intent": "CONVERT_CODE", "language": "Hindi-English", "domain": "coding"}
+{"id": 301, "text": "How does the Dijkstra shortest path algorithm work with priority queues?", "intent": "ALGORITHM", "language": "English", "domain": "coding"}
+{"id": 302, "text": "Explain the difference between depth-first search and breadth-first search.", "intent": "ALGORITHM", "language": "English", "domain": "coding"}
+{"id": 303, "text": "Which sorting algorithm is optimal for nearly sorted input arrays?", "intent": "ALGORITHM", "language": "English", "domain": "coding"}
+{"id": 304, "text": "How does the Boyer-Moore majority voting algorithm achieve O(1) space?", "intent": "ALGORITHM", "language": "English", "domain": "coding"}
+{"id": 305, "text": "Explain how the Knuth-Morris-Pratt string matching algorithm builds its pi table.", "intent": "ALGORITHM", "language": "English", "domain": "coding"}
+{"id": 306, "text": "What is the time complexity of the Floyd-Warshall all-pairs shortest path algorithm?", "intent": "ALGORITHM", "language": "English", "domain": "coding"}
+{"id": 307, "text": "How does Quickselect find the k-th smallest element in linear expected time?", "intent": "ALGORITHM", "language": "English", "domain": "coding"}
+{"id": 308, "text": "Explain the working principle of the A* search heuristic function.", "intent": "ALGORITHM", "language": "English", "domain": "coding"}
+{"id": 309, "text": "How does topological sorting work using Kahn's in-degree algorithm?", "intent": "ALGORITHM", "language": "English", "domain": "coding"}
+{"id": 310, "text": "What makes merge sort stable while quicksort is typically unstable?", "intent": "ALGORITHM", "language": "English", "domain": "coding"}
+{"id": 311, "text": "बाइनरी सर्च एल्गोरिदम कैसे काम करता है?", "intent": "ALGORITHM", "language": "Hindi", "domain": "coding"}
+{"id": 312, "text": "क्विक सॉर्ट और मर्ज सॉर्ट में मुख्य अंतर क्या है?", "intent": "ALGORITHM", "language": "Hindi", "domain": "coding"}
+{"id": 313, "text": "डाइकस्ट्रा एल्गोरिदम सबसे छोटा रास्ता कैसे खोजता है?", "intent": "ALGORITHM", "language": "Hindi", "domain": "coding"}
+{"id": 314, "text": "डीएफएस और बीएफएस ग्राफ ट्रैवर्सल में क्या फर्क है?", "intent": "ALGORITHM", "language": "Hindi", "domain": "coding"}
+{"id": 315, "text": "प्रिम्स और क्रुस्कल एल्गोरिदम में क्या अंतर है?", "intent": "ALGORITHM", "language": "Hindi", "domain": "coding"}
+{"id": 316, "text": "बाइनरी सर्च की टाइम कॉम्प्लेक्सिटी क्या होती है?", "intent": "ALGORITHM", "language": "Hindi", "domain": "coding"}
+{"id": 317, "text": "डायनामिक प्रोग्रामिंग और ग्रीडी एल्गोरिदम में क्या अंतर है?", "intent": "ALGORITHM", "language": "Hindi", "domain": "coding"}
+{"id": 318, "text": "केएमपी स्ट्रिंग मैचिंग एल्गोरिदम कैसे कार्य करता है?", "intent": "ALGORITHM", "language": "Hindi", "domain": "coding"}
+{"id": 319, "text": "बबल सॉर्ट की तुलना में इन्सर्शन सॉर्ट बेहतर क्यों है?", "intent": "ALGORITHM", "language": "Hindi", "domain": "coding"}
+{"id": 320, "text": "टॉपोलॉजिकल सॉर्टिंग किस तरह की समस्याओं के लिए उपयोगी है?", "intent": "ALGORITHM", "language": "Hindi", "domain": "coding"}
+{"id": 321, "text": "बायनरी सर्च अल्गोरिदम नक्की कसा काम करतो?", "intent": "ALGORITHM", "language": "Marathi", "domain": "coding"}
+{"id": 322, "text": "क्विक सॉर्ट आणि मर्ज सॉर्ट अल्गोरिदममधील फरक काय आहे?", "intent": "ALGORITHM", "language": "Marathi", "domain": "coding"}
+{"id": 323, "text": "डायक्स्ट्रा अल्गोरिदम सर्वात लहान मार्ग कसा शोधतो?", "intent": "ALGORITHM", "language": "Marathi", "domain": "coding"}
+{"id": 324, "text": "डीएफएस आणि बीएफएस या दोन पद्धतींमध्ये काय फरक आहे?", "intent": "ALGORITHM", "language": "Marathi", "domain": "coding"}
+{"id": 325, "text": "प्रिम्स आणि क्रुस्कल अल्गोरिदम कशासाठी वापरले जातात?", "intent": "ALGORITHM", "language": "Marathi", "domain": "coding"}
+{"id": 326, "text": "बायनरी सर्च अल्गोरिदमची वेळ जटिलता किती असते?", "intent": "ALGORITHM", "language": "Marathi", "domain": "coding"}
+{"id": 327, "text": "डायनॅमिक प्रोग्रामिंग आणि ग्रीडी अल्गोरिदम मधील फरक स्पष्ट करा.", "intent": "ALGORITHM", "language": "Marathi", "domain": "coding"}
+{"id": 328, "text": "केएमपी स्ट्रिंग सर्च अल्गोरिदम कसा चालतो?", "intent": "ALGORITHM", "language": "Marathi", "domain": "coding"}
+{"id": 329, "text": "सॉर्टिंग अल्गोरिदमपैकी सर्वात वेगवान अल्गोरिदम कोणता आहे?", "intent": "ALGORITHM", "language": "Marathi", "domain": "coding"}
+{"id": 330, "text": "टॉपोलॉजिकल सॉर्टिंगचे कार्य कसे चालते ते सांगा.", "intent": "ALGORITHM", "language": "Marathi", "domain": "coding"}
+{"id": 331, "text": "binary search algorithm kaise kaam karta hai explain karo", "intent": "ALGORITHM", "language": "Hinglish", "domain": "coding"}
+{"id": 332, "text": "quick sort vs merge sort me se better algorithm konsa hai", "intent": "ALGORITHM", "language": "Hinglish", "domain": "coding"}
+{"id": 333, "text": "dijkstra shortest path algorithm ka working principle kya hai", "intent": "ALGORITHM", "language": "Hinglish", "domain": "coding"}
+{"id": 334, "text": "dfs aur bfs graph traversal me kya difference hota hai", "intent": "ALGORITHM", "language": "Hinglish", "domain": "coding"}
+{"id": 335, "text": "bubble sort ki time complexity worst case me kya hoti hai", "intent": "ALGORITHM", "language": "Hinglish", "domain": "coding"}
+{"id": 336, "text": "kmp string matching algorithm kaise kaam karta hai", "intent": "ALGORITHM", "language": "Hinglish", "domain": "coding"}
+{"id": 337, "text": "dynamic programming vs greedy algorithm me kya difference hai", "intent": "ALGORITHM", "language": "Hinglish", "domain": "coding"}
+{"id": 338, "text": "kahn algorithm se topological sort kaise hota hai", "intent": "ALGORITHM", "language": "Hinglish", "domain": "coding"}
+{"id": 339, "text": "binary search me search space kaise divide hota hai", "intent": "ALGORITHM", "language": "Hinglish", "domain": "coding"}
+{"id": 340, "text": "kadane algorithm maximum subarray sum kaise nikalta hai", "intent": "ALGORITHM", "language": "Hinglish", "domain": "coding"}
+{"id": 341, "text": "binary search algorithm cha core concept kay ahe", "intent": "ALGORITHM", "language": "Marathi-English", "domain": "coding"}
+{"id": 342, "text": "quick sort aani merge sort madhla main difference sang", "intent": "ALGORITHM", "language": "Marathi-English", "domain": "coding"}
+{"id": 343, "text": "dijkstra shortest path algorithm kasa work karto", "intent": "ALGORITHM", "language": "Marathi-English", "domain": "coding"}
+{"id": 344, "text": "dfs vs bfs graph search madhe kay farak ahe", "intent": "ALGORITHM", "language": "Marathi-English", "domain": "coding"}
+{"id": 345, "text": "kadane algorithm maximum subarray kasa find karto", "intent": "ALGORITHM", "language": "Marathi-English", "domain": "coding"}
+{"id": 346, "text": "kmp string searching algorithm cha mechanism kay ahe", "intent": "ALGORITHM", "language": "Marathi-English", "domain": "coding"}
+{"id": 347, "text": "dynamic programming approach kashasathi best ahe", "intent": "ALGORITHM", "language": "Marathi-English", "domain": "coding"}
+{"id": 348, "text": "topological sort sathi konta algorithm use karava", "intent": "ALGORITHM", "language": "Marathi-English", "domain": "coding"}
+{"id": 349, "text": "binary search algorithm time complexity explain kar", "intent": "ALGORITHM", "language": "Marathi-English", "domain": "coding"}
+{"id": 350, "text": "bubble sort vs insertion sort comparison sang", "intent": "ALGORITHM", "language": "Marathi-English", "domain": "coding"}
+{"id": 351, "text": "binary search algorithm ki step by step working explain karo", "intent": "ALGORITHM", "language": "Hindi-English", "domain": "coding"}
+{"id": 352, "text": "merge sort stability concept algorithm level par explain kijiye", "intent": "ALGORITHM", "language": "Hindi-English", "domain": "coding"}
+{"id": 353, "text": "dijkstra algorithm negative weights ke saath fail kyu hota hai", "intent": "ALGORITHM", "language": "Hindi-English", "domain": "coding"}
+{"id": 354, "text": "bfs shortest path unweighted graph me kaise guarantee karta hai", "intent": "ALGORITHM", "language": "Hindi-English", "domain": "coding"}
+{"id": 355, "text": "quicksort pivot selection strategy algorithm ko kaise affect karti hai", "intent": "ALGORITHM", "language": "Hindi-English", "domain": "coding"}
+{"id": 356, "text": "floyd warshall algorithm dynamic programming kaise use karta hai", "intent": "ALGORITHM", "language": "Hindi-English", "domain": "coding"}
+{"id": 357, "text": "a star pathfinding heuristic algorithm kaise kaam karta hai", "intent": "ALGORITHM", "language": "Hindi-English", "domain": "coding"}
+{"id": 358, "text": "cycle detection in graph using union find algorithm explain karo", "intent": "ALGORITHM", "language": "Hindi-English", "domain": "coding"}
+{"id": 359, "text": "two pointer algorithm technique kab use karni chahiye", "intent": "ALGORITHM", "language": "Hindi-English", "domain": "coding"}
+{"id": 360, "text": "sliding window algorithm pattern kis type ke problems me lagta hai", "intent": "ALGORITHM", "language": "Hindi-English", "domain": "coding"}
+{"id": 361, "text": "What is polymorphism in object-oriented programming?", "intent": "CONCEPT", "language": "English", "domain": "coding"}
+{"id": 362, "text": "Explain the difference between process and thread in operating systems.", "intent": "CONCEPT", "language": "English", "domain": "coding"}
+{"id": 363, "text": "What does ACID stand for in relational database systems?", "intent": "CONCEPT", "language": "English", "domain": "coding"}
+{"id": 364, "text": "Explain the concept of closures in functional programming.", "intent": "CONCEPT", "language": "English", "domain": "coding"}
+{"id": 365, "text": "What is the difference between concurrency and parallelism?", "intent": "CONCEPT", "language": "English", "domain": "coding"}
+{"id": 366, "text": "Explain what database normalization is and why it is important.", "intent": "CONCEPT", "language": "English", "domain": "coding"}
+{"id": 367, "text": "What is a memory leak and how do garbage collectors prevent it?", "intent": "CONCEPT", "language": "English", "domain": "coding"}
+{"id": 368, "text": "Explain the difference between synchronous and asynchronous execution.", "intent": "CONCEPT", "language": "English", "domain": "coding"}
+{"id": 369, "text": "What is the difference between monolithic and microservices architecture?", "intent": "CONCEPT", "language": "English", "domain": "coding"}
+{"id": 370, "text": "Explain the concept of idempotency in HTTP REST methods.", "intent": "CONCEPT", "language": "English", "domain": "coding"}
+{"id": 371, "text": "ऑब्जेक्ट ओरिएंटेड प्रोग्रामिंग में पॉलीमॉर्फिज्म क्या होता है?", "intent": "CONCEPT", "language": "Hindi", "domain": "coding"}
+{"id": 372, "text": "प्रोसेस और थ्रेड में मुख्य अंतर क्या है?", "intent": "CONCEPT", "language": "Hindi", "domain": "coding"}
+{"id": 373, "text": "डेटाबेस में एसिड प्रॉपर्टीज का क्या अर्थ है?", "intent": "CONCEPT", "language": "Hindi", "domain": "coding"}
+{"id": 374, "text": "जावास्क्रिप्ट में क्लोजर का क्या सिद्धांत है?", "intent": "CONCEPT", "language": "Hindi", "domain": "coding"}
+{"id": 375, "text": "कॉनकरेंसी और पैरेललिज्म में क्या फर्क है?", "intent": "CONCEPT", "language": "Hindi", "domain": "coding"}
+{"id": 376, "text": "डेटाबेस नॉर्मलाइजेशन क्या होता है और क्यों जरूरी है?", "intent": "CONCEPT", "language": "Hindi", "domain": "coding"}
+{"id": 377, "text": "मेमोरी लीक क्या होती है और यह कैसे होती है?", "intent": "CONCEPT", "language": "Hindi", "domain": "coding"}
+{"id": 378, "text": "सिंक्रोनस और असिंक्रोनस प्रोग्रामिंग में क्या अंतर है?", "intent": "CONCEPT", "language": "Hindi", "domain": "coding"}
+{"id": 379, "text": "रेस्ट एपीआई में स्टेटलेसनेस का क्या मतलब होता है?", "intent": "CONCEPT", "language": "Hindi", "domain": "coding"}
+{"id": 380, "text": "इनहेरिटेंस और कम्पोज़िशन में क्या अंतर है?", "intent": "CONCEPT", "language": "Hindi", "domain": "coding"}
+{"id": 381, "text": "ऑब्जेक्ट ओरिएंटेड प्रोग्रामिंगमध्ये पॉलिमॉर्फिझम म्हणजे नक्की काय?", "intent": "CONCEPT", "language": "Marathi", "domain": "coding"}
+{"id": 382, "text": "ऑपरेटिंग सिस्टीममध्ये प्रोसेस आणि थ्रेड मधील फरक काय आहे?", "intent": "CONCEPT", "language": "Marathi", "domain": "coding"}
+{"id": 383, "text": "डेटाबेस व्यवस्थापनात अॅसिड प्रॉपर्टीज म्हणजे काय?", "intent": "CONCEPT", "language": "Marathi", "domain": "coding"}
+{"id": 384, "text": "जावास्क्रिप्टमध्ये क्लोजर ही संकल्पना काय आहे?", "intent": "CONCEPT", "language": "Marathi", "domain": "coding"}
+{"id": 385, "text": "कॉनकरन्सी आणि पॅरललिझम मधील फरक स्पष्ट करा.", "intent": "CONCEPT", "language": "Marathi", "domain": "coding"}
+{"id": 386, "text": "डेटाबेस नॉर्मलायझेशन म्हणजे काय आणि ते का केले जाते?", "intent": "CONCEPT", "language": "Marathi", "domain": "coding"}
+{"id": 387, "text": "मेमरी लीक म्हणजे काय आणि ती कशी रोखली जाते?", "intent": "CONCEPT", "language": "Marathi", "domain": "coding"}
+{"id": 388, "text": "सिंक्रोनस आणि असिंक्रोनस अंमलबजावणीमधील फरक सांगा.", "intent": "CONCEPT", "language": "Marathi", "domain": "coding"}
+{"id": 389, "text": "इन्हेरीटन्स आणि कंपोझिशन या दोन संकल्पनांमधील फरक काय आहे?", "intent": "CONCEPT", "language": "Marathi", "domain": "coding"}
+{"id": 390, "text": "रेस्ट एपीआय मध्ये स्टेटलेस असणे म्हणजे काय?", "intent": "CONCEPT", "language": "Marathi", "domain": "coding"}
+{"id": 391, "text": "polymorphism kya hota hai programming me simple explain karo", "intent": "CONCEPT", "language": "Hinglish", "domain": "coding"}
+{"id": 392, "text": "process vs thread me difference kya hota hai os concept me", "intent": "CONCEPT", "language": "Hinglish", "domain": "coding"}
+{"id": 393, "text": "database me acid properties ka kya matlab hota hai", "intent": "CONCEPT", "language": "Hinglish", "domain": "coding"}
+{"id": 394, "text": "javascript me closures ka concept explain karo", "intent": "CONCEPT", "language": "Hinglish", "domain": "coding"}
+{"id": 395, "text": "concurrency aur parallelism me kya difference hota hai", "intent": "CONCEPT", "language": "Hinglish", "domain": "coding"}
+{"id": 396, "text": "database normalization kya hai aur 3nf ka kya matlab hai", "intent": "CONCEPT", "language": "Hinglish", "domain": "coding"}
+{"id": 397, "text": "memory leak kya hota hai aur garbage collector ise kaise rokta hai", "intent": "CONCEPT", "language": "Hinglish", "domain": "coding"}
+{"id": 398, "text": "synchronous vs asynchronous execution me main concept kya hai", "intent": "CONCEPT", "language": "Hinglish", "domain": "coding"}
+{"id": 399, "text": "inheritance vs composition ka architectural concept samjhao", "intent": "CONCEPT", "language": "Hinglish", "domain": "coding"}
+{"id": 400, "text": "api me idempotency ka kya matlab hota hai concept wise", "intent": "CONCEPT", "language": "Hinglish", "domain": "coding"}
+{"id": 401, "text": "polymorphism concept oop madhe kay ahe explain kar", "intent": "CONCEPT", "language": "Marathi-English", "domain": "coding"}
+{"id": 402, "text": "process aani thread madhla conceptual farak sang", "intent": "CONCEPT", "language": "Marathi-English", "domain": "coding"}
+{"id": 403, "text": "database acid properties mhanje kay te explain kar", "intent": "CONCEPT", "language": "Marathi-English", "domain": "coding"}
+{"id": 404, "text": "javascript closures concept detail madhe sang", "intent": "CONCEPT", "language": "Marathi-English", "domain": "coding"}
+{"id": 405, "text": "concurrency vs parallelism concept clarify kar", "intent": "CONCEPT", "language": "Marathi-English", "domain": "coding"}
+{"id": 406, "text": "database normalization ka garjeche aste te sang", "intent": "CONCEPT", "language": "Marathi-English", "domain": "coding"}
+{"id": 407, "text": "memory leak concept c++ madhe kay asate explain kar", "intent": "CONCEPT", "language": "Marathi-English", "domain": "coding"}
+{"id": 408, "text": "async vs sync execution flow concept samjav", "intent": "CONCEPT", "language": "Marathi-English", "domain": "coding"}
+{"id": 409, "text": "oop madhe abstraction vs encapsulation farak sang", "intent": "CONCEPT", "language": "Marathi-English", "domain": "coding"}
+{"id": 410, "text": "http methods madhe idempotency concept kay ahe", "intent": "CONCEPT", "language": "Marathi-English", "domain": "coding"}
+{"id": 411, "text": "object oriented programming me encapsulation concept kya hai", "intent": "CONCEPT", "language": "Hindi-English", "domain": "coding"}
+{"id": 412, "text": "virtual memory concept operating systems me explain kijiye", "intent": "CONCEPT", "language": "Hindi-English", "domain": "coding"}
+{"id": 413, "text": "cap theorem distributed systems me kya define karta hai", "intent": "CONCEPT", "language": "Hindi-English", "domain": "coding"}
+{"id": 414, "text": "database indexing b-tree concept explain kijiye", "intent": "CONCEPT", "language": "Hindi-English", "domain": "coding"}
+{"id": 415, "text": "event driven architecture ka core concept kya hai", "intent": "CONCEPT", "language": "Hindi-English", "domain": "coding"}
+{"id": 416, "text": "dependency injection concept software design me kya hota hai", "intent": "CONCEPT", "language": "Hindi-English", "domain": "coding"}
+{"id": 417, "text": "functional programming me immutability concept samjhao", "intent": "CONCEPT", "language": "Hindi-English", "domain": "coding"}
+{"id": 418, "text": "tcp vs udp protocol concept difference explain kijiye", "intent": "CONCEPT", "language": "Hindi-English", "domain": "coding"}
+{"id": 419, "text": "caching mechanisms me lru eviction concept kya hai", "intent": "CONCEPT", "language": "Hindi-English", "domain": "coding"}
+{"id": 420, "text": "database deadlock concept aur detection explain karo", "intent": "CONCEPT", "language": "Hindi-English", "domain": "coding"}
+{"id": 421, "text": "Perform a comprehensive code review of this pull request snippet.", "intent": "CODE_REVIEW", "language": "English", "domain": "coding"}
+{"id": 422, "text": "Review this Python function for code smell, readability, and conventions.", "intent": "CODE_REVIEW", "language": "English", "domain": "coding"}
+{"id": 423, "text": "Critique this React component implementation and point out anti-patterns.", "intent": "CODE_REVIEW", "language": "English", "domain": "coding"}
+{"id": 424, "text": "Review this SQL migration script for schema design flaws.", "intent": "CODE_REVIEW", "language": "English", "domain": "coding"}
+{"id": 425, "text": "Examine this Java service implementation against clean code principles.", "intent": "CODE_REVIEW", "language": "English", "domain": "coding"}
+{"id": 426, "text": "Conduct a review of this authentication flow for edge case handling.", "intent": "CODE_REVIEW", "language": "English", "domain": "coding"}
+{"id": 427, "text": "Review this C++ class design for proper rule-of-five compliance.", "intent": "CODE_REVIEW", "language": "English", "domain": "coding"}
+{"id": 428, "text": "Check this Go package implementation for concurrency issues and style.", "intent": "CODE_REVIEW", "language": "English", "domain": "coding"}
+{"id": 429, "text": "Review this Dockerfile for layer caching and size optimization concerns.", "intent": "CODE_REVIEW", "language": "English", "domain": "coding"}
+{"id": 430, "text": "Review this API response serializer for consistency and error handling.", "intent": "CODE_REVIEW", "language": "English", "domain": "coding"}
+{"id": 431, "text": "इस कोड का समग्र रिव्यू कीजिए और कमियां बताइए।", "intent": "CODE_REVIEW", "language": "Hindi", "domain": "coding"}
+{"id": 432, "text": "मेरे इस पायथन फंक्शन की कोड क्वालिटी का निरीक्षण करें।", "intent": "CODE_REVIEW", "language": "Hindi", "domain": "coding"}
+{"id": 433, "text": "इस रिएक्ट कोड का रिव्यू करके एंटी-पैटर्न्स बताइए।", "intent": "CODE_REVIEW", "language": "Hindi", "domain": "coding"}
+{"id": 434, "text": "इस एसक्यूएल स्क्रिप्ट की समीक्षा करें और गलतियां इंगित करें।", "intent": "CODE_REVIEW", "language": "Hindi", "domain": "coding"}
+{"id": 435, "text": "इस जावा क्लास के डिजाइन का कोड रिव्यू प्रस्तुत कीजिए।", "intent": "CODE_REVIEW", "language": "Hindi", "domain": "coding"}
+{"id": 436, "text": "इस कोड को क्लीन कोड के सिद्धांतों के अनुसार रिव्यू करो।", "intent": "CODE_REVIEW", "language": "Hindi", "domain": "coding"}
+{"id": 437, "text": "मेरे इस पुल रिक्वेस्ट कोड की विस्तृत समीक्षा कीजिए।", "intent": "CODE_REVIEW", "language": "Hindi", "domain": "coding"}
+{"id": 438, "text": "इस सी++ कोड की संरचना का पेशेवर रिव्यू प्रदान करें।", "intent": "CODE_REVIEW", "language": "Hindi", "domain": "coding"}
+{"id": 439, "text": "इस ऑथेंटिकेशन कोड का रिव्यू करके कमियां बताएं।", "intent": "CODE_REVIEW", "language": "Hindi", "domain": "coding"}
+{"id": 440, "text": "इस कोड में मेंटेनेबिलिटी और रीडेबिलिटी का रिव्यू करो।", "intent": "CODE_REVIEW", "language": "Hindi", "domain": "coding"}
+{"id": 441, "text": "या कोडचे संपूर्ण पुनरावलोकन (कोड रिव्ह्यू) करा आणि त्रुटी सांगा.", "intent": "CODE_REVIEW", "language": "Marathi", "domain": "coding"}
+{"id": 442, "text": "माझ्या या पायथन फंक्शनच्या दर्जाचे सखोल परीक्षण करा.", "intent": "CODE_REVIEW", "language": "Marathi", "domain": "coding"}
+{"id": 443, "text": "या रिएक्ट कोडचा रिव्ह्यू करून चुकीच्या पद्धती दाखवा.", "intent": "CODE_REVIEW", "language": "Marathi", "domain": "coding"}
+{"id": 444, "text": "या एसक्यूएल स्क्रिप्टची तपासणी करून डिझाईनमधील दोष सांगा.", "intent": "CODE_REVIEW", "language": "Marathi", "domain": "coding"}
+{"id": 445, "text": "या जावा क्लासच्या रचनेचे व्यावसायिक पुनरावलोकन सादर करा.", "intent": "CODE_REVIEW", "language": "Marathi", "domain": "coding"}
+{"id": 446, "text": "क्लीन कोडच्या नियमांनुसार या कोडचे परीक्षण करा.", "intent": "CODE_REVIEW", "language": "Marathi", "domain": "coding"}
+{"id": 447, "text": "या पुल रिक्वेस्ट कोडचे सविस्तर पुनरावलोकन करा.", "intent": "CODE_REVIEW", "language": "Marathi", "domain": "coding"}
+{"id": 448, "text": "या सी++ कोडमधील त्रुटी आणि सुधारणा योग्य रिव्ह्यूद्वारे सांगा.", "intent": "CODE_REVIEW", "language": "Marathi", "domain": "coding"}
+{"id": 449, "text": "या ऑथेंटिकेशन कोडचा रिव्ह्यू करून कमतरता दाखवून द्या.", "intent": "CODE_REVIEW", "language": "Marathi", "domain": "coding"}
+{"id": 450, "text": "या कोडच्या वाचनीयतेबाबत आणि रचनेबाबत रिव्ह्यू द्या.", "intent": "CODE_REVIEW", "language": "Marathi", "domain": "coding"}
+{"id": 451, "text": "is python code ka overall code review karke feedback do", "intent": "CODE_REVIEW", "language": "Hinglish", "domain": "coding"}
+{"id": 452, "text": "mera pull request code review karo aur code smells batao", "intent": "CODE_REVIEW", "language": "Hinglish", "domain": "coding"}
+{"id": 453, "text": "is react component ka review karke anti patterns highlight karo", "intent": "CODE_REVIEW", "language": "Hinglish", "domain": "coding"}
+{"id": 454, "text": "sql migration script ka review karo aur design flaws batao", "intent": "CODE_REVIEW", "language": "Hinglish", "domain": "coding"}
+{"id": 455, "text": "java backend code ka clean code standards pe review do", "intent": "CODE_REVIEW", "language": "Hinglish", "domain": "coding"}
+{"id": 456, "text": "is function ki readability aur style pe review provide kijiye", "intent": "CODE_REVIEW", "language": "Hinglish", "domain": "coding"}
+{"id": 457, "text": "auth implementation ka review karke missing edge cases batao", "intent": "CODE_REVIEW", "language": "Hinglish", "domain": "coding"}
+{"id": 458, "text": "c++ code structure ka professional review karo", "intent": "CODE_REVIEW", "language": "Hinglish", "domain": "coding"}
+{"id": 459, "text": "is pull request me code quality ka overall review do", "intent": "CODE_REVIEW", "language": "Hinglish", "domain": "coding"}
+{"id": 460, "text": "api handler code ka review karke improvement points batao", "intent": "CODE_REVIEW", "language": "Hinglish", "domain": "coding"}
+{"id": 461, "text": "ya python code cha overall code review karun dya", "intent": "CODE_REVIEW", "language": "Marathi-English", "domain": "coding"}
+{"id": 462, "text": "majhya pull request cha code review karun feedback de na", "intent": "CODE_REVIEW", "language": "Marathi-English", "domain": "coding"}
+{"id": 463, "text": "ya react component madhle anti patterns review madhe sang", "intent": "CODE_REVIEW", "language": "Marathi-English", "domain": "coding"}
+{"id": 464, "text": "sql database script cha code review karun flaws dakhva", "intent": "CODE_REVIEW", "language": "Marathi-English", "domain": "coding"}
+{"id": 465, "text": "java backend code cha quality review karun opinion dya", "intent": "CODE_REVIEW", "language": "Marathi-English", "domain": "coding"}
+{"id": 466, "text": "ya function cha readability aani maintainability review kara", "intent": "CODE_REVIEW", "language": "Marathi-English", "domain": "coding"}
+{"id": 467, "text": "auth handler implementation cha thorough review dya", "intent": "CODE_REVIEW", "language": "Marathi-English", "domain": "coding"}
+{"id": 468, "text": "c++ class structure cha detailed code review kar", "intent": "CODE_REVIEW", "language": "Marathi-English", "domain": "coding"}
+{"id": 469, "text": "ya api controller code cha professional review provide kar", "intent": "CODE_REVIEW", "language": "Marathi-English", "domain": "coding"}
+{"id": 470, "text": "clean code principles var ya module cha review dya", "intent": "CODE_REVIEW", "language": "Marathi-English", "domain": "coding"}
+{"id": 471, "text": "is python module ka comprehensive code review kijiye", "intent": "CODE_REVIEW", "language": "Hindi-English", "domain": "coding"}
+{"id": 472, "text": "pull request changes ka code review provide karke flaws point out karo", "intent": "CODE_REVIEW", "language": "Hindi-English", "domain": "coding"}
+{"id": 473, "text": "is react state management code ka architectural review do", "intent": "CODE_REVIEW", "language": "Hindi-English", "domain": "coding"}
+{"id": 474, "text": "sql query schema structure ka formal code review kijiye", "intent": "CODE_REVIEW", "language": "Hindi-English", "domain": "coding"}
+{"id": 475, "text": "java enterprise service class ka code quality review karo", "intent": "CODE_REVIEW", "language": "Hindi-English", "domain": "coding"}
+{"id": 476, "text": "code formatting and readability standards par review dijiye", "intent": "CODE_REVIEW", "language": "Hindi-English", "domain": "coding"}
+{"id": 477, "text": "security and robustness ke perspective se code review karo", "intent": "CODE_REVIEW", "language": "Hindi-English", "domain": "coding"}
+{"id": 478, "text": "is c++ implementation ka rule-of-five review kijiye", "intent": "CODE_REVIEW", "language": "Hindi-English", "domain": "coding"}
+{"id": 479, "text": "api error handling flow ka code review provide karo", "intent": "CODE_REVIEW", "language": "Hindi-English", "domain": "coding"}
+{"id": 480, "text": "clean architecture principles ke according is code ka review do", "intent": "CODE_REVIEW", "language": "Hindi-English", "domain": "coding"}
+{"id": 481, "text": "What suggestions do you have to improve this Python function?", "intent": "CODE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 482, "text": "Can you suggest better variable naming and structure for this class?", "intent": "CODE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 483, "text": "What improvements would you suggest for this React component hierarchy?", "intent": "CODE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 484, "text": "Suggest cleaner alternatives for this nested ternary operator.", "intent": "CODE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 485, "text": "What coding improvements can make this JavaScript module easier to maintain?", "intent": "CODE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 486, "text": "Suggest how to refactor this bulky switch statement into a dictionary lookup.", "intent": "CODE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 487, "text": "Do you have suggestions for making this database helper more modular?", "intent": "CODE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 488, "text": "Suggest a more idiomatic way to write this list comprehension in Python.", "intent": "CODE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 489, "text": "What suggestions can improve the error handling in this Express route?", "intent": "CODE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 490, "text": "Suggest improvements for organizing these TypeScript utility types.", "intent": "CODE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 491, "text": "इस कोड को बेहतर बनाने के लिए आपके पास क्या सुझाव हैं?", "intent": "CODE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 492, "text": "इस पायथन फंक्शन को सुधारने के लिए कुछ सुझाव दीजिए।", "intent": "CODE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 493, "text": "इस कोड की संरचना को और अच्छा करने के लिए क्या करना चाहिए?", "intent": "CODE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 494, "text": "इस नेस्टेड इफ-एल्स को बेहतर तरीके से लिखने का सुझाव दें।", "intent": "CODE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 495, "text": "इस क्लास को अधिक मॉड्यूलर बनाने के सुझाव दीजिए।", "intent": "CODE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 496, "text": "वेरिएबल के नाम और कोड स्ट्रक्चर सुधारने के सुझाव बताएं।", "intent": "CODE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 497, "text": "इस रिएक्ट कोड को और अधिक पठनीय बनाने का सुझाव दें।", "intent": "CODE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 498, "text": "इस फंक्शन में एरर हैंडलिंग सुधारने के क्या सुझाव हैं?", "intent": "CODE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 499, "text": "इस जावास्क्रिप्ट कोड को आधुनिक सिंटैक्स में लिखने का सुझाव दो।", "intent": "CODE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 500, "text": "इस डेटाबेस हेल्पर फंक्शन को सुधारने के सुझाव दीजिए।", "intent": "CODE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 501, "text": "हा कोड अधिक चांगला करण्यासाठी काही सुधारणा सुचवा.", "intent": "CODE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 502, "text": "या पायथन फंक्शनची गुणवत्ता वाढवण्यासाठी काय बदल करावेत?", "intent": "CODE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 503, "text": "या कोडची रचना अधिक व्यवस्थित करण्यासाठी सूचना द्या.", "intent": "CODE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 504, "text": "या नेस्टेड इफ-एल्स ऐवजी अधिक चांगला पर्याय सुचवा.", "intent": "CODE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 505, "text": "हा क्लास अधिक मॉड्यूलर बनवण्यासाठी काय सल्ले द्याल?", "intent": "CODE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 506, "text": "व्हेरिएबलची नावे आणि कोडची रचना सुधारण्यासाठी मार्गदर्शन करा.", "intent": "CODE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 507, "text": "हा रिएक्ट कोड अधिक वाचनीय करण्यासाठी काही युक्त्या सांगा.", "intent": "CODE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 508, "text": "या फंक्शनमधील त्रुटी हाताळणी अधिक सक्षम करण्याचे उपाय सुचवा.", "intent": "CODE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 509, "text": "हा जावास्क्रिप्ट कोड आधुनिक पद्धतीने लिहिण्यासाठी सल्ला द्या.", "intent": "CODE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 510, "text": "या डेटाबेस फंक्शनमध्ये सुधारणा करण्यासाठी काय सुचवाल?", "intent": "CODE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 511, "text": "is code ko improve karne ke liye kya suggestions hain aapke paas", "intent": "CODE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 512, "text": "python function ko better banane ke liye tips suggest karo", "intent": "CODE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 513, "text": "is react component ki readability improve karne ke suggestions do", "intent": "CODE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 514, "text": "nested if else ko replace karne ke liye clean suggestion batao", "intent": "CODE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 515, "text": "is class structure ko modular banane ke liye suggest kijiye", "intent": "CODE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 516, "text": "variable naming better karne ke suggestions do is code me", "intent": "CODE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 517, "text": "error handling improve karne ke suggestions provide karo", "intent": "CODE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 518, "text": "javascript module ko clean likhne ke suggestions chahiye", "intent": "CODE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 519, "text": "database query helper ko improve karne ke suggestions do", "intent": "CODE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 520, "text": "is function ko simplify karne ke quick suggestions batao", "intent": "CODE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 521, "text": "ya code la improve karnyasaathi kay suggestions ahet sang", "intent": "CODE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 522, "text": "python function clean lihinyasathi suggestions de na", "intent": "CODE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 523, "text": "react component structure better karnyache suggestions dya", "intent": "CODE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 524, "text": "nested if else avoid karnyache clean suggestions sang", "intent": "CODE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 525, "text": "ya class la modular banavnyasathi kay suggestions dyaal", "intent": "CODE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 526, "text": "variable names aani readability sathi suggestions dya", "intent": "CODE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 527, "text": "error handling strong karnyache suggestions provide kar", "intent": "CODE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 528, "text": "javascript helper module improve karnyache suggestions dya", "intent": "CODE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 529, "text": "database operations organize karnyache suggestions sang", "intent": "CODE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 530, "text": "ya method la refactor karnyache smart suggestions dya", "intent": "CODE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 531, "text": "is python code ko refactor karne ke suggestions dijiye", "intent": "CODE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 532, "text": "function readability enhance karne ke liye suggestions batao", "intent": "CODE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 533, "text": "react component hierarchy organize karne ke suggestions do", "intent": "CODE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 534, "text": "complex ternary operators simplify karne ka suggestion dijiye", "intent": "CODE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 535, "text": "backend service modularity improve karne ke suggestions do", "intent": "CODE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 536, "text": "code maintainability boost karne ke specific suggestions batao", "intent": "CODE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 537, "text": "exception propagation streamline karne ke suggestions dijiye", "intent": "CODE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 538, "text": "typescript type definitions organize karne ke suggestions do", "intent": "CODE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 539, "text": "data parsing logic simplify karne ke suggestions provide karo", "intent": "CODE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 540, "text": "controller code decoupling improve karne ke suggestions dijiye", "intent": "CODE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 541, "text": "Why is this Python processing script running so slowly on large datasets?", "intent": "PERFORMANCE_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 542, "text": "Analyze the performance bottleneck in this database query execution plan.", "intent": "PERFORMANCE_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 543, "text": "What is causing this high CPU usage in my Node.js event loop?", "intent": "PERFORMANCE_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 544, "text": "Analyze why this React table component lags when scrolling through 1000 rows.", "intent": "PERFORMANCE_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 545, "text": "Determine the cause of the latency spike in this microservice endpoint.", "intent": "PERFORMANCE_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 546, "text": "Analyze the memory profiling graph to find the object allocation bottleneck.", "intent": "PERFORMANCE_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 547, "text": "Why does this SQL join query consume excessive disk temporary space?", "intent": "PERFORMANCE_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 548, "text": "Examine this multithreaded Java application for lock contention bottlenecks.", "intent": "PERFORMANCE_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 549, "text": "Analyze why this file upload handler saturates server memory.", "intent": "PERFORMANCE_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 550, "text": "Determine why this Docker container experiences high I/O wait times.", "intent": "PERFORMANCE_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 551, "text": "यह पायथन प्रोग्राम बड़े डेटा पर इतना धीमा क्यों चल रहा है?", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 552, "text": "इस डेटाबेस क्वेरी के स्लो होने का कारण विश्लेषण करके बताइए।", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 553, "text": "मेरे नोड जेएस सर्वर में सीपीयू का अधिक उपयोग क्यों हो रहा है?", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 554, "text": "यह रिएक्ट कॉम्पोनेंट स्क्रोल करते समय लैग क्यों कर रहा है?", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 555, "text": "इस एपीआई एंडपॉइंट में लेटेंसी बढ़ने का कारण विश्लेषित कीजिए।", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 556, "text": "मेमोरी प्रोफाइल देखकर बताइए कि मेमोरी कहाँ खर्च हो रही है।", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 557, "text": "यह एसक्यूएल क्वेरी इतना ज्यादा समय क्यों ले रही है, विश्लेषण करो।", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 558, "text": "इस जावा मल्टीथ्रेडेड कोड में परफॉरमेंस की रुकावट कहाँ है?", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 559, "text": "फाइल अपलोड के दौरान सर्वर इतना स्लो क्यों हो जाता है?", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 560, "text": "इस प्रोग्राम का परफॉरमेंस बॉटलनेक ढूंढकर विश्लेषित कीजिए।", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 561, "text": "हा पायथन प्रोग्राम मोठ्या डेटावर एवढा संथ का चालत आहे?", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 562, "text": "या डेटाबेस क्वेरीच्या संथपणाचे नेमके कारण काय आहे ते शोधा.", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 563, "text": "माझ्या नोड जेएस सर्व्हरमध्ये सीपीयूचा वापर एवढा जास्त का होतोय?", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 564, "text": "हा रिएक्ट कॉम्पोनंट स्क्रोल करताना का अडखळतोय ते तपासा.", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 565, "text": "या एपीआयच्या प्रतिसादाला एवढा वेळ का लागत आहे याचे विश्लेषण करा.", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 566, "text": "मेमरी प्रोफाईल तपासून मेमरी कुठे अडकून पडली आहे ते सांगा.", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 567, "text": "ही एसक्यूएल क्वेरी एवढा वेळ का घेत आहे याचे तांत्रिक विश्लेषण करा.", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 568, "text": "या जावा मल्टीथ्रेडेड कोडमध्ये परफॉर्मन्सची अडचण कुठे आहे?", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 569, "text": "फाईल अपलोड करताना सर्व्हर का मंदावतो त्याचे विश्लेषण करा.", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 570, "text": "या प्रोग्रामचा परफॉर्मन्स बॉटलनेक नेमका कुठे आहे ते स्पष्ट करा.", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 571, "text": "ye python script itna slow kyu chal rahi hai performance analyze karo", "intent": "PERFORMANCE_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 572, "text": "database query me bottleneck kaha hai analyze karke batao", "intent": "PERFORMANCE_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 573, "text": "node js server high cpu usage kyu le raha hai analyze kijiye", "intent": "PERFORMANCE_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 574, "text": "react table scroll karne pe lag kyu kar raha hai issue dhoondo", "intent": "PERFORMANCE_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 575, "text": "api endpoint me response time itna zyada kyu aa raha hai", "intent": "PERFORMANCE_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 576, "text": "memory profile dekh ke batao bottleneck kidhar hai", "intent": "PERFORMANCE_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 577, "text": "sql join query itna disk space kyu consume kar rahi hai", "intent": "PERFORMANCE_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 578, "text": "multithreaded code me lock contention kyu ho raha hai analyze karo", "intent": "PERFORMANCE_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 579, "text": "system itna slow kyu respond kar raha hai diagnose karo", "intent": "PERFORMANCE_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 580, "text": "performance bottleneck identify karke root cause explain karo", "intent": "PERFORMANCE_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 581, "text": "ha python script evdha slow ka chaltayt performance analyze kar", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 582, "text": "database query execution plan madhe bottleneck analyze karun sang", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 583, "text": "node js server var cpu usage evdha high ka ahe diagnose kar", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 584, "text": "react table lag kashamule hotoy performance analyze kar na", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 585, "text": "api endpoint response latency evdhi high ka ahe check kar", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 586, "text": "memory profile madhe memory leak bottleneck kuthe aahe te dakhva", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 587, "text": "sql query evdha time ka ghet ahe root cause analyze kar", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 588, "text": "java threads madhe lock contention bottleneck analyze kar", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 589, "text": "server response time slow asnyache reason diagnose kar", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 590, "text": "system performance drop honyache main causes analyze kara", "intent": "PERFORMANCE_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 591, "text": "is python script ka performance bottleneck analyze kijiye", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 592, "text": "query execution plan me table scan latency analyze karo", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 593, "text": "application high memory allocation root cause diagnose kijiye", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 594, "text": "react virtual dom rendering delay analyze karke batao", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 595, "text": "microservice latency spike ka performance breakdown do", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 596, "text": "garbage collection pause time increase hone ka reason analyze karo", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 597, "text": "database lock waiting time bottleneck diagnose kijiye", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 598, "text": "network throughput bottleneck identify karke analyze karo", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 599, "text": "asynchronous task queue backlog latency analyze kijiye", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 600, "text": "disk I/O wait spike ka performance impact analyze karo", "intent": "PERFORMANCE_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 601, "text": "What does 'TypeError: unsupported operand type for +: int and str' mean?", "intent": "ERROR_EXPLANATION", "language": "English", "domain": "coding"}
+{"id": 602, "text": "Explain the cause of 'IndexError: list index out of range' in Python.", "intent": "ERROR_EXPLANATION", "language": "English", "domain": "coding"}
+{"id": 603, "text": "Why do I get 'NullPointerException' in Java when accessing an object field?", "intent": "ERROR_EXPLANATION", "language": "English", "domain": "coding"}
+{"id": 604, "text": "What does 'CORS policy: No Access-Control-Allow-Origin header' signify?", "intent": "ERROR_EXPLANATION", "language": "English", "domain": "coding"}
+{"id": 605, "text": "Explain what 'Segmentation fault (core dumped)' indicates in C.", "intent": "ERROR_EXPLANATION", "language": "English", "domain": "coding"}
+{"id": 606, "text": "Why is PostgreSQL throwing 'deadlock detected' error in this transaction?", "intent": "ERROR_EXPLANATION", "language": "English", "domain": "coding"}
+{"id": 607, "text": "What does 'OperationalError: no such table' indicate in SQLite?", "intent": "ERROR_EXPLANATION", "language": "English", "domain": "coding"}
+{"id": 608, "text": "Explain the meaning of HTTP status code 429 Too Many Requests.", "intent": "ERROR_EXPLANATION", "language": "English", "domain": "coding"}
+{"id": 609, "text": "Why does JavaScript throw 'ReferenceError: Cannot access lexical declaration before initialization'?", "intent": "ERROR_EXPLANATION", "language": "English", "domain": "coding"}
+{"id": 610, "text": "What does 'RecursionError: maximum recursion depth exceeded' mean?", "intent": "ERROR_EXPLANATION", "language": "English", "domain": "coding"}
+{"id": 611, "text": "पायथन में 'TypeError: int and str' एरर का क्या अर्थ है?", "intent": "ERROR_EXPLANATION", "language": "Hindi", "domain": "coding"}
+{"id": 612, "text": "'IndexError: list index out of range' क्यों आता है समझाइए।", "intent": "ERROR_EXPLANATION", "language": "Hindi", "domain": "coding"}
+{"id": 613, "text": "जावा में 'NullPointerException' एरर का क्या मतलब होता है?", "intent": "ERROR_EXPLANATION", "language": "Hindi", "domain": "coding"}
+{"id": 614, "text": "ब्राउज़र में 'CORS policy' एरर का क्या कारण है?", "intent": "ERROR_EXPLANATION", "language": "Hindi", "domain": "coding"}
+{"id": 615, "text": "सी प्रोग्रामिंग में 'Segmentation fault' का क्या अर्थ है?", "intent": "ERROR_EXPLANATION", "language": "Hindi", "domain": "coding"}
+{"id": 616, "text": "डेटाबेस में 'deadlock detected' एरर क्यों आता है समझाइए।", "intent": "ERROR_EXPLANATION", "language": "Hindi", "domain": "coding"}
+{"id": 617, "text": "एचटीटीपी स्टेटस 404 और 500 का क्या मतलब होता है?", "intent": "ERROR_EXPLANATION", "language": "Hindi", "domain": "coding"}
+{"id": 618, "text": "'RecursionError: maximum recursion depth exceeded' का क्या कारण है?", "intent": "ERROR_EXPLANATION", "language": "Hindi", "domain": "coding"}
+{"id": 619, "text": "जावास्क्रिप्ट में 'undefined is not a function' क्यों आता है?", "intent": "ERROR_EXPLANATION", "language": "Hindi", "domain": "coding"}
+{"id": 620, "text": "एसक्यूएल में 'foreign key constraint fails' का क्या मतलब है?", "intent": "ERROR_EXPLANATION", "language": "Hindi", "domain": "coding"}
+{"id": 621, "text": "पायथनमध्ये 'TypeError: int and str' या त्रुटीचा अर्थ काय आहे?", "intent": "ERROR_EXPLANATION", "language": "Marathi", "domain": "coding"}
+{"id": 622, "text": "'IndexError: list index out of range' ही त्रुटी का येते ते सांगा.", "intent": "ERROR_EXPLANATION", "language": "Marathi", "domain": "coding"}
+{"id": 623, "text": "जावामध्ये 'NullPointerException' चा नेमका अर्थ काय आहे?", "intent": "ERROR_EXPLANATION", "language": "Marathi", "domain": "coding"}
+{"id": 624, "text": "वेब ब्राऊझरमध्ये 'CORS error' का येतो त्याचे कारण स्पष्ट करा.", "intent": "ERROR_EXPLANATION", "language": "Marathi", "domain": "coding"}
+{"id": 625, "text": "सी लँग्वेजमध्ये 'Segmentation fault' का येतो ते समजावून सांगा.", "intent": "ERROR_EXPLANATION", "language": "Marathi", "domain": "coding"}
+{"id": 626, "text": "डेटाबेसमध्ये 'deadlock detected' ही त्रुटी का निर्माण होते?", "intent": "ERROR_EXPLANATION", "language": "Marathi", "domain": "coding"}
+{"id": 627, "text": "एचटीटीपी 403 Forbidden या स्टेटस कोडचा काय अर्थ होतो?", "intent": "ERROR_EXPLANATION", "language": "Marathi", "domain": "coding"}
+{"id": 628, "text": "पायथनमध्ये 'RecursionError' का येतो याचे कारण सांगा.", "intent": "ERROR_EXPLANATION", "language": "Marathi", "domain": "coding"}
+{"id": 629, "text": "जावास्क्रिप्टमध्ये 'ReferenceError' चा अर्थ स्पष्ट करा.", "intent": "ERROR_EXPLANATION", "language": "Marathi", "domain": "coding"}
+{"id": 630, "text": "एसक्यूएलमध्ये 'unique constraint violation' का होते ते स्पष्ट करा.", "intent": "ERROR_EXPLANATION", "language": "Marathi", "domain": "coding"}
+{"id": 631, "text": "TypeError: unsupported operand type ka kya matlab hota hai", "intent": "ERROR_EXPLANATION", "language": "Hinglish", "domain": "coding"}
+{"id": 632, "text": "python me IndexError list index out of range kyu aata hai", "intent": "ERROR_EXPLANATION", "language": "Hinglish", "domain": "coding"}
+{"id": 633, "text": "java me NullPointerException ka real meaning kya hai explain karo", "intent": "ERROR_EXPLANATION", "language": "Hinglish", "domain": "coding"}
+{"id": 634, "text": "browser me CORS policy error kyu trigger hota hai explain kijiye", "intent": "ERROR_EXPLANATION", "language": "Hinglish", "domain": "coding"}
+{"id": 635, "text": "c me segmentation fault core dumped ka kya matlab hai", "intent": "ERROR_EXPLANATION", "language": "Hinglish", "domain": "coding"}
+{"id": 636, "text": "database me deadlock detected error kyu throw hota hai", "intent": "ERROR_EXPLANATION", "language": "Hinglish", "domain": "coding"}
+{"id": 637, "text": "HTTP 429 Too Many Requests error ka kya purpose hai", "intent": "ERROR_EXPLANATION", "language": "Hinglish", "domain": "coding"}
+{"id": 638, "text": "RecursionError maximum recursion depth exceeded kyu aata hai", "intent": "ERROR_EXPLANATION", "language": "Hinglish", "domain": "coding"}
+{"id": 639, "text": "javascript me Cannot read property of undefined ka meaning kya hai", "intent": "ERROR_EXPLANATION", "language": "Hinglish", "domain": "coding"}
+{"id": 640, "text": "sql me foreign key constraint fail hone ka kya reason hai", "intent": "ERROR_EXPLANATION", "language": "Hinglish", "domain": "coding"}
+{"id": 641, "text": "TypeError int and str cha meaning kay ahe explain kar", "intent": "ERROR_EXPLANATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 642, "text": "python madhe IndexError kashamule yeto te explain karun sang", "intent": "ERROR_EXPLANATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 643, "text": "java NullPointerException ka trigger hoto te explain kar", "intent": "ERROR_EXPLANATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 644, "text": "browser madhe CORS error kay denote karto sang na", "intent": "ERROR_EXPLANATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 645, "text": "c madhe segmentation fault cha exact reason kay asato", "intent": "ERROR_EXPLANATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 646, "text": "database deadlock error kashamule occur hoto sang", "intent": "ERROR_EXPLANATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 647, "text": "http 500 vs 502 bad gateway error madhla farak explain kar", "intent": "ERROR_EXPLANATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 648, "text": "python recursion depth exceeded error cha meaning kay ahe", "intent": "ERROR_EXPLANATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 649, "text": "javascript reference error temporal dead zone kashamule yeto", "intent": "ERROR_EXPLANATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 650, "text": "sql table does not exist error kashamule aala explain kar", "intent": "ERROR_EXPLANATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 651, "text": "ZeroDivisionError ka cause kya hota hai explain kijiye", "intent": "ERROR_EXPLANATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 652, "text": "python KeyError dictionary access me kyu aata hai explain karo", "intent": "ERROR_EXPLANATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 653, "text": "java ClassNotFoundException vs NoClassDefFoundError difference samjhao", "intent": "ERROR_EXPLANATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 654, "text": "CORS preflight request failure error ka meaning explain kijiye", "intent": "ERROR_EXPLANATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 655, "text": "SIGSEGV signal operating system me kya indicate karta hai", "intent": "ERROR_EXPLANATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 656, "text": "database transaction serialization failure error explain karo", "intent": "ERROR_EXPLANATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 657, "text": "HTTP 401 Unauthorized vs 403 Forbidden ka difference explain kijiye", "intent": "ERROR_EXPLANATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 658, "text": "stack overflow error vs out of memory error difference samjhao", "intent": "ERROR_EXPLANATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 659, "text": "javascript uncaught promise rejection error explain karo", "intent": "ERROR_EXPLANATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 660, "text": "git merge conflict error state ka meaning explain kijiye", "intent": "ERROR_EXPLANATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 661, "text": "What is the best approach to find the longest palindromic substring?", "intent": "APPROACH_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 662, "text": "How should I approach designing an LRU cache from scratch?", "intent": "APPROACH_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 663, "text": "What strategy should I take to detect cycles in a directed graph?", "intent": "APPROACH_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 664, "text": "How should I approach building a real-time chat application backend?", "intent": "APPROACH_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 665, "text": "What is the recommended approach to paginate millions of database records?", "intent": "APPROACH_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 666, "text": "How should I approach synchronizing offline data with a remote database?", "intent": "APPROACH_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 667, "text": "What architectural approach works best for a distributed job queue?", "intent": "APPROACH_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 668, "text": "How should I tackle solving the 0/1 knapsack dynamic programming problem?", "intent": "APPROACH_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 669, "text": "What approach should I take to implement rate limiting across multiple servers?", "intent": "APPROACH_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 670, "text": "How should I approach migrating a legacy monolith to a microservice setup?", "intent": "APPROACH_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 671, "text": "इस समस्या को हल करने का सबसे अच्छा तरीका (अप्रोच) क्या होगा?", "intent": "APPROACH_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 672, "text": "लॉन्गेस्ट पैलिंड्रोमिक सबस्ट्रिंग निकालने के लिए क्या रणनीति अपनाएं?", "intent": "APPROACH_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 673, "text": "एलआरयू कैश बनाने के लिए किस तरह शुरुआत करनी चाहिए?", "intent": "APPROACH_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 674, "text": "ग्राफ में साइकिल खोजने का सही अप्रोच क्या है?", "intent": "APPROACH_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 675, "text": "रीयल-टाइम चैट ऐप बनाने के लिए क्या अप्रोच लेना चाहिए?", "intent": "APPROACH_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 676, "text": "लाखों डेटाबेस रिकॉर्ड्स को पेजिनेट करने का सबसे अच्छा तरीका क्या है?", "intent": "APPROACH_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 677, "text": "ऑफलाइन डेटा सिंक करने की सही तकनीक और अप्रोच क्या होगी?", "intent": "APPROACH_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 678, "text": "नैपसैक प्रॉब्लम को हल करने के लिए क्या रणनीति अपनानी चाहिए?", "intent": "APPROACH_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 679, "text": "रेट लिमिटिंग लागू करने का सबसे सही अप्रोच क्या है?", "intent": "APPROACH_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 680, "text": "इस कोडिंग सवाल को हल करने के अलग-अलग अप्रोच क्या हो सकते हैं?", "intent": "APPROACH_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 681, "text": "ही समस्या सोडवण्यासाठी कोणती पद्धत (अप्रोच) योग्य ठरेल?", "intent": "APPROACH_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 682, "text": "लॉन्गेस्ट पॅलिंड्रोमिक सबस्ट्रिंग शोधण्यासाठी काय रणनीती वापरावी?", "intent": "APPROACH_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 683, "text": "एलआरयू कॅश तयार करण्यासाठी कशी सुरुवात करावी?", "intent": "APPROACH_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 684, "text": "ग्राफमधील सायकल शोधण्याचा योग्य अप्रोच कोणता आहे?", "intent": "APPROACH_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 685, "text": "रिअल-टाइम चॅट अॅप तयार करण्यासाठी कोणती रणनीती वापरावी?", "intent": "APPROACH_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 686, "text": "मोठ्या प्रमाणातील डेटाबेस रेकॉर्ड्स पेजिनेट करण्याचा योग्य मार्ग कोणता?", "intent": "APPROACH_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 687, "text": "ऑफलाईन डेटा सिंक करण्यासाठी काय अप्रोच वापरावा?", "intent": "APPROACH_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 688, "text": "नॅपसॅक समस्या सोडवण्यासाठी डायनॅमिक प्रोग्रामिंगचा काय अप्रोच असावा?", "intent": "APPROACH_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 689, "text": "रेट लिमिटिंग लागू करण्यासाठी कोणती तांत्रिक रणनीती योग्य आहे?", "intent": "APPROACH_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 690, "text": "हा कोडिंग प्रश्न सोडवण्यासाठी विविध पर्याय आणि अप्रोच सांगा.", "intent": "APPROACH_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 691, "text": "is coding problem ko solve karne ka best approach kya hoga", "intent": "APPROACH_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 692, "text": "longest palindromic substring ke liye kya strategy use kare", "intent": "APPROACH_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 693, "text": "lru cache design karne ke liye starting approach kya hona chahiye", "intent": "APPROACH_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 694, "text": "directed graph me cycle detect karne ka approach batao", "intent": "APPROACH_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 695, "text": "real time chat application build karne ka high level approach kya hai", "intent": "APPROACH_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 696, "text": "large dataset pagination handle karne ka best approach batao", "intent": "APPROACH_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 697, "text": "offline data synchronization ka approach kaise design kare", "intent": "APPROACH_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 698, "text": "knapsack problem solve karne ka step by step approach kya hai", "intent": "APPROACH_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 699, "text": "multi server rate limiting implement karne ka kya approach hoga", "intent": "APPROACH_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 700, "text": "is complex feature ko implement karne ka road map aur approach batao", "intent": "APPROACH_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 701, "text": "ya coding problem la solve karnyacha best approach kay asel", "intent": "APPROACH_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 702, "text": "longest palindrome substring sathi kay approach thevaava", "intent": "APPROACH_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 703, "text": "lru cache design sathi starting strategy kay asavi sang", "intent": "APPROACH_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 704, "text": "graph madhe cycle detection sathi best approach sang na", "intent": "APPROACH_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 705, "text": "real time messaging backend banavnyacha approach kay asel", "intent": "APPROACH_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 706, "text": "million records paginate karnyacha correct approach dya", "intent": "APPROACH_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 707, "text": "offline first mobile app sathi data sync approach suggest kar", "intent": "APPROACH_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 708, "text": "0 1 knapsack problem tackle karnyacha dynamic approach sang", "intent": "APPROACH_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 709, "text": "distributed rate limiting handle karnyacha approach dya", "intent": "APPROACH_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 710, "text": "legacy migration start karnyacha systematic approach kay asava", "intent": "APPROACH_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 711, "text": "is problem ko break down karne ka algorithmic approach batao", "intent": "APPROACH_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 712, "text": "system design interview me lru cache ka approach kya hona chahiye", "intent": "APPROACH_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 713, "text": "graph topological sorting problem ka approach explain kijiye", "intent": "APPROACH_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 714, "text": "websocket vs polling chat application architecture approach batao", "intent": "APPROACH_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 715, "text": "keyset pagination vs offset pagination approach compare karo", "intent": "APPROACH_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 716, "text": "event sourcing based data synchronization approach explain kijiye", "intent": "APPROACH_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 717, "text": "token bucket vs leaky bucket rate limiting approach discuss karo", "intent": "APPROACH_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 718, "text": "dynamic programming state definition approach kaise decide kare", "intent": "APPROACH_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 719, "text": "distributed lock implementation ka robust approach batao", "intent": "APPROACH_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 720, "text": "microservices data consistency maintain karne ka approach suggest kijiye", "intent": "APPROACH_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 721, "text": "What are the industry best practices for error handling in FastAPI?", "intent": "BEST_PRACTICE", "language": "English", "domain": "coding"}
+{"id": 722, "text": "What is the recommended best practice for storing API secrets in Docker?", "intent": "BEST_PRACTICE", "language": "English", "domain": "coding"}
+{"id": 723, "text": "Explain the best practices for designing RESTful API endpoints and URLs.", "intent": "BEST_PRACTICE", "language": "English", "domain": "coding"}
+{"id": 724, "text": "What are the best practices for indexing PostgreSQL relational tables?", "intent": "BEST_PRACTICE", "language": "English", "domain": "coding"}
+{"id": 725, "text": "What is the recommended practice for structuring React project folders?", "intent": "BEST_PRACTICE", "language": "English", "domain": "coding"}
+{"id": 726, "text": "What are the best practices for logging and monitoring in Python microservices?", "intent": "BEST_PRACTICE", "language": "English", "domain": "coding"}
+{"id": 727, "text": "Explain the best practices for handling database migrations safely in production.", "intent": "BEST_PRACTICE", "language": "English", "domain": "coding"}
+{"id": 728, "text": "What are the best practices for writing clean and maintainable unit tests?", "intent": "BEST_PRACTICE", "language": "English", "domain": "coding"}
+{"id": 729, "text": "What is the industry standard practice for JWT token storage on the frontend?", "intent": "BEST_PRACTICE", "language": "English", "domain": "coding"}
+{"id": 730, "text": "Explain the best practices for configuring CORS headers in production environments.", "intent": "BEST_PRACTICE", "language": "English", "domain": "coding"}
+{"id": 731, "text": "फास्टएपीआई में एरर हैंडलिंग के लिए इंडस्ट्री बेस्ट प्रैक्टिसेज क्या हैं?", "intent": "BEST_PRACTICE", "language": "Hindi", "domain": "coding"}
+{"id": 732, "text": "डेटाबेस पासवर्ड और सीक्रेट्स सुरक्षित रखने की बेस्ट प्रैक्टिस क्या है?", "intent": "BEST_PRACTICE", "language": "Hindi", "domain": "coding"}
+{"id": 733, "text": "रेस्ट एपीआई एंडपॉइंट्स डिजाइन करने के सही नियम और प्रैक्टिसेज क्या हैं?", "intent": "BEST_PRACTICE", "language": "Hindi", "domain": "coding"}
+{"id": 734, "text": "पोस्टग्रेस डेटाबेस में इंडेक्स बनाने की बेस्ट प्रैक्टिस क्या है?", "intent": "BEST_PRACTICE", "language": "Hindi", "domain": "coding"}
+{"id": 735, "text": "रिएक्ट प्रोजेक्ट के फोल्डर स्ट्रक्चर की बेस्ट प्रैक्टिस समझाइए।", "intent": "BEST_PRACTICE", "language": "Hindi", "domain": "coding"}
+{"id": 736, "text": "पायथन में लॉगिंग सेटअप करने के मानक तरीके क्या हैं?", "intent": "BEST_PRACTICE", "language": "Hindi", "domain": "coding"}
+{"id": 737, "text": "प्रोडक्शन में डेटाबेस माइग्रेशन सुरक्षित रूप से करने की बेस्ट प्रैक्टिस क्या है?", "intent": "BEST_PRACTICE", "language": "Hindi", "domain": "coding"}
+{"id": 738, "text": "यूनिट टेस्ट लिखने के लिए कौन से नियम और बेस्ट प्रैक्टिसेज फॉलो करें?", "intent": "BEST_PRACTICE", "language": "Hindi", "domain": "coding"}
+{"id": 739, "text": "जेडब्ल्यूटी टोकन को फ्रंटएंड पर सुरक्षित रखने की बेस्ट प्रैक्टिस क्या है?", "intent": "BEST_PRACTICE", "language": "Hindi", "domain": "coding"}
+{"id": 740, "text": "प्रोडक्शन में कोर्स हेडर कॉन्फ़िगर करने की सही प्रैक्टिस क्या है?", "intent": "BEST_PRACTICE", "language": "Hindi", "domain": "coding"}
+{"id": 741, "text": "फास्टएपीआय मध्ये त्रुटी हाताळणीसाठी सर्वोत्तम पद्धती (बेस्ट प्रॅक्टिसेस) काय आहेत?", "intent": "BEST_PRACTICE", "language": "Marathi", "domain": "coding"}
+{"id": 742, "text": "डेटाबेस पासवर्ड आणि सिक्रेट्स साठवण्यासाठी कोणती पद्धत योग्य आहे?", "intent": "BEST_PRACTICE", "language": "Marathi", "domain": "coding"}
+{"id": 743, "text": "रेस्ट एपीआय रचना करताना कोणत्या सर्वोत्तम नियमांचे पालन करावे?", "intent": "BEST_PRACTICE", "language": "Marathi", "domain": "coding"}
+{"id": 744, "text": "पोस्टग्रेस डेटाबेसमध्ये इंडेक्स तयार करण्याच्या सर्वोत्तम पद्धती सांगा.", "intent": "BEST_PRACTICE", "language": "Marathi", "domain": "coding"}
+{"id": 745, "text": "रिएक्ट प्रोजेक्टची फोल्डर रचना आदर्श ठेवण्यासाठी कोणत्या पद्धती वापराव्यात?", "intent": "BEST_PRACTICE", "language": "Marathi", "domain": "coding"}
+{"id": 746, "text": "पायथनमध्ये लॉगिंग योग्य प्रकारे सेटअप करण्यासाठी मार्गदर्शक तत्त्वे काय आहेत?", "intent": "BEST_PRACTICE", "language": "Marathi", "domain": "coding"}
+{"id": 747, "text": "प्रोडक्शनवर डेटाबेस स्थलांतर (मायग्रेशन) सुरक्षितपणे करण्याची पद्धत कोणती?", "intent": "BEST_PRACTICE", "language": "Marathi", "domain": "coding"}
+{"id": 748, "text": "चांगल्या युनिट टेस्ट्स लिहिण्यासाठी सर्वोत्तम मार्गदर्शक नियम सांगा.", "intent": "BEST_PRACTICE", "language": "Marathi", "domain": "coding"}
+{"id": 749, "text": "जेडब्ल्यूटी टोकन फ्रंटएंडवर साठवण्याची सुरक्षित आणि योग्य पद्धत कोणती?", "intent": "BEST_PRACTICE", "language": "Marathi", "domain": "coding"}
+{"id": 750, "text": "वेब सुरक्षेसाठी कोर्स कॉन्फिगरेशनचे सर्वोत्तम नियम स्पष्ट करा.", "intent": "BEST_PRACTICE", "language": "Marathi", "domain": "coding"}
+{"id": 751, "text": "fastapi me error handling ki best practices kya hoti hain", "intent": "BEST_PRACTICE", "language": "Hinglish", "domain": "coding"}
+{"id": 752, "text": "api keys aur secrets store karne ki industry best practice kya hai", "intent": "BEST_PRACTICE", "language": "Hinglish", "domain": "coding"}
+{"id": 753, "text": "rest api endpoints design karne ke best practice guidelines batao", "intent": "BEST_PRACTICE", "language": "Hinglish", "domain": "coding"}
+{"id": 754, "text": "postgresql database indexing ki best practices kya hain", "intent": "BEST_PRACTICE", "language": "Hinglish", "domain": "coding"}
+{"id": 755, "text": "react folder structure organize karne ki best practice explain karo", "intent": "BEST_PRACTICE", "language": "Hinglish", "domain": "coding"}
+{"id": 756, "text": "python microservices me logging setup karne ki best practice batao", "intent": "BEST_PRACTICE", "language": "Hinglish", "domain": "coding"}
+{"id": 757, "text": "zero downtime database migration ki best practices kya hain", "intent": "BEST_PRACTICE", "language": "Hinglish", "domain": "coding"}
+{"id": 758, "text": "maintainable unit tests likhne ke best practice principles batao", "intent": "BEST_PRACTICE", "language": "Hinglish", "domain": "coding"}
+{"id": 759, "text": "jwt token frontend pe store karne ki safe best practice kya hai", "intent": "BEST_PRACTICE", "language": "Hinglish", "domain": "coding"}
+{"id": 760, "text": "production cors setup karne ke best practice rules explain karo", "intent": "BEST_PRACTICE", "language": "Hinglish", "domain": "coding"}
+{"id": 761, "text": "fastapi madhe exception handling chya best practices kay ahet", "intent": "BEST_PRACTICE", "language": "Marathi-English", "domain": "coding"}
+{"id": 762, "text": "api keys aani secrets secure thevnyasathi best practices sang", "intent": "BEST_PRACTICE", "language": "Marathi-English", "domain": "coding"}
+{"id": 763, "text": "rest api endpoints url naming chya best practices dya", "intent": "BEST_PRACTICE", "language": "Marathi-English", "domain": "coding"}
+{"id": 764, "text": "postgresql database indexing chya recommended best practices kay ahet", "intent": "BEST_PRACTICE", "language": "Marathi-English", "domain": "coding"}
+{"id": 765, "text": "react folder structure manage karnyachi best practice dya", "intent": "BEST_PRACTICE", "language": "Marathi-English", "domain": "coding"}
+{"id": 766, "text": "python backend application madhe logging chya best practices sang", "intent": "BEST_PRACTICE", "language": "Marathi-English", "domain": "coding"}
+{"id": 767, "text": "production database schema migrations chya best practices dya", "intent": "BEST_PRACTICE", "language": "Marathi-English", "domain": "coding"}
+{"id": 768, "text": "pytest unit tests structure karnyachya best practices sang", "intent": "BEST_PRACTICE", "language": "Marathi-English", "domain": "coding"}
+{"id": 769, "text": "jwt tokens client side store karnyachi recommended best practice dya", "intent": "BEST_PRACTICE", "language": "Marathi-English", "domain": "coding"}
+{"id": 770, "text": "cors policy configure karnyachya industry best practices sang", "intent": "BEST_PRACTICE", "language": "Marathi-English", "domain": "coding"}
+{"id": 771, "text": "fastapi dependency injection use karne ki best practices batao", "intent": "BEST_PRACTICE", "language": "Hindi-English", "domain": "coding"}
+{"id": 772, "text": "environment variables manage karne ke 12 factor app best practices kya hain", "intent": "BEST_PRACTICE", "language": "Hindi-English", "domain": "coding"}
+{"id": 773, "text": "rest api status codes return karne ke standard best practices batao", "intent": "BEST_PRACTICE", "language": "Hindi-English", "domain": "coding"}
+{"id": 774, "text": "database connection pool configuration ke best practice parameters kya hain", "intent": "BEST_PRACTICE", "language": "Hindi-English", "domain": "coding"}
+{"id": 775, "text": "react component state lifting aur hooks ki best practices explain kijiye", "intent": "BEST_PRACTICE", "language": "Hindi-English", "domain": "coding"}
+{"id": 776, "text": "structured logging format json me implement karne ki best practice batao", "intent": "BEST_PRACTICE", "language": "Hindi-English", "domain": "coding"}
+{"id": 777, "text": "database transaction management ki best practices explain kijiye", "intent": "BEST_PRACTICE", "language": "Hindi-English", "domain": "coding"}
+{"id": 778, "text": "test driven development tdd workflow ke best practice guidelines do", "intent": "BEST_PRACTICE", "language": "Hindi-English", "domain": "coding"}
+{"id": 779, "text": "oauth2 token refresh mechanism ki security best practices batao", "intent": "BEST_PRACTICE", "language": "Hindi-English", "domain": "coding"}
+{"id": 780, "text": "api rate limiting aur throttling ke best practice strategies explain karo", "intent": "BEST_PRACTICE", "language": "Hindi-English", "domain": "coding"}
+{"id": 781, "text": "How should I structure the architecture for a scalable multi-tenant SaaS backend?", "intent": "ARCHITECTURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 782, "text": "Suggest an architecture for handling asynchronous background video processing.", "intent": "ARCHITECTURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 783, "text": "How should the frontend and backend communicate in an event-driven architecture?", "intent": "ARCHITECTURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 784, "text": "Suggest a modular microservices architecture for an online payment platform.", "intent": "ARCHITECTURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 785, "text": "How should I organize the folder and service layers in a clean FastAPI project?", "intent": "ARCHITECTURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 786, "text": "Suggest an architecture for a real-time multiplayer game server.", "intent": "ARCHITECTURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 787, "text": "How should caching layers be placed across CDN, Redis, and database tiers?", "intent": "ARCHITECTURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 788, "text": "Suggest an architecture for a secure webhook delivery and retry infrastructure.", "intent": "ARCHITECTURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 789, "text": "How should we architect data ingestion for a streaming analytics dashboard?", "intent": "ARCHITECTURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 790, "text": "Suggest a clean domain-driven architecture for a banking ledger service.", "intent": "ARCHITECTURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 791, "text": "एक स्केलेबल सास बैकएंड का आर्किटेक्चर कैसे डिजाइन करना चाहिए?", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 792, "text": "वीडियो प्रोसेसिंग के लिए बैकग्राउंड टास्क आर्किटेक्चर का सुझाव दीजिए।", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 793, "text": "इवेंट ड्रिवेन आर्किटेक्चर में फ्रंटएंड और बैकएंड कैसे जुड़े होने चाहिए?", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 794, "text": "ऑनलाइन पेमेंट प्लेटफॉर्म के लिए माइक्रोसर्विस आर्किटेक्चर सुझाइए।", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 795, "text": "फास्टएपीआई प्रोजेक्ट में सर्विस और रिपॉजिटरी लेयर का आर्किटेक्चर कैसे रखें?", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 796, "text": "रियल-टाइम मल्टीप्लेयर गेम के लिए सर्वर आर्किटेक्चर का सुझाव दीजिए।", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 797, "text": "सीडीएन, रेडिस और डेटाबेस के बीच कैशिंग आर्किटेक्चर कैसे बनाएं?", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 798, "text": "वेबहुक डिलीवरी और रिट्राई सिस्टम का आर्किटेक्चर कैसा होना चाहिए?", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 799, "text": "स्ट्रीमिंग एनालिटिक्स के लिए डेटा पाइपलाइन आर्किटेक्चर सुझाइए।", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 800, "text": "बैंकिंग लेजर के लिए डोमेन ड्रिवेन डिजाइन आर्किटेक्चर का सुझाव दीजिए।", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 801, "text": "स्केलेबल सास अनुप्रयोगासाठी (SaaS) बॅकएंड आर्किटेक्चर कसे डिझाइन करावे?", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 802, "text": "व्हिडिओ प्रोसेसिंगसाठी बॅकग्राउंड टास्क आर्किटेक्चर सुचवा.", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 803, "text": "इव्हेंट ड्रिव्हन सिस्टीममध्ये फ्रंटएंड आणि बॅकएंडची रचना कशी असावी?", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 804, "text": "पेमेंट प्लॅटफॉर्मसाठी मायक्रोसर्व्हिसेस आर्किटेक्चरची रचना सुचवा.", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 805, "text": "फास्टएपीआय प्रोजेक्टमध्ये लेयर्स कशा संघटित कराव्यात याचे आर्किटेक्चर सांगा.", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 806, "text": "रिअल-टाइम गेम सर्व्हरसाठी योग्य सिस्टीम आर्किटेक्चर सुचवा.", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 807, "text": "सीडीएन, रेडिस आणि डेटाबेस यांमध्ये कॅशिंग स्तर कसे ठेवावेत?", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 808, "text": "वेबहुक पाठवण्यासाठी आणि पुन्हा प्रयत्न करण्यासाठी सिस्टीम आर्किटेक्चर सुचवा.", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 809, "text": "स्ट्रीमिंग डेटासाठी पाइपलाइन आर्किटेक्चर कसे असावे ते सांगा.", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 810, "text": "डोमेन ड्रिव्हन डिझाईननुसार सुरक्षित आर्किटेक्चर सुचवा.", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 811, "text": "scalable multi tenant saas backend ka architecture kaise design kare", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 812, "text": "video processing system ke liye background architecture suggest karo", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 813, "text": "event driven architecture me microservices communication kaise plan kare", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 814, "text": "payment gateway backend ke liye resilient architecture suggest kijiye", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 815, "text": "clean architecture pattern me fastapi project kaise structure kare", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 816, "text": "real time game server ke liye websocket architecture suggest karo", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 817, "text": "redis cache and database tier architecture design kaise kare", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 818, "text": "webhook retry mechanism ke liye queue architecture suggest kijiye", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 819, "text": "streaming data ingestion ke liye kafka architecture suggest karo", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 820, "text": "distributed transaction ledger ka system architecture suggest kijiye", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 821, "text": "scalable saas application sathi backend architecture suggest kar", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 822, "text": "heavy background tasks sathi worker architecture kasa design karu", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 823, "text": "microservices madhe inter service communication architecture suggest kar", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 824, "text": "payment processing sathi high availability architecture design kashi asel", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 825, "text": "fastapi project sathi clean service repository architecture suggest kara", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 826, "text": "real time multiplayer game sathi server architecture suggest kar", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 827, "text": "multi tier caching architecture cdn redis database kashi plan karavi", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 828, "text": "webhook event delivery system sathi resilient architecture suggest kar", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 829, "text": "data streaming analytics sathi pipeline architecture design sang", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 830, "text": "domain driven design ddd architecture backend sathi suggest kar", "intent": "ARCHITECTURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 831, "text": "high throughput read heavy system ka architecture suggest kijiye", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 832, "text": "cqrs pattern use karke event driven architecture kaise design kare", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 833, "text": "notification service architecture with multi channel delivery suggest karo", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 834, "text": "api gateway and authentication service mesh architecture suggest kijiye", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 835, "text": "database read replicas and sharding architecture design kaise kare", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 836, "text": "distributed rate limiter cluster architecture suggest karo", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 837, "text": "search indexing pipeline with elasticsearch architecture suggest kijiye", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 838, "text": "serverless vs containerized deployment architecture trade-offs suggest karo", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 839, "text": "centralized logging and telemetry tracing architecture suggest kijiye", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 840, "text": "disaster recovery and multi region failover architecture design batao", "intent": "ARCHITECTURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 841, "text": "What features should I add to my developer portfolio website to make it stand out?", "intent": "FEATURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 842, "text": "Suggest interesting features to build into a personal expense tracker app.", "intent": "FEATURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 843, "text": "What features would make this code snippet manager more productive for developers?", "intent": "FEATURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 844, "text": "Suggest innovative feature ideas for an AI-powered coding assistant.", "intent": "FEATURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 845, "text": "What functionality should I add to an open-source Markdown documentation reader?", "intent": "FEATURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 846, "text": "Suggest interactive features for an algorithm visualization web tool.", "intent": "FEATURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 847, "text": "What features are missing from this basic student management CRUD application?", "intent": "FEATURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 848, "text": "Suggest collaboration features to add to a shared online whiteboard tool.", "intent": "FEATURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 849, "text": "What features should a lightweight API testing client have?", "intent": "FEATURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 850, "text": "Suggest useful utility features for an automated code review bot.", "intent": "FEATURE_SUGGESTION", "language": "English", "domain": "coding"}
+{"id": 851, "text": "मेरे डेवलपर पोर्टफोलियो वेबसाइट में कौन से नए फीचर्स जोड़ने चाहिए?", "intent": "FEATURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 852, "text": "पर्सनल खर्च ट्रैक करने वाले ऐप में कौन से उपयोगी फीचर्स होने चाहिए?", "intent": "FEATURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 853, "text": "कोड स्निपेट मैनेजर ऐप को बेहतर बनाने के लिए क्या फीचर्स सुझायेंगे?", "intent": "FEATURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 854, "text": "एआई कोडिंग असिस्टेंट में कौन से नए और इनोवेटिव फीचर्स होने चाहिए?", "intent": "FEATURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 855, "text": "मार्कडाउन डॉक्यूमेंटेशन रीडर में कौन सी नई कार्यप्रणाली जोड़ी जा सकती है?", "intent": "FEATURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 856, "text": "एल्गोरिदम विज़ुअलाइज़ेशन टूल में कौन से इंटरएक्टिव फीचर्स जोड़े जा सकते हैं?", "intent": "FEATURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 857, "text": "इस स्टूडेंट मैनेजमेंट सिस्टम में कौन से अतिरिक्त फीचर्स जोड़ें?", "intent": "FEATURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 858, "text": "ऑनलाइन व्हाइटबोर्ड टूल में कौन से सहयोग (कोलैबोरेशन) फीचर्स होने चाहिए?", "intent": "FEATURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 859, "text": "एपीआई टेस्टिंग टूल में कौन से बुनियादी फीचर्स जोड़े जा सकते हैं?", "intent": "FEATURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 860, "text": "ऑटोमेटेड कोड रिव्यू बॉट में क्या उपयोगी फीचर्स होने चाहिए?", "intent": "FEATURE_SUGGESTION", "language": "Hindi", "domain": "coding"}
+{"id": 861, "text": "माझ्या पोर्टफोलिओ वेबसाइटमध्ये कोणते नवीन आणि आकर्षक फीचर्स जोडावेत?", "intent": "FEATURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 862, "text": "खर्च नोंदवणाऱ्या ॲपमध्ये वापरकर्त्यांसाठी कोणते उपयुक्त फीचर्स असावेत?", "intent": "FEATURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 863, "text": "कोड स्निपेट मॅनेजर अधिक कार्यक्षम बनवण्यासाठी कोणती वैशिष्ट्ये सुचवाल?", "intent": "FEATURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 864, "text": "एआय कोडिंग असिस्टंटमध्ये कोणती नाविन्यपूर्ण वैशिष्ट्ये (फीचर्स) असावीत?", "intent": "FEATURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 865, "text": "मार्कडाउन डॉक्युमेंटेशन ॲपमध्ये कोणती नवीन कार्ये जोडता येतील?", "intent": "FEATURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 866, "text": "अल्गोरिदम व्हिज्युअलायझेशन टूलमध्ये कोणती इंटरअॅक्टिव्ह वैशिष्ट्ये जोडावीत?", "intent": "FEATURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 867, "text": "विद्यार्थी व्यवस्थापन प्रणालीत अजून कोणती उपयुक्त वैशिष्ट्ये जोडता येतील?", "intent": "FEATURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 868, "text": "ऑनलाइन व्हाईटबोर्ड टूलमध्ये सहकार्यासाठी कोणती वैशिष्ट्ये असावीत?", "intent": "FEATURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 869, "text": "एपीआय टेस्टिंग सॉफ्टवेअरमध्ये कोणती महत्त्वाची वैशिष्ट्ये असावीत?", "intent": "FEATURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 870, "text": "ऑटोमेटेड कोड रिव्ह्यू बॉटमध्ये कोणती उपयुक्त वैशिष्ट्ये सुचवाल?", "intent": "FEATURE_SUGGESTION", "language": "Marathi", "domain": "coding"}
+{"id": 871, "text": "developer portfolio website me kon se mast features add karu", "intent": "FEATURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 872, "text": "expense tracker mobile app me kon se useful features hone chahiye", "intent": "FEATURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 873, "text": "code snippet manager tool ke liye innovative feature ideas suggest karo", "intent": "FEATURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 874, "text": "ai coding assistant me kon se unique features add kar sakte hain", "intent": "FEATURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 875, "text": "markdown doc reader app me kon se helpful features hone chahiye", "intent": "FEATURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 876, "text": "algorithm visualizer web app me kon se interactive features add kare", "intent": "FEATURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 877, "text": "student management project me kon se extra features add karu", "intent": "FEATURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 878, "text": "real time collaborative whiteboard tool me kon se features chahiye", "intent": "FEATURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 879, "text": "api testing client me postman jaise lightweight features suggest karo", "intent": "FEATURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 880, "text": "github automated review bot me kon se useful features dale", "intent": "FEATURE_SUGGESTION", "language": "Hinglish", "domain": "coding"}
+{"id": 881, "text": "developer portfolio website sathi konate attractive features suggest karashil", "intent": "FEATURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 882, "text": "expense tracker application madhe konati helpful features add karu", "intent": "FEATURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 883, "text": "code snippet manager tool sathi innovative feature ideas dya", "intent": "FEATURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 884, "text": "ai coding assistant madhe student friendly features konate asavet", "intent": "FEATURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 885, "text": "markdown documentation viewer madhe useful features suggest kara", "intent": "FEATURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 886, "text": "algorithm visualization tool sathi interactive features suggest kar na", "intent": "FEATURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 887, "text": "student portal project madhe advanced features konati add karavi", "intent": "FEATURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 888, "text": "whiteboard collaboration tool sathi real time features suggest kara", "intent": "FEATURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 889, "text": "api testing tool sathi developer friendly features dya", "intent": "FEATURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 890, "text": "automated code reviewer bot madhe konati features implement karavi", "intent": "FEATURE_SUGGESTION", "language": "Marathi-English", "domain": "coding"}
+{"id": 891, "text": "developer portfolio website ko stand out karne ke features suggest kijiye", "intent": "FEATURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 892, "text": "personal finance management application me gamification features suggest karo", "intent": "FEATURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 893, "text": "code snippet library tool me categorization and search features suggest kijiye", "intent": "FEATURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 894, "text": "ai programming companion me context retention features suggest karo", "intent": "FEATURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 895, "text": "technical documentation platform me versioning features suggest kijiye", "intent": "FEATURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 896, "text": "data structure visualization tool me step by step debugger features suggest karo", "intent": "FEATURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 897, "text": "lms portal me student analytics features suggest kijiye", "intent": "FEATURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 898, "text": "remote pair programming tool me audio and screen sync features suggest karo", "intent": "FEATURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 899, "text": "http rest client tool me environment variables features suggest kijiye", "intent": "FEATURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 900, "text": "ci cd pipeline monitoring dashboard me alert features suggest karo", "intent": "FEATURE_SUGGESTION", "language": "Hindi-English", "domain": "coding"}
+{"id": 901, "text": "Generate comprehensive unit test cases for this email validation function using pytest.", "intent": "TEST_CASE_GENERATION", "language": "English", "domain": "coding"}
+{"id": 902, "text": "Write boundary test cases covering all edge conditions for this binary search logic.", "intent": "TEST_CASE_GENERATION", "language": "English", "domain": "coding"}
+{"id": 903, "text": "Generate JUnit 5 test cases testing success and failure scenarios for this service.", "intent": "TEST_CASE_GENERATION", "language": "English", "domain": "coding"}
+{"id": 904, "text": "Create Jest test cases testing asynchronous API call rejections and timeouts.", "intent": "TEST_CASE_GENERATION", "language": "English", "domain": "coding"}
+{"id": 905, "text": "Write parameterized test cases verifying this palindrome checker against edge strings.", "intent": "TEST_CASE_GENERATION", "language": "English", "domain": "coding"}
+{"id": 906, "text": "Generate negative test cases for this user authentication controller.", "intent": "TEST_CASE_GENERATION", "language": "English", "domain": "coding"}
+{"id": 907, "text": "Create test fixtures and mock data for testing this database repository layer.", "intent": "TEST_CASE_GENERATION", "language": "English", "domain": "coding"}
+{"id": 908, "text": "Generate test cases verifying integer overflow and division by zero protection.", "intent": "TEST_CASE_GENERATION", "language": "English", "domain": "coding"}
+{"id": 909, "text": "Write integration test scenarios verifying end-to-end checkout calculation.", "intent": "TEST_CASE_GENERATION", "language": "English", "domain": "coding"}
+{"id": 910, "text": "Generate property-based test cases for this list sorting implementation.", "intent": "TEST_CASE_GENERATION", "language": "English", "domain": "coding"}
+{"id": 911, "text": "इस ईमेल वैलिडेशन फंक्शन के लिए सभी जरूरी टेस्ट केसेस तैयार करो।", "intent": "TEST_CASE_GENERATION", "language": "Hindi", "domain": "coding"}
+{"id": 912, "text": "बाइनरी सर्च के लिए सभी एज कंडीशंस कवर करते हुए टेस्ट केसेस लिखो।", "intent": "TEST_CASE_GENERATION", "language": "Hindi", "domain": "coding"}
+{"id": 913, "text": "इस जावा सर्विस के लिए जेयूनिट टेस्ट केसेस बनाइए।", "intent": "TEST_CASE_GENERATION", "language": "Hindi", "domain": "coding"}
+{"id": 914, "text": "इस असिंक्रोनस एपीआई कॉल के लिए जेस्ट टेस्ट केसेस लिखिए।", "intent": "TEST_CASE_GENERATION", "language": "Hindi", "domain": "coding"}
+{"id": 915, "text": "इस पैलिंड्रोम फंक्शन की जांच के लिए पैरामीटराइज्ड टेस्ट केसेस बनाओ।", "intent": "TEST_CASE_GENERATION", "language": "Hindi", "domain": "coding"}
+{"id": 916, "text": "इस ऑथेंटिकेशन कंट्रोलर के लिए नेगेटिव टेस्ट केसेस तैयार कीजिए।", "intent": "TEST_CASE_GENERATION", "language": "Hindi", "domain": "coding"}
+{"id": 917, "text": "इस डेटाबेस रिपॉजिटरी के लिए मॉक डेटा और टेस्ट केसेस लिखो।", "intent": "TEST_CASE_GENERATION", "language": "Hindi", "domain": "coding"}
+{"id": 918, "text": "इंटीजर ओवरफ्लो और शून्य से भाग से बचाव वाले टेस्ट केसेस बनाइए।", "intent": "TEST_CASE_GENERATION", "language": "Hindi", "domain": "coding"}
+{"id": 919, "text": "इस शॉपिंग कार्ट कैलकुलेशन के लिए इंटीग्रेशन टेस्ट केसेस तैयार करो।", "intent": "TEST_CASE_GENERATION", "language": "Hindi", "domain": "coding"}
+{"id": 920, "text": "इस सॉर्टिंग फंक्शन की सभी संभावित इनपुट्स पर जांच के लिए टेस्ट केसेस दो।", "intent": "TEST_CASE_GENERATION", "language": "Hindi", "domain": "coding"}
+{"id": 921, "text": "या ईमेल व्हॅलिडेशन फंक्शनसाठी सर्व आवश्यक युनिट टेस्ट केसेस तयार करा.", "intent": "TEST_CASE_GENERATION", "language": "Marathi", "domain": "coding"}
+{"id": 922, "text": "बायनरी सर्च लॉजिकसाठी सर्व सीमा तपासणाऱ्या (एज केसेस) टेस्ट्स लिहा.", "intent": "TEST_CASE_GENERATION", "language": "Marathi", "domain": "coding"}
+{"id": 923, "text": "या जावा सर्व्हिससाठी जेयुनिट टेस्ट केसेस तयार करून द्या.", "intent": "TEST_CASE_GENERATION", "language": "Marathi", "domain": "coding"}
+{"id": 924, "text": "या असिंक्रोनस एपीआय फंक्शनसाठी जेस्ट टेस्ट केसेस लिहा.", "intent": "TEST_CASE_GENERATION", "language": "Marathi", "domain": "coding"}
+{"id": 925, "text": "पॅलिंड्रोम तपासणीसाठी विविध इनपुट घेऊन टेस्ट केसेस तयार करा.", "intent": "TEST_CASE_GENERATION", "language": "Marathi", "domain": "coding"}
+{"id": 926, "text": "या ऑथेंटिकेशन फंक्शनसाठी नकारात्मक (निगेटिव्ह) टेस्ट केसेस तयार करा.", "intent": "TEST_CASE_GENERATION", "language": "Marathi", "domain": "coding"}
+{"id": 927, "text": "डेटाबेस ऑपरेशन्स तपासण्यासाठी मॉक डेटा आणि टेस्ट केसेस लिहा.", "intent": "TEST_CASE_GENERATION", "language": "Marathi", "domain": "coding"}
+{"id": 928, "text": "शून्य ने भागाकार आणि मर्यादा तपासणाऱ्या टेस्ट केसेस तयार करा.", "intent": "TEST_CASE_GENERATION", "language": "Marathi", "domain": "coding"}
+{"id": 929, "text": "या शॉपिंग कार्ट फंक्शनसाठी संपूर्ण एकत्रीकरण (इंटेग्रेशन) टेस्ट केसेस लिहा.", "intent": "TEST_CASE_GENERATION", "language": "Marathi", "domain": "coding"}
+{"id": 930, "text": "या सॉर्टिंग अल्गोरिदमची पडताळणी करण्यासाठी विविध टेस्ट केसेस द्या.", "intent": "TEST_CASE_GENERATION", "language": "Marathi", "domain": "coding"}
+{"id": 931, "text": "is email validation function ke liye pytest unit test cases generate karo", "intent": "TEST_CASE_GENERATION", "language": "Hinglish", "domain": "coding"}
+{"id": 932, "text": "binary search ke edge cases cover karte hue test cases likh do", "intent": "TEST_CASE_GENERATION", "language": "Hinglish", "domain": "coding"}
+{"id": 933, "text": "java service class ke liye junit test cases create karo", "intent": "TEST_CASE_GENERATION", "language": "Hinglish", "domain": "coding"}
+{"id": 934, "text": "react async api call ke liye jest test cases generate kijiye", "intent": "TEST_CASE_GENERATION", "language": "Hinglish", "domain": "coding"}
+{"id": 935, "text": "palindrome function ke edge strings test cases likho", "intent": "TEST_CASE_GENERATION", "language": "Hinglish", "domain": "coding"}
+{"id": 936, "text": "user login controller ke negative test cases generate karo", "intent": "TEST_CASE_GENERATION", "language": "Hinglish", "domain": "coding"}
+{"id": 937, "text": "database repository ke liye mock test cases bana kar do", "intent": "TEST_CASE_GENERATION", "language": "Hinglish", "domain": "coding"}
+{"id": 938, "text": "division by zero aur null pointer test cases generate karo", "intent": "TEST_CASE_GENERATION", "language": "Hinglish", "domain": "coding"}
+{"id": 939, "text": "shopping cart calculation ke integration test cases likho", "intent": "TEST_CASE_GENERATION", "language": "Hinglish", "domain": "coding"}
+{"id": 940, "text": "is sorting implementation ke property based test cases banao", "intent": "TEST_CASE_GENERATION", "language": "Hinglish", "domain": "coding"}
+{"id": 941, "text": "ya email validator sathi pytest unit test cases generate kar", "intent": "TEST_CASE_GENERATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 942, "text": "binary search chya saglya edge cases cover karnare tests lihi", "intent": "TEST_CASE_GENERATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 943, "text": "java backend service sathi junit test cases tayar kar na", "intent": "TEST_CASE_GENERATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 944, "text": "react component sathi jest test cases generate karun de", "intent": "TEST_CASE_GENERATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 945, "text": "palindrome logic sathi edge cases aani test data generate kar", "intent": "TEST_CASE_GENERATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 946, "text": "auth controller sathi negative validation test cases lihi", "intent": "TEST_CASE_GENERATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 947, "text": "database repository sathi mock fixtures aani tests create kar", "intent": "TEST_CASE_GENERATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 948, "text": "zero division error sathi test cases tayar karun de", "intent": "TEST_CASE_GENERATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 949, "text": "cart total calculation sathi integration test cases generate kar", "intent": "TEST_CASE_GENERATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 950, "text": "sorting function sathi comprehensive test cases likhun de", "intent": "TEST_CASE_GENERATION", "language": "Marathi-English", "domain": "coding"}
+{"id": 951, "text": "is validation logic ke liye pytest parameterized test cases generate karo", "intent": "TEST_CASE_GENERATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 952, "text": "binary tree search ke boundary edge test cases provide kijiye", "intent": "TEST_CASE_GENERATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 953, "text": "spring boot service layer ke mockito test cases write karo", "intent": "TEST_CASE_GENERATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 954, "text": "frontend form submission error handling ke test cases generate kijiye", "intent": "TEST_CASE_GENERATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 955, "text": "string manipulation logic ke corner case tests create karo", "intent": "TEST_CASE_GENERATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 956, "text": "api authentication token expiry test cases generate kijiye", "intent": "TEST_CASE_GENERATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 957, "text": "database transaction rollback verification test cases write karo", "intent": "TEST_CASE_GENERATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 958, "text": "arithmetic calculation overflow test cases provide kijiye", "intent": "TEST_CASE_GENERATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 959, "text": "end to end checkout flow ke acceptance test cases generate karo", "intent": "TEST_CASE_GENERATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 960, "text": "array sorting stability verify karne ke test cases create kijiye", "intent": "TEST_CASE_GENERATION", "language": "Hindi-English", "domain": "coding"}
+{"id": 961, "text": "Analyze this Python Flask route for SQL injection and cross-site scripting vulnerabilities.", "intent": "SECURITY_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 962, "text": "Examine this JWT token verification implementation for signature bypass risks.", "intent": "SECURITY_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 963, "text": "Is this raw database query susceptible to SQL injection attacks?", "intent": "SECURITY_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 964, "text": "Analyze this file upload endpoint for arbitrary file execution vulnerabilities.", "intent": "SECURITY_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 965, "text": "Audit this password hashing implementation against current cryptography standards.", "intent": "SECURITY_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 966, "text": "Inspect this React component for potential cross-site scripting (XSS) reflection.", "intent": "SECURITY_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 967, "text": "Analyze this CORS and CSRF configuration for cross-origin security flaws.", "intent": "SECURITY_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 968, "text": "Check whether this API endpoint is vulnerable to broken object-level authorization.", "intent": "SECURITY_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 969, "text": "Examine this Dockerfile for insecure default root permissions and exposed ports.", "intent": "SECURITY_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 970, "text": "Analyze this cryptographic key generation code for entropy and randomness issues.", "intent": "SECURITY_ANALYSIS", "language": "English", "domain": "coding"}
+{"id": 971, "text": "इस फ्लास्क कोड में एसक्यूएल इंजेक्शन और सुरक्षा कमियां ढूंढिए।", "intent": "SECURITY_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 972, "text": "इस जेडब्ल्यूटी ऑथेंटिकेशन कोड का सुरक्षा ऑडिट कीजिए।", "intent": "SECURITY_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 973, "text": "क्या इस एसक्यूएल क्वेरी में एसक्यूएल इंजेक्शन का खतरा है?", "intent": "SECURITY_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 974, "text": "इस फाइल अपलोड एंडपॉइंट में सुरक्षा खामियों का विश्लेषण करें।", "intent": "SECURITY_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 975, "text": "इस पासवर्ड हैशिंग कोड की सुरक्षा का परीक्षण कीजिए।", "intent": "SECURITY_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 976, "text": "इस रिएक्ट कोड में क्रॉस-साइट स्क्रिप्टिंग (XSS) का खतरा जांचें।", "intent": "SECURITY_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 977, "text": "इस कोर्स (CORS) और सीएसआरएफ (CSRF) कॉन्फ़िगरेशन की सुरक्षा कमियां बताएं।", "intent": "SECURITY_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 978, "text": "क्या इस एपीआई में अनधिकृत एक्सेस की कोई सुरक्षा चूक है?", "intent": "SECURITY_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 979, "text": "इस डॉकर फाइल में सुरक्षा संबंधी कमजोरियों की जांच करें।", "intent": "SECURITY_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 980, "text": "इस कोड में क्रिप्टोग्राफिक सुरक्षा का विश्लेषण कीजिए।", "intent": "SECURITY_ANALYSIS", "language": "Hindi", "domain": "coding"}
+{"id": 981, "text": "या फ्लास्क कोडमधील एसक्यूएल इंजेक्शन आणि सुरक्षेच्या त्रुटी तपासा.", "intent": "SECURITY_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 982, "text": "या जेडब्ल्यूटी टोकन कोडचे सुरक्षा ऑडिट करा आणि धोके सांगा.", "intent": "SECURITY_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 983, "text": "या थेट एसक्यूएल क्वेरीमध्ये एसक्यूएल इंजेक्शनचा धोका आहे का?", "intent": "SECURITY_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 984, "text": "या फाईल अपलोड एंडपॉइंटमधील सुरक्षा त्रुटींचे विश्लेषण करा.", "intent": "SECURITY_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 985, "text": "या पासवर्ड हॅशिंग पद्धतीची क्रिप्टोग्राफिक सुरक्षा तपासून पहा.", "intent": "SECURITY_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 986, "text": "या रिएक्ट कोडमध्ये क्रॉस-साइट स्क्रिप्टिंग (XSS) चा धोका आहे का?", "intent": "SECURITY_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 987, "text": "या वेब ॲप्लिकेशनमधील कोर्स आणि सीएसआरएफ सुरक्षेचे परीक्षण करा.", "intent": "SECURITY_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 988, "text": "या एपीआय एंडपॉइंटमध्ये अनाधिकृत प्रवेशाचा (ऑथोरायझेशन) धोका आहे का?", "intent": "SECURITY_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 989, "text": "या डॉकर फाईलमध्ये सुरक्षेच्या दृष्टीने काही त्रुटी आहेत का ते सांगा.", "intent": "SECURITY_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 990, "text": "या कोडमधील डेटा एन्क्रिप्शनच्या सुरक्षेचे तांत्रिक विश्लेषण करा.", "intent": "SECURITY_ANALYSIS", "language": "Marathi", "domain": "coding"}
+{"id": 991, "text": "is python code me sql injection vulnerabilities analyze karo", "intent": "SECURITY_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 992, "text": "jwt token verification me security bypass ka risk check kijiye", "intent": "SECURITY_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 993, "text": "kya is raw sql query me sql injection ho sakta hai", "intent": "SECURITY_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 994, "text": "file upload endpoint me malicious file execution vulnerability check karo", "intent": "SECURITY_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 995, "text": "password hashing implementation ka security audit karke batao", "intent": "SECURITY_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 996, "text": "react component me xss cross site scripting risk analyze karo", "intent": "SECURITY_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 997, "text": "cors aur csrf configuration me security flaws check kijiye", "intent": "SECURITY_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 998, "text": "is api endpoint me authorization bypass ka risk hai kya", "intent": "SECURITY_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 999, "text": "dockerfile me security issues aur root user risk analyze karo", "intent": "SECURITY_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 1000, "text": "encryption key generation me randomness aur security evaluate karo", "intent": "SECURITY_ANALYSIS", "language": "Hinglish", "domain": "coding"}
+{"id": 1001, "text": "ya flask route madhe sql injection vulnerability ahe ka check kar", "intent": "SECURITY_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 1002, "text": "jwt authentication logic cha security audit karun dya", "intent": "SECURITY_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 1003, "text": "ya sql query madhe injection attack hovu shakto ka sang", "intent": "SECURITY_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 1004, "text": "file upload endpoint madhe arbitrary execution risk analyze kar", "intent": "SECURITY_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 1005, "text": "password hashing algorithm secure ahe ka audit kara", "intent": "SECURITY_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 1006, "text": "react application madhe xss vulnerability check karun sang", "intent": "SECURITY_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 1007, "text": "cors aani csrf configuration madhe security loopholes dakhva", "intent": "SECURITY_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 1008, "text": "api endpoint broken authorization sathi vulnerable ahe ka", "intent": "SECURITY_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 1009, "text": "docker container security standards follow kartoy ka check kar", "intent": "SECURITY_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 1010, "text": "cryptographic key storage implementation secure ahe ka sang", "intent": "SECURITY_ANALYSIS", "language": "Marathi-English", "domain": "coding"}
+{"id": 1011, "text": "is web endpoint ka security threat model analyze kijiye", "intent": "SECURITY_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 1012, "text": "sql injection prevention measures is query me evaluate karo", "intent": "SECURITY_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 1013, "text": "jwt signature verification algorithm confusion attack check kijiye", "intent": "SECURITY_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 1014, "text": "unrestricted file upload vulnerability analyze karke report karo", "intent": "SECURITY_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 1015, "text": "bcrypt password salt rounds sufficiency audit kijiye", "intent": "SECURITY_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 1016, "text": "dom based xss vulnerability is javascript code me analyze karo", "intent": "SECURITY_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 1017, "text": "csrf token validation bypass risk check kijiye", "intent": "SECURITY_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 1018, "text": "bola broken object level authorization flaw analyze karo", "intent": "SECURITY_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 1019, "text": "secrets hardcoded in source code security risk inspect kijiye", "intent": "SECURITY_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 1020, "text": "tls ssl cipher suite configuration security analyze karo", "intent": "SECURITY_ANALYSIS", "language": "Hindi-English", "domain": "coding"}
+{"id": 1021, "text": "Find my previous Python function where we implemented the calculator.", "intent": "SEARCH", "language": "English", "domain": "coding"}
+{"id": 1022, "text": "Search our conversation history for the discussion about PostgreSQL indexing.", "intent": "SEARCH", "language": "English", "domain": "coding"}
+{"id": 1023, "text": "Locate the saved code snippet for reversing a linked list.", "intent": "SEARCH", "language": "English", "domain": "coding"}
+{"id": 1024, "text": "Search my saved notes for the explanation of binary search trees.", "intent": "SEARCH", "language": "English", "domain": "coding"}
+{"id": 1025, "text": "Where did we previously discuss Docker container optimization?", "intent": "SEARCH", "language": "English", "domain": "coding"}
+{"id": 1026, "text": "Find the SQL query we wrote earlier for calculating monthly revenue.", "intent": "SEARCH", "language": "English", "domain": "coding"}
+{"id": 1027, "text": "Search my conversation notes for the definition of polymorphism.", "intent": "SEARCH", "language": "English", "domain": "coding"}
+{"id": 1028, "text": "Locate our previous discussion regarding JWT authentication setup.", "intent": "SEARCH", "language": "English", "domain": "coding"}
+{"id": 1029, "text": "Find the code where we handled divide-by-zero exceptions in FastAPI.", "intent": "SEARCH", "language": "English", "domain": "coding"}
+{"id": 1030, "text": "Search our history for the React custom hook we created yesterday.", "intent": "SEARCH", "language": "English", "domain": "coding"}
+{"id": 1031, "text": "मेरी पिछली बातचीत में से कैलकुलेटर वाला पायथन कोड ढूंढो।", "intent": "SEARCH", "language": "Hindi", "domain": "coding"}
+{"id": 1032, "text": "हमारी बातचीत के इतिहास में एसक्यूएल इंडेक्सिंग की चर्चा खोजिए।", "intent": "SEARCH", "language": "Hindi", "domain": "coding"}
+{"id": 1033, "text": "लिंक्ड लिस्ट को रिवर्स करने वाला सेव किया गया कोड निकालो।", "intent": "SEARCH", "language": "Hindi", "domain": "coding"}
+{"id": 1034, "text": "मेरे सहेजे गए नोट्स में से बाइनरी सर्च ट्री की व्याख्या खोजें।", "intent": "SEARCH", "language": "Hindi", "domain": "coding"}
+{"id": 1035, "text": "हमने पहले डॉकर ऑप्टिमाइज़ेशन पर कहाँ बात की थी, वह ढूंढो।", "intent": "SEARCH", "language": "Hindi", "domain": "coding"}
+{"id": 1036, "text": "पहले लिखी गई मासिक रेवेन्यू वाली एसक्यूएल क्वेरी खोजिए।", "intent": "SEARCH", "language": "Hindi", "domain": "coding"}
+{"id": 1037, "text": "मेरे नोट्स में से पॉलीमॉर्फिज्म की परिभाषा खोज कर दिखाओ।", "intent": "SEARCH", "language": "Hindi", "domain": "coding"}
+{"id": 1038, "text": "पिछली चैट में से जेडब्ल्यूटी ऑथेंटिकेशन वाली चर्चा निकालिए।", "intent": "SEARCH", "language": "Hindi", "domain": "coding"}
+{"id": 1039, "text": "वह पायथन कोड खोजो जहाँ हमने जीरो से भाग वाली एरर ठीक की थी।", "intent": "SEARCH", "language": "Hindi", "domain": "coding"}
+{"id": 1040, "text": "हमारी पुरानी बातचीत में से रिएक्ट कस्टम हुक वाला कोड ढूंढो।", "intent": "SEARCH", "language": "Hindi", "domain": "coding"}
+{"id": 1041, "text": "माझ्या आधीच्या संभाषणातून कॅल्क्युलेटरचा पायथन कोड शोधून दाखवा.", "intent": "SEARCH", "language": "Marathi", "domain": "coding"}
+{"id": 1042, "text": "आपल्या जुन्या संभाषणात पोस्टग्रेस इंडेक्सिंगबाबत झालेली चर्चा शोधा.", "intent": "SEARCH", "language": "Marathi", "domain": "coding"}
+{"id": 1043, "text": "लिंक्ड लिस्ट रिव्हर्स करण्याचा सेव्ह केलेला कोड काढून द्या.", "intent": "SEARCH", "language": "Marathi", "domain": "coding"}
+{"id": 1044, "text": "माझ्या सेव्ह केलेल्या नोट्समधून बायनरी सर्च ट्रीचे स्पष्टीकरण शोधा.", "intent": "SEARCH", "language": "Marathi", "domain": "coding"}
+{"id": 1045, "text": "आपण आधी डॉकर कंटेनर ऑप्टिमायझेशनवर कुठे बोललो होतो ते शोधा.", "intent": "SEARCH", "language": "Marathi", "domain": "coding"}
+{"id": 1046, "text": "आधी लिहिलेली मासिक कमाई मोजणारी एसक्यूएल क्वेरी शोधा.", "intent": "SEARCH", "language": "Marathi", "domain": "coding"}
+{"id": 1047, "text": "माझ्या नोट्समधून पॉलिमॉर्फिझमची व्याख्या शोधून दाखवा.", "intent": "SEARCH", "language": "Marathi", "domain": "coding"}
+{"id": 1048, "text": "मागील चॅटमधील जेडब्ल्यूटी ऑथेंटिकेशनबाबतची चर्चा शोधा.", "intent": "SEARCH", "language": "Marathi", "domain": "coding"}
+{"id": 1049, "text": "आम्ही डिव्हाईड बाय झिरो एरर सोडवलेला कोड कुठे आहे तो शोधा.", "intent": "SEARCH", "language": "Marathi", "domain": "coding"}
+{"id": 1050, "text": "आपल्या जुन्या संभाषणातील रिएक्ट हुकचा कोड शोधून दाखवा.", "intent": "SEARCH", "language": "Marathi", "domain": "coding"}
+{"id": 1051, "text": "mera previous python calculator code search karke do", "intent": "SEARCH", "language": "Hinglish", "domain": "coding"}
+{"id": 1052, "text": "chat history me postgresql indexing wali discussion search karo", "intent": "SEARCH", "language": "Hinglish", "domain": "coding"}
+{"id": 1053, "text": "saved messages me se linked list reverse ka code nikalo", "intent": "SEARCH", "language": "Hinglish", "domain": "coding"}
+{"id": 1054, "text": "saved notes me se binary search tree ka explanation search kijiye", "intent": "SEARCH", "language": "Hinglish", "domain": "coding"}
+{"id": 1055, "text": "pichli chat me docker optimization kaha discuss kiya tha search karo", "intent": "SEARCH", "language": "Hinglish", "domain": "coding"}
+{"id": 1056, "text": "pehle likhi hui monthly revenue wali sql query dhoond ke do", "intent": "SEARCH", "language": "Hinglish", "domain": "coding"}
+{"id": 1057, "text": "mere notes me se polymorphism ki definition search karo", "intent": "SEARCH", "language": "Hinglish", "domain": "coding"}
+{"id": 1058, "text": "history me se jwt authentication wala discussion find kijiye", "intent": "SEARCH", "language": "Hinglish", "domain": "coding"}
+{"id": 1059, "text": "wo code dhoondo jisme zero division error handle kiya tha", "intent": "SEARCH", "language": "Hinglish", "domain": "coding"}
+{"id": 1060, "text": "chat history me kal banaya hua react custom hook search karo", "intent": "SEARCH", "language": "Hinglish", "domain": "coding"}
+{"id": 1061, "text": "majha previous python calculator wala code search karun dya", "intent": "SEARCH", "language": "Marathi-English", "domain": "coding"}
+{"id": 1062, "text": "chat history madhun postgresql indexing discussion shodha", "intent": "SEARCH", "language": "Marathi-English", "domain": "coding"}
+{"id": 1063, "text": "saved snippets madhla linked list reverse code dakhva", "intent": "SEARCH", "language": "Marathi-English", "domain": "coding"}
+{"id": 1064, "text": "saved notes madhun binary search tree explanation find kar", "intent": "SEARCH", "language": "Marathi-English", "domain": "coding"}
+{"id": 1065, "text": "aapan docker optimization var aadhi kuth bola hoto search kar", "intent": "SEARCH", "language": "Marathi-English", "domain": "coding"}
+{"id": 1066, "text": "aadhi lihileli monthly revenue sql query shodhun dya na", "intent": "SEARCH", "language": "Marathi-English", "domain": "coding"}
+{"id": 1067, "text": "notes madhun polymorphism definition search karun dakhva", "intent": "SEARCH", "language": "Marathi-English", "domain": "coding"}
+{"id": 1068, "text": "previous messages madhle jwt authentication setup find kar", "intent": "SEARCH", "language": "Marathi-English", "domain": "coding"}
+{"id": 1069, "text": "fastapi divide by zero code kuthe ahe to shodhun kadh", "intent": "SEARCH", "language": "Marathi-English", "domain": "coding"}
+{"id": 1070, "text": "chat history madhla kal tayar kelela react hook search kar", "intent": "SEARCH", "language": "Marathi-English", "domain": "coding"}
+{"id": 1071, "text": "previous conversation me se calculator function search karke do", "intent": "SEARCH", "language": "Hindi-English", "domain": "coding"}
+{"id": 1072, "text": "chat archive me se database indexing discussion locate kijiye", "intent": "SEARCH", "language": "Hindi-English", "domain": "coding"}
+{"id": 1073, "text": "saved snippets me se linked list reversal code retrieve karo", "intent": "SEARCH", "language": "Hindi-English", "domain": "coding"}
+{"id": 1074, "text": "saved notes me se binary search explanation search karke dikhao", "intent": "SEARCH", "language": "Hindi-English", "domain": "coding"}
+{"id": 1075, "text": "conversation history me docker memory limit search kijiye", "intent": "SEARCH", "language": "Hindi-English", "domain": "coding"}
+{"id": 1076, "text": "pehle discuss ki hui sql query locate karke display karo", "intent": "SEARCH", "language": "Hindi-English", "domain": "coding"}
+{"id": 1077, "text": "saved references me se polymorphism explanation search kijiye", "intent": "SEARCH", "language": "Hindi-English", "domain": "coding"}
+{"id": 1078, "text": "jwt token authentication history thread search karo", "intent": "SEARCH", "language": "Hindi-English", "domain": "coding"}
+{"id": 1079, "text": "error handling implementation wala previous code locate kijiye", "intent": "SEARCH", "language": "Hindi-English", "domain": "coding"}
+{"id": 1080, "text": "react state hook wala previous discussion search karke do", "intent": "SEARCH", "language": "Hindi-English", "domain": "coding"}
