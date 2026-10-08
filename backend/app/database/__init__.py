@@ -16,6 +16,16 @@ from backend.app.database.models import (
     GeneratedCode,
     DebugHistory,
 )
+from backend.app.database.repositories import (
+    BaseRepository,
+    UserRepository,
+    SessionRepository,
+    MessageRepository,
+    SavedMessageRepository,
+    NoteRepository,
+    GeneratedCodeRepository,
+    DebugHistoryRepository,
+)
 
 __all__ = [
     "Base",
@@ -32,4 +42,12 @@ __all__ = [
     "Note",
     "GeneratedCode",
     "DebugHistory",
+    "BaseRepository",
+    "UserRepository",
+    "SessionRepository",
+    "MessageRepository",
+    "SavedMessageRepository",
+    "NoteRepository",
+    "GeneratedCodeRepository",
+    "DebugHistoryRepository",
 ]

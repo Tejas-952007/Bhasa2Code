@@ -1,10 +1,14 @@
 import uuid
 from datetime import datetime, timezone
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 from sqlalchemy import String, DateTime, Text, ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from backend.app.database.base import Base
+
+if TYPE_CHECKING:
+    from backend.app.database.models.user import User
+    from backend.app.database.models.session import Session
 
 
 class Note(Base):

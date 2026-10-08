@@ -1,10 +1,16 @@
 import uuid
 from datetime import datetime, timezone
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional
 from sqlalchemy import String, DateTime, Text, JSON, ForeignKey, CheckConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from backend.app.database.base import Base
+
+if TYPE_CHECKING:
+    from backend.app.database.models.session import Session
+    from backend.app.database.models.generated_code import GeneratedCode
+    from backend.app.database.models.debug_history import DebugHistory
+    from backend.app.database.models.saved_message import SavedMessage
 
 
 class Message(Base):

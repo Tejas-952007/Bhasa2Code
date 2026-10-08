@@ -271,7 +271,7 @@ debug_history
 - API routes do not directly contain database logic
 - Tests added
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 

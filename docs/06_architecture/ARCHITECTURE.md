@@ -1123,6 +1123,29 @@ Relationships:
 
 ---
 
+# 35.1 Database Repository Layer
+
+Target Architecture:
+
+```text
+API → Service → Repository → SQLAlchemy Session → SQLite
+```
+
+Repositories reside in `backend/app/database/repositories/`:
+- `BaseRepository`: Shared generic base providing queries, existence checks, pagination, and transactional `_save()` / `delete()`.
+- `UserRepository`: User creation, lookup, listing, update, and deletion.
+- `SessionRepository`: Conversation sessions with user ownership filtering, deterministic ordering (`updated_at DESC`), title search, and status tracking.
+- `MessageRepository`: Conversation messages with strict session isolation, deterministic ordering (`created_at ASC`), content search, and latest retrieval.
+- `SavedMessageRepository`: Bookmarked messages with idempotent duplicate handling, label updates, unsave support, and user isolation.
+- `NoteRepository`: User personal notes (session-linked or standalone) with ownership filtering, search, and ordering.
+- `GeneratedCodeRepository`: Code artifacts linked to sessions/messages with validation status tracking.
+- `DebugHistoryRepository`: Append-oriented debugging records preserving chronological iterations without unnecessary modification.
+
+Transaction Strategy:
+- Repositories default to committing self-contained write operations (`commit=True`), immediately rolling back the session upon any database exception and re-raising.
+- Multi-repository transactions support deferred commit (`commit=False`), allowing services to coordinate atomic operations across repositories.
+
+---
 
 # 36. Data Flow — Chat
 
