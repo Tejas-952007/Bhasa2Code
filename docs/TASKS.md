@@ -445,31 +445,48 @@ Logistic Regression (C=3.0, balanced, random_state=42)
 
 ---
 
-## E03-F05 Programming Language Detection
+## E03-F05 NLP Pipeline Integration
 
-### T14 — Implement Programming Language Detector
+### T14 — NLP Pipeline Integration
 
-Initial languages:
+Flow:
 
 ```text
-Python
-C
-C++
-Java
-JavaScript
-SQL
+Raw User Input
+      ↓
+TextPreprocessor (T08)
+      ↓
+PreprocessedText
+      ↓
+LanguageDetector (T09)
+      ↓
+LanguageDetectionResult
+      ↓
+ToneClassifier (T11)
+      ↓
+ToneClassificationResult
+      ↓
+IntentClassifier (T13)
+      ↓
+IntentClassificationResult
+      ↓
+Unified NLP Result (NLPPipelineResult)
 ```
 
-**Dependencies:** T08
+**Dependencies:** T08, T09, T11, T13
 
 **Acceptance Criteria:**
 
-- Detect from code syntax
-- Detect from explicit user request
-- Handle code + text combinations
-- Resolve conflicts predictably
+- Unified `NLPPipelineResult` schema with accessors and `.to_dict()`
+- Sequential execution: Preprocessing -> Language -> Tone -> Intent
+- Preprocessing-aware natural-language classifier text selection
+- Attached code does not distort language, tone, or intent
+- Code-only, traceback, and empty/whitespace inputs handled gracefully
+- Deterministic execution across repeated calls
+- Single eager load of model artifacts with cached singleton `get_nlp_pipeline()`
+- All 36 unit/integration tests (`tests/unit/nlp/test_nlp_pipeline.py`) pass
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 

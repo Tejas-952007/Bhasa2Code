@@ -517,6 +517,73 @@ Intent   = EXPLAIN_CODE
 
 ---
 
+# 12.1. NLP Pipeline Integration (T14)
+
+Implemented in `backend/app/nlp/pipeline/nlp_pipeline.py`.
+
+The Bhasha2Code NLP Pipeline integrates the completed text preprocessing, language detection, tone classification, and intent classification stages into one deterministic, offline, reusable orchestration pipeline.
+
+### Pipeline Architecture:
+
+```text
+                    NLP PIPELINE
+
+                         User Text
+                            ↓
+                    Text Preprocessor
+                         (T08)
+                            ↓
+                 ┌──────────┴──────────┐
+                 ↓                     ↓
+        Language Detection       Classifier Text
+             (T09)                    ↓
+                                  ┌────┴────┐
+                                  ↓         ↓
+                              Tone (T11) Intent (T13)
+                                  └────┬────┘
+                                       ↓
+                              Unified NLP Result
+```
+
+### Why Preprocessing Comes First:
+1. **Unicode Canonical Normalization**: Text from different operating systems and keyboards may combine Devanagari or Latin diacritics inconsistently; Unicode NFC composition ensures uniform token representations.
+2. **Code & Natural Language Separation**: Fenced blocks (```` ``` ````, `~~~`) and unfenced raw code/stack traces are isolated into structured `CodeSegment` objects. This guarantees that technical code tokens (such as Python keywords or C++ pointers) do not corrupt language detection or distort tone and intent predictions.
+
+### Why Language, Tone, and Intent Remain Separate:
+Each stage answers a distinct operational question:
+- **Language (`T09`)**: *What language or style of language is the user using?*
+- **Tone (`T11`)**: *How should the response sound or be formatted?*
+- **Intent (`T13`)**: *What does the user want the system to do or provide?*
+
+Decoupling these stages prevents label confounding. A query like `"bro ha code debug kar na"` has `CASUAL` tone and `DEBUG_CODE` intent in `MARATHI_ENGLISH` language. Merging them into a single monolithic classifier would result in combinatorial explosion ($6 \text{ languages} \times 6 \text{ tones} \times 18 \text{ intents} = 648 \text{ classes}$) and brittle generalization.
+
+### Code & Traceback Handling:
+The pipeline uses a clear hierarchy to select classifier text (`select_classifier_text`):
+1. **Natural Language Segments**: Extracted commentary preceding or following code blocks is the primary input for tone and intent inference.
+2. **Code-Only Queries**: When a user inputs code without any conversational commentary (e.g. `def add(a, b): return a + b`), the language detector outputs `Language.UNKNOWN` (confidence 0.10), and the classifiers gracefully evaluate the code content or return safe fallbacks without raising exceptions.
+3. **Traceback Inputs**: Tracebacks attached to natural language questions (e.g., `"mala ha error ka aahe?\n\nValueError: ..."` ) preserve the natural inquiry for language detection and correctly route to `ERROR_EXPLANATION` intent.
+
+### Model Loading & Inference Behavior:
+- **Offline & Local**: Zero network access or external APIs.
+- **Single Load Lifecycle**: Pre-trained scikit-learn model pipelines (`models/tone/tone_classifier.joblib` [1.3 MB] and `models/intent/intent_classifier.joblib` [3.9 MB]) are loaded once at startup and reused via a cached singleton (`get_nlp_pipeline()`), avoiding repeated disk I/O.
+- **Ultra-Fast Throughput**: Complete pipeline execution takes < 5 milliseconds per message (> 200 queries/sec on a single CPU core).
+
+### Failure & Fallback Behavior:
+- **Empty or Whitespace Input**: Returns valid `NLPPipelineResult` with `is_empty=True`, `Language.UNKNOWN` (confidence 0.0), `Tone.SIMPLE` fallback (confidence 0.0), and `Intent.CONCEPT` fallback (confidence 0.0).
+- **Missing or Corrupted Model Artifacts**: Fails fast during initialization with explicit `FileNotFoundError` or `ValueError` rather than failing mid-inference.
+- **Unsupported Types**: Raises descriptive `TypeError` if input is not `str`, `PreprocessedText`, or `None`.
+
+### Unified Result Schema (`backend/app/nlp/pipeline/schemas.py`):
+```python
+class NLPPipelineResult(BaseModel):
+    preprocessed_text: PreprocessedText
+    language: LanguageDetectionResult
+    tone: ToneClassificationResult
+    intent: IntentClassificationResult
+```
+
+---
+
 # 13. Programming Language Detection
 
 Programming language detection uses:
