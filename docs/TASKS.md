@@ -371,7 +371,7 @@ Logistic Regression
 - Model can predict supported tone classes
 - Model saved locally
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 

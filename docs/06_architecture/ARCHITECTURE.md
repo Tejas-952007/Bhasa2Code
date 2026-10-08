@@ -372,37 +372,62 @@ class LanguageDetectionResult(BaseModel):
 
 ---
 
-# 11. Tone Detection
+# 11. Tone Classification
 
-The Tone Detection component determines the user's desired communication style to guide the Prompt Builder and local LLM response generation.
+Implemented in `backend/app/nlp/tone_classification/tone_classifier.py`.
 
-### Supported Tone Classes:
-- `CASUAL`: Informal, friendly, conversational, slang-oriented requests.
-- `FORMAL`: Polite, respectful, professional, academic phrasing.
-- `SIMPLE`: Explicit requests for beginner-friendly, plain language, or non-technical analogies.
-- `TECHNICAL`: Explicit requests for low-level architecture, internals, Big-O proofs, and algorithmic mechanics.
-- `SHORT`: Explicit requests for concise, direct, one-line, or code-only responses.
-- `DETAILED`: Explicit requests for comprehensive, step-by-step walk-throughs with edge cases and examples.
+The Tone Classification component determines the user's desired communication style to guide the Prompt Builder and local LLM response generation.
 
-### Labeled Tone Dataset (T10):
-Located in `data/datasets/tone/`:
-- `tone_dataset.csv` / `tone_dataset.jsonl`: 600 balanced, unique coding queries across 6 languages (English, Hindi, Marathi, Hinglish, Marathi-English, Hindi-English).
-- Stratified splits: `tone_train.csv` (70%), `tone_validation.csv` (15%), `tone_test.csv` (15%).
-- Dataset schema: `id`, `text`, `tone`, `language`, `domain`.
-- Verified via `scripts/validate_tone_dataset.py`.
-
-### Future Tone Classifier Boundary (T11):
-The classifier (TF-IDF + Logistic Regression / Linear SVM) will consume preprocessed text from T08 and output the dominant tone with confidence:
+### Pipeline Flow:
 
 ```text
 PreprocessedText
       ↓
-ToneClassifier (T11)
+LanguageDetector (T09) [Language isolated]
       ↓
-ToneClassificationResult (tone, confidence)
+ToneClassifier (T11)
+      ├── TF-IDF Word N-Grams (1, 2)
+      ├── TF-IDF Char N-Grams (3, 5, char_wb)
+      └── Multi-class Logistic Regression
+      ↓
+ToneClassificationResult (tone, confidence, probabilities)
 ```
 
-The result instructs the Prompt Builder to modulate explanation depth and vocabulary (e.g., `User Tone = SIMPLE` instructs beginner-friendly analogies, while `User Tone = SHORT` instructs minimal code-first answers).
+> **Separation of Responsibilities**:
+> - `T09 Language Detection` identifies *what natural language* the user is speaking (`Language`).
+> - `T11 Tone Classification` identifies *what communication style* the user expects (`Tone`).
+> - The classifier learns tone cues (e.g., formal politeness, brevity markers, technical depth requests) independently of language, ensuring that polite Marathi, polite Hindi, and polite English are all classified as `FORMAL`.
+
+### Supported Tone Classes:
+- `CASUAL`: Informal, friendly, conversational, slang-oriented requests (`bro`, `bhai`, `yaar`, `re`).
+- `FORMAL`: Polite, respectful, professional, academic phrasing (`Please`, `Kindly`, `कृपया`).
+- `SIMPLE`: Explicit requests for beginner-friendly, plain language, or non-technical analogies.
+- `TECHNICAL`: Explicit requests for low-level architecture, internals, Big-O proofs, and algorithmic mechanics.
+- `SHORT`: Explicit requests for concise, direct, one-line, or code-only responses (`just the code`, `fakt code de`).
+- `DETAILED`: Explicit requests for comprehensive, step-by-step walk-throughs with edge cases and examples.
+
+### Schema (`backend/app/nlp/tone_classification/schemas.py`):
+
+```python
+class Tone(str, Enum):
+    CASUAL = "CASUAL"
+    FORMAL = "FORMAL"
+    SIMPLE = "SIMPLE"
+    TECHNICAL = "TECHNICAL"
+    SHORT = "SHORT"
+    DETAILED = "DETAILED"
+
+class ToneClassificationResult(BaseModel):
+    tone: str
+    confidence: float = Field(ge=0.0, le=1.0)
+    probabilities: dict[str, float] = Field(default_factory=dict)
+```
+
+### Key Guarantees & Features:
+- **Offline & Deterministic**: Zero network or cloud API calls. Uses local scikit-learn pipeline persisted at `models/tone/tone_classifier.joblib`.
+- **Hybrid Representation**: Word n-grams `(1, 2)` capture semantic intent; subword character n-grams `(3, 5)` capture Indian-language transliterations and spelling variations.
+- **Calibrated Probabilities**: Produces true probability distributions over all 6 tone classes.
+- **Edge Case Robustness**: Safely handles empty string, whitespace, `None`, and multi-line code segments.
 
 ---
 

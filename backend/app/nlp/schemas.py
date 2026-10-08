@@ -66,3 +66,34 @@ class LanguageDetectionResult(BaseModel):
 
     def __getitem__(self, item: str) -> Any:
         return getattr(self, item)
+
+
+class Tone(str, Enum):
+    """Supported conversational tone classes in Bhasha2Code."""
+
+    CASUAL = "CASUAL"
+    FORMAL = "FORMAL"
+    SIMPLE = "SIMPLE"
+    TECHNICAL = "TECHNICAL"
+    SHORT = "SHORT"
+    DETAILED = "DETAILED"
+
+
+class ToneClassificationResult(BaseModel):
+    """Result of conversational tone classification."""
+
+    tone: str
+    confidence: float = Field(ge=0.0, le=1.0)
+    probabilities: dict[str, float] = Field(default_factory=dict)
+
+    def to_dict(self) -> dict:
+        """Serialize result to a dictionary."""
+        return {
+            "tone": self.tone,
+            "confidence": round(self.confidence, 4),
+            "probabilities": {k: round(v, 4) for k, v in self.probabilities.items()},
+        }
+
+    def __getitem__(self, item: str) -> Any:
+        return getattr(self, item)
+

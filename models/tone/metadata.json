@@ -1,0 +1,232 @@
+{
+  "task": "tone_classification",
+  "model": "tfidf_logistic_regression",
+  "model_version": "1.0.0",
+  "labels": [
+    "CASUAL",
+    "DETAILED",
+    "FORMAL",
+    "SHORT",
+    "SIMPLE",
+    "TECHNICAL"
+  ],
+  "train_samples": 420,
+  "validation_samples": 90,
+  "test_samples": 90,
+  "random_state": 42,
+  "features": {
+    "word_ngram_range": [
+      1,
+      2
+    ],
+    "char_ngram_range": [
+      3,
+      5
+    ],
+    "sublinear_tf": true
+  },
+  "classifier_params": {
+    "C": 3.0,
+    "max_iter": 1000,
+    "solver": "lbfgs",
+    "class_weight": "balanced"
+  },
+  "dependencies": {
+    "scikit-learn": "1.9.1",
+    "joblib": "1.6.0"
+  },
+  "training_timestamp": "2026-10-08T12:25:59.761444+00:00",
+  "metrics": {
+    "validation": {
+      "accuracy": 0.9778,
+      "macro_f1": 0.9778,
+      "weighted_f1": 0.9778,
+      "per_class": {
+        "CASUAL": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 15
+        },
+        "DETAILED": {
+          "precision": 0.9375,
+          "recall": 1.0,
+          "f1_score": 0.9677,
+          "support": 15
+        },
+        "FORMAL": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 15
+        },
+        "SHORT": {
+          "precision": 0.9333,
+          "recall": 0.9333,
+          "f1_score": 0.9333,
+          "support": 15
+        },
+        "SIMPLE": {
+          "precision": 1.0,
+          "recall": 0.9333,
+          "f1_score": 0.9655,
+          "support": 15
+        },
+        "TECHNICAL": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 15
+        }
+      },
+      "confusion_matrix": [
+        [
+          15,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          15,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          15,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          14,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          14,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          15
+        ]
+      ]
+    },
+    "test": {
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "weighted_f1": 1.0,
+      "per_class": {
+        "CASUAL": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 15
+        },
+        "DETAILED": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 15
+        },
+        "FORMAL": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 15
+        },
+        "SHORT": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 15
+        },
+        "SIMPLE": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 15
+        },
+        "TECHNICAL": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 15
+        }
+      },
+      "confusion_matrix": [
+        [
+          15,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          15,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          15,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          15,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          15,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          15
+        ]
+      ]
+    }
+  },
+  "dataset_sources": {
+    "train": "data/datasets/tone/tone_train.csv",
+    "validation": "data/datasets/tone/tone_validation.csv",
+    "test": "data/datasets/tone/tone_test.csv"
+  }
+}
