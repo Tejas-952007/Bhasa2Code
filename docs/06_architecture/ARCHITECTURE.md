@@ -188,6 +188,19 @@ Frontend must not directly communicate with Ollama or the database.
 
 All backend interaction should happen through FastAPI.
 
+### Frontend Architecture Pipeline:
+```text
+React/Vite
+      ↓
+Frontend Workspace
+      ↓
+Future FastAPI API
+      ↓
+T14–T19 Backend Pipeline
+```
+
+*Note on Integration Status:* In T20, the frontend workspace foundation, component architecture, code artifact, and Study Mode UI are fully implemented with deterministic local demo state. Full frontend ↔ FastAPI API communication will be established in task T21.
+
 ---
 
 # 6. API Layer

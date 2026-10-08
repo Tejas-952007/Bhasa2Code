@@ -609,36 +609,29 @@ Convert current user request, T14 NLP result, T15 Context Package, Study Mode st
 
 ---
 
-### T20 — Implement Structured Prompt Builder
+### T20 — Frontend Foundation + Bhasha2Code Workspace UI
 
-Input:
-
-```text
-User Request
-Language
-Tone
-Intent
-Programming Language
-Current Code
-Relevant Context
-Error
-```
-
-Output:
-
-```text
-Structured LLM Prompt
-```
+**Goal:** Build a minimalist, white-first, professional developer and study workspace interface using React and Vite based on the core design specification.
 
 **Dependencies:** T19
 
 **Acceptance Criteria:**
 
-- Correct prompt selected by intent
-- Unnecessary context excluded
-- Tests added
+- React 18 + Vite 5 workspace foundation with clean CSS tokens and minimal dependencies
+- Desktop-first responsive layout with collapsible sidebar and document-style chat
+- Minimalist header with Bhasha2Code wordmark, Study Mode toggle, and model status (`● Local · Ready`)
+- Narrow quiet sidebar (`+ New Chat`, `Recent sessions`, `Saved`, `Notes`, `Study Mode`, `Search`, `Settings`)
+- Refined empty state with suggested multilingual prompts
+- Code artifact component with line numbers, language tag, copy, inline editor, validation badge, and sandbox run console
+- Integrated Study Mode (`Normal | Study`) with Problem Understanding, Algorithm, Flowchart, Important Points, and Viva Questions
+- Compact modal settings dialog for theme, local model, and sandbox status
+- Secondary workspace views implemented (Notes notebook view, Saved bookmarks, and Search)
+- Zero console errors during live browser testing
+- Production build succeeds via `npm run build`
+- Comprehensive documentation in `docs/11_development/FRONTEND_IMPLEMENTATION.md`
 
-**Status:** TODO
+**Status:** DONE
+
 
 ---
 
