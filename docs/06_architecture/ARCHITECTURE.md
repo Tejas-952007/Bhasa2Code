@@ -963,6 +963,60 @@ Not every response needs every field.
 
 ---
 
+# 24.1. Response Validation & Code Validation (T18)
+
+Implemented in `backend/app/validation/`.
+
+The Response Validation layer inspects responses produced by the local LLM (`T17`) to statically certify the syntax of all extracted code blocks before code is stored, displayed, or executed.
+
+### Validation Pipeline:
+
+```text
+T16 Prompt Builder
+        ↓
+T17 Local Ollama
+        ↓
+Generated Assistant Response
+        ↓
+T18 Response Validator
+        ├── Code Extraction (`CodeExtractor`)
+        │     └── Extract ``` or ~~~ fenced blocks with language tags
+        ├── Language Resolution (`resolve_language`)
+        │     └── Priority: Fence tag → Context Hint → Lexical Heuristics → Unknown
+        ├── Syntax Validation (`BaseCodeValidator`)
+        │     ├── Python (`ast.parse`)
+        │     ├── C (`gcc -fsyntax-only`)
+        │     ├── C++ (`g++ -fsyntax-only`)
+        │     ├── Java (`javac -d <tmp>`)
+        │     ├── JavaScript (`node --check`)
+        │     └── SQL (Static statement structural parser)
+        ├── Structured Diagnostics (`ValidationDiagnostic`)
+        └── Deterministic Status Aggregation
+        ↓
+ResponseValidationResult
+        ↓
+T19 Safe Code Sandbox (Runtime Execution)
+```
+
+### Critical Operational Boundaries:
+- **T17 = Generation**: Generates conversational text, explanations, and code.
+- **T18 = Static/Syntax Validation**: Static and parser-assisted syntax verification without code execution.
+- **T19 = Runtime Execution**: Isolated container/sandbox execution of valid programs.
+
+### Safety Guarantees:
+1. **Never Execute on Host**: No host execution (`python code.py`, `./a.out`, `node app.js`, `java Main`, or database mutations).
+2. **Subprocess Safety**: Compilers (`gcc`, `g++`, `javac`, `node`) are invoked strictly with `shell=False`, argument arrays, and a 5-second timeout.
+3. **Isolated Temporary Files**: Source code is compiled in temporary files/directories and cleaned up in `finally` blocks.
+4. **Deterministic Aggregation**:
+   - No code $\to$ `NOT_VALIDATED`
+   - All code blocks valid $\to$ `VALID`
+   - Any code block invalid $\to$ `INVALID`
+   - Unrecognized/unsupported languages $\to$ `UNSUPPORTED`
+   - Mixture of valid and unsupported $\to$ `UNSUPPORTED`
+
+
+---
+
 # 25. Code Engine
 
 The Code Engine is responsible for code-specific operations.

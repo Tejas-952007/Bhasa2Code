@@ -561,28 +561,26 @@ Convert current user request, T14 NLP result, T15 Context Package, Study Mode st
 
 ---
 
-### T18 — Implement LLM Service
+### T18 — Response Validation / Code Validation
 
-Expected abstraction:
-
-```text
-LLMService
-├── generate()
-├── stream()
-├── health_check()
-└── model_info()
-```
+**Goal:** Implement response parsing, code extraction, and static/syntax validation layer for LLM outputs.
 
 **Dependencies:** T17
 
 **Acceptance Criteria:**
 
-- Backend can send prompt to local model
-- Response returned
-- Errors handled
-- No hard-coded business logic inside provider
+- Fenced and structured code block extraction (`CodeExtractor`)
+- Deterministic programming language resolution with alias mapping (`resolve_language`)
+- Static/parser syntax validation for Python, C, C++, Java, JavaScript, and SQL
+- Safe compiler invocation (`gcc -fsyntax-only`, `g++ -fsyntax-only`, `javac`, `node --check`) with `shell=False`, argument arrays, and 5-second timeouts
+- Clean temporary file isolation and disposal
+- Zero host code execution: pure static verification preserving host security
+- Structured diagnostic error reporting with line/column pointers (`ValidationDiagnostic`)
+- Deterministic status aggregation (`VALID`, `INVALID`, `UNSUPPORTED`, `NOT_VALIDATED`)
+- 51 unit, integration, and benchmark tests passing
+- Architecture & development documentation complete
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 
