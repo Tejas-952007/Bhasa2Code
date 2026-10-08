@@ -744,6 +744,38 @@ This improves:
 
 ---
 
+# 18.1. Context Manager Implementation (T15)
+
+The Context Manager (`backend/app/context/`) provides deterministic multi-turn conversational memory and artifact linking for Bhasha2Code without response generation or external vector databases.
+
+```text
+User Message
+    ↓
+T14 NLP Pipeline
+    ↓
+Context Manager (T15)
+    ├── Recent Messages (created_at ASC)
+    ├── Generated Code (newest first, linked to turns)
+    ├── Session Metadata (isolated by user_id)
+    ├── Follow-Up Detection (is_follow_up heuristics)
+    └── Context Window Policy (budget & truncation)
+    ↓
+ContextPackage
+    ↓
+Future Prompt Builder (T16)
+```
+
+### Core Architecture Specifications:
+- **Session Awareness & Ownership Isolation**: Every context request validates `session.user_id == user_id`. Access across user boundaries raises `UnauthorizedSessionError` and never leaks history or code.
+- **Repository Reuse**: Direct consumption of `SessionRepository`, `MessageRepository`, and `GeneratedCodeRepository` using constant O(1) query budgets without N+1 round trips.
+- **Deterministic Recency & Ordering**: Retains the most recent conversational window in strict chronological sequence (`created_at ASC`), and links recent `GeneratedCode` records ordered newest-first.
+- **Follow-Up Awareness**: Deterministic rule-based heuristic (`is_follow_up`) identifies continuation requests (deictic pronouns, modification verbs, concise utterances) to allocate full context budgets, while restricting standalone queries to bounded context budgets (`standalone_max_messages`).
+- **Context Window & Truncation**: Enforces configurable budgets (`max_messages`, `max_characters`, `max_code_characters`, `max_generated_code_items`). Current user messages are always preserved; oldest low-priority turns are dropped deterministically, flagging `truncated = True`.
+- **Code Continuity**: Generated code artifacts from prior assistant responses (e.g. calculator implementation) are automatically packaged for follow-up turns (e.g. "yat error handling add kar").
+- **No Vector DB**: Operates completely offline without ChromaDB, embeddings, or semantic vector retrieval in T15.
+
+---
+
 # 19. Prompt Builder
 
 The Prompt Builder converts structured context into a local LLM prompt.

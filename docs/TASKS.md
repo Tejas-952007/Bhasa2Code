@@ -490,33 +490,26 @@ Unified NLP Result (NLPPipelineResult)
 
 ---
 
-## E03-F06 Requirement Extraction
+## E03-F06 Context Management
 
-### T15 — Implement Requirement Extraction
+### T15 — Context Manager
 
-Extract useful entities such as:
+Provide multi-turn conversational memory for the coding assistant by retrieving and organizing relevant previous session messages, generated code, and current context from existing T06 models and T07 repositories without external vector databases.
 
-```text
-Programming Language
-Task
-Framework
-Input
-Output
-Constraints
-Error
-Requested Tone
-Requested Transformation
-```
+**Dependencies:** T06, T07, T14
 
-**Dependencies:** T09, T13, T14
+**Deliverables:**
+- `backend/app/context/schemas.py`: `ContextMessage`, `ContextCode`, `ContextMetadata`, `ContextPackage`
+- `backend/app/context/policies.py`: `ContextPolicy` and deterministic `is_follow_up` heuristics
+- `backend/app/context/exceptions.py`: `ContextError`, `SessionNotFoundError`, `UnauthorizedSessionError`
+- `backend/app/context/context_manager.py`: `ContextManager.build_context(...)`
+- Strict session ownership validation and privacy protections
+- Chronological turn sequence (`created_at ASC`) and linked generated code artifacts (newest first)
+- Context window budgeting and deterministic truncation (`truncated=True`)
+- Unit and integration tests in `tests/unit/context/test_context_manager.py` (21 passing tests)
+- Documentation in `docs/06_architecture/ARCHITECTURE.md` and `docs/11_development/CONTEXT_MANAGER.md`
 
-**Acceptance Criteria:**
-
-- Structured output generated
-- Missing fields handled safely
-- Tests added
-
-**Status:** TODO
+**Status:** DONE
 
 ---
 
