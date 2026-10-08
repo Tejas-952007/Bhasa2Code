@@ -255,7 +255,7 @@ debug_history
 - Relationships documented
 - Database initializes successfully
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 

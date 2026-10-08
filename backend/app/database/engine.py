@@ -1,13 +1,25 @@
 import logging
 import os
+import sqlite3
 from typing import Generator
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, event
+from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker, Session
 
 from backend.app.core.config import settings
 from backend.app.database.base import Base
 
 logger = logging.getLogger("bhasha2code.database")
+
+
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    """Enable foreign key constraints for SQLite connections."""
+    if isinstance(dbapi_connection, sqlite3.Connection):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
+
 
 
 def get_engine_args(url: str) -> dict:
@@ -46,6 +58,9 @@ def ensure_sqlite_directory(url: str) -> None:
 
 def init_db(target_engine=None, url: str | None = None) -> None:
     """Safely initialize database tables and directories without destructive recreation."""
+    # Ensure all models are registered in Base.metadata
+    import backend.app.database.models  # noqa: F401
+
     active_engine = target_engine or engine
     db_url = url or str(active_engine.url)
     ensure_sqlite_directory(db_url)

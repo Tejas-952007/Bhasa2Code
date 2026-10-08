@@ -962,19 +962,24 @@ Initial database:
 SQLite
 ```
 
-Conceptual schema:
+Conceptual schema and relationships:
 
 ```text
-users
-  │
-  └── sessions
-         │
-         ├── messages
-         ├── generated_code
-         ├── debug_history
-         ├── saved_messages
-         ├── notes
-         └── study_sessions
+User
+ │
+ ├───────────────┐
+ │               │
+ ▼               ▼
+Sessions        Notes
+ │
+ ▼
+Messages
+ │  │
+ │  ├──────────────→ GeneratedCode
+ │  │
+ │  └──────────────→ DebugHistory (optional message link)
+ │
+ └────────────────→ SavedMessage
 ```
 
 ---
@@ -984,109 +989,140 @@ users
 ## User
 
 ```text
-id
-name
-created_at
-settings
+id (UUID, String 36, PK)
+name (String 100)
+created_at (DateTime UTC)
+updated_at (DateTime UTC)
 ```
+
+Relationships:
+- `sessions`: 1-to-N Session (cascade delete)
+- `saved_messages`: 1-to-N SavedMessage (cascade delete)
+- `notes`: 1-to-N Note (cascade delete)
 
 ---
 
 ## Session
 
 ```text
-id
-title
-created_at
-updated_at
-status
-current_language
-current_task
-current_code
+id (UUID, String 36, PK)
+user_id (UUID, FK -> users.id, indexed, cascade delete)
+title (String 255)
+status (String 50, default 'active')
+current_language (String 50, optional)
+programming_language (String 50, optional)
+current_code (Text, optional)
+created_at (DateTime UTC)
+updated_at (DateTime UTC)
 ```
+
+Relationships:
+- `user`: N-to-1 User
+- `messages`: 1-to-N Message (cascade delete, ordered by created_at)
+- `generated_codes`: 1-to-N GeneratedCode (cascade delete)
+- `debug_histories`: 1-to-N DebugHistory (cascade delete)
+- `notes`: 1-to-N Note (on session delete, note session_id SET NULL)
 
 ---
 
 ## Message
 
 ```text
-id
-session_id
-role
-content
-timestamp
-intent
-language
-tone
-programming_language
+id (UUID, String 36, PK)
+session_id (UUID, FK -> sessions.id, indexed, cascade delete)
+role (String 20, check constraint: 'user', 'assistant', 'system')
+content (Text)
+detected_language (String 50, optional)
+intent (String 50, optional)
+tone (String 50, optional)
+programming_language (String 50, optional)
+context_metadata (JSON, optional)
+created_at (DateTime UTC, indexed)
 ```
+
+Relationships:
+- `session`: N-to-1 Session
+- `generated_codes`: 1-to-N GeneratedCode (cascade delete)
+- `debug_histories`: 1-to-N DebugHistory (on message delete, message_id SET NULL)
+- `saved_messages`: 1-to-N SavedMessage (cascade delete)
 
 ---
 
 ## GeneratedCode
 
 ```text
-id
-session_id
-message_id
-language
-code
-validation_status
-created_at
+id (UUID, String 36, PK)
+session_id (UUID, FK -> sessions.id, indexed, cascade delete)
+message_id (UUID, FK -> messages.id, indexed, cascade delete)
+language (String 50, default 'python')
+code (Text)
+validation_status (String 50, default 'unvalidated')
+created_at (DateTime UTC)
 ```
+
+Relationships:
+- `session`: N-to-1 Session
+- `message`: N-to-1 Message
 
 ---
 
 ## DebugHistory
 
 ```text
-id
-session_id
-code_version
-error
-suggested_fix
-validation_result
-timestamp
+id (UUID, String 36, PK)
+session_id (UUID, FK -> sessions.id, indexed, cascade delete)
+message_id (UUID, FK -> messages.id, optional, indexed, ondelete SET NULL)
+original_code (Text)
+error_message (Text)
+corrected_code (Text, optional)
+validation_status (String 50, default 'pending')
+attempt_count (Integer, default 1)
+created_at (DateTime UTC)
 ```
+
+Relationships:
+- `session`: N-to-1 Session
+- `message`: N-to-1 Message (optional)
 
 ---
 
 ## SavedMessage
 
 ```text
-id
-session_id
-message_id
-created_at
+id (UUID, String 36, PK)
+user_id (UUID, FK -> users.id, indexed, cascade delete)
+message_id (UUID, FK -> messages.id, indexed, cascade delete)
+label (String 100, optional)
+created_at (DateTime UTC)
 ```
+
+Constraints:
+- Unique(`user_id`, `message_id`)
+
+Relationships:
+- `user`: N-to-1 User
+- `message`: N-to-1 Message
 
 ---
 
 ## Note
 
 ```text
-id
-session_id
-title
-content
-created_at
-updated_at
+id (UUID, String 36, PK)
+user_id (UUID, FK -> users.id, indexed, cascade delete)
+session_id (UUID, FK -> sessions.id, optional, indexed, ondelete SET NULL)
+title (String 255, default 'Untitled Note')
+content (Text)
+created_at (DateTime UTC)
+updated_at (DateTime UTC)
 ```
+
+Relationships:
+- `user`: N-to-1 User
+- `session`: N-to-1 Session (optional, notes can exist independently of sessions)
 
 ---
 
-## StudySession
-
-```text
-id
-session_id
-topic
-content
-quiz_data
-created_at
-```
-
----
 
 # 36. Data Flow — Chat
 
