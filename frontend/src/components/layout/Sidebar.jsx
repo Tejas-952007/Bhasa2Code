@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Plus,
   Bookmark,
@@ -8,6 +8,8 @@ import {
   Settings,
   ChevronRight,
   MessageSquare,
+  Pencil,
+  Trash2,
 } from 'lucide-react';
 import Button from '../common/Button';
 
@@ -16,11 +18,17 @@ export default function Sidebar({
   activeSessionId,
   onSelectSession,
   onNewChat,
+  onRenameSession,
+  onDeleteSession,
   activeView,
   onSelectView,
   collapsed = false,
   onOpenSettings,
 }) {
+  const [editingSessionId, setEditingSessionId] = useState(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [deletingSessionId, setDeletingSessionId] = useState(null);
+
   if (collapsed) {
     return null;
   }
@@ -123,31 +131,201 @@ export default function Sidebar({
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
             {sessions.map((session) => {
               const isActive = activeView === 'chat' && session.id === activeSessionId;
-              return (
-                <button
-                  key={session.id}
-                  type="button"
-                  onClick={() => onSelectSession(session.id)}
-                  style={navItemStyle(isActive)}
-                  onMouseEnter={(e) => {
-                    if (!isActive) e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.03)';
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
-                  }}
-                >
-                  <MessageSquare size={14} style={{ flexShrink: 0, opacity: 0.7 }} />
-                  <span
+              const isEditing = editingSessionId === session.id;
+              const isDeleting = deletingSessionId === session.id;
+
+              if (isDeleting) {
+                return (
+                  <div
+                    key={session.id}
                     style={{
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '6px 10px',
+                      borderRadius: 'var(--radius-sm)',
+                      backgroundColor: 'var(--status-error-bg, #fef2f2)',
+                      border: '1px solid var(--status-error-border, #fecaca)',
+                      fontSize: 'var(--text-xs)',
                     }}
                   >
-                    {session.title}
-                  </span>
-                </button>
+                    <span style={{ color: 'var(--status-error)', fontWeight: 600 }}>Delete chat?</span>
+                    <div style={{ display: 'flex', gap: '4px' }}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (onDeleteSession) onDeleteSession(session.id);
+                          setDeletingSessionId(null);
+                        }}
+                        style={{
+                          padding: '2px 6px',
+                          backgroundColor: 'var(--status-error)',
+                          color: '#ffffff',
+                          borderRadius: 'var(--radius-xs)',
+                          fontSize: '0.68rem',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setDeletingSessionId(null)}
+                        style={{
+                          padding: '2px 6px',
+                          backgroundColor: 'transparent',
+                          color: 'var(--text-secondary)',
+                          borderRadius: 'var(--radius-xs)',
+                          fontSize: '0.68rem',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                );
+              }
+
+              if (isEditing) {
+                return (
+                  <div
+                    key={session.id}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: '4px 8px',
+                      borderRadius: 'var(--radius-sm)',
+                      backgroundColor: 'var(--bg-subtle)',
+                      border: '1px solid var(--accent-primary)',
+                    }}
+                  >
+                    <input
+                      type="text"
+                      value={editTitle}
+                      autoFocus
+                      onChange={(e) => setEditTitle(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          if (onRenameSession && editTitle.trim()) {
+                            onRenameSession(session.id, editTitle.trim());
+                          }
+                          setEditingSessionId(null);
+                        } else if (e.key === 'Escape') {
+                          setEditingSessionId(null);
+                        }
+                      }}
+                      onBlur={() => {
+                        if (onRenameSession && editTitle.trim()) {
+                          onRenameSession(session.id, editTitle.trim());
+                        }
+                        setEditingSessionId(null);
+                      }}
+                      style={{
+                        width: '100%',
+                        fontSize: 'var(--text-sm)',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        outline: 'none',
+                        color: 'var(--text-primary)',
+                      }}
+                    />
+                  </div>
+                );
+              }
+
+              return (
+                <div
+                  key={session.id}
+                  style={{
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    borderRadius: 'var(--radius-sm)',
+                    backgroundColor: isActive ? 'var(--accent-subtle)' : 'transparent',
+                    borderLeft: isActive ? '3px solid var(--accent-primary)' : '3px solid transparent',
+                  }}
+                  className="b2c-session-item"
+                >
+                  <button
+                    type="button"
+                    onClick={() => onSelectSession(session.id)}
+                    style={{
+                      ...navItemStyle(isActive),
+                      borderLeft: 'none',
+                      paddingRight: '48px',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.03)';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
+                    }}
+                  >
+                    <MessageSquare size={14} style={{ flexShrink: 0, opacity: 0.7 }} />
+                    <span
+                      style={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        flex: 1,
+                      }}
+                    >
+                      {session.title}
+                    </span>
+                  </button>
+
+                  <div
+                    style={{
+                      position: 'absolute',
+                      right: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '2px',
+                    }}
+                  >
+                    <button
+                      type="button"
+                      title="Rename"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditingSessionId(session.id);
+                        setEditTitle(session.title);
+                      }}
+                      style={{
+                        padding: '4px',
+                        color: 'var(--text-muted)',
+                        borderRadius: 'var(--radius-xs)',
+                        backgroundColor: 'transparent',
+                        cursor: 'pointer',
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+                    >
+                      <Pencil size={12} />
+                    </button>
+                    <button
+                      type="button"
+                      title="Delete"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDeletingSessionId(session.id);
+                      }}
+                      style={{
+                        padding: '4px',
+                        color: 'var(--text-muted)',
+                        borderRadius: 'var(--radius-xs)',
+                        backgroundColor: 'transparent',
+                        cursor: 'pointer',
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--status-error)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                </div>
               );
             })}
           </div>

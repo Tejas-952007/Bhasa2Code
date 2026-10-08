@@ -9,6 +9,9 @@ export default function AppShell({
   activeSessionId,
   onSelectSession,
   onNewChat,
+  onRenameSession,
+  onDeleteSession,
+  serverStatus,
   activeView = 'chat',
   onSelectView,
   isStudyMode = false,
@@ -35,6 +38,7 @@ export default function AppShell({
         onOpenSettings={() => setShowSettings(true)}
         onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
         sidebarCollapsed={sidebarCollapsed}
+        serverStatus={serverStatus}
       />
 
       {/* Main Container: Sidebar + Content */}
@@ -52,6 +56,8 @@ export default function AppShell({
           activeSessionId={activeSessionId}
           onSelectSession={onSelectSession}
           onNewChat={onNewChat}
+          onRenameSession={onRenameSession}
+          onDeleteSession={onDeleteSession}
           activeView={activeView}
           onSelectView={onSelectView}
           collapsed={sidebarCollapsed}

@@ -8,6 +8,9 @@ import { Terminal } from 'lucide-react';
 export default function ChatWorkspace({
   messages = [],
   isStudyMode = false,
+  isLoading = false,
+  errorMessage = null,
+  onRetry = null,
   onSendMessage,
   activeSessionTitle = 'Python Calculator',
   contextHint = 'Using current session context',
@@ -16,7 +19,7 @@ export default function ChatWorkspace({
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isStudyMode]);
+  }, [messages, isStudyMode, isLoading, errorMessage]);
 
   return (
     <div
@@ -95,6 +98,75 @@ export default function ChatWorkspace({
                   />
                 )
               )}
+
+              {/* Generating response loading state */}
+              {isLoading && (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    padding: '14px 18px',
+                    margin: '14px 0',
+                    backgroundColor: 'var(--bg-surface)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: 'var(--radius-md)',
+                    color: 'var(--text-secondary)',
+                    fontSize: 'var(--text-sm)',
+                    boxShadow: 'var(--shadow-sm)',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      backgroundColor: 'var(--accent-primary)',
+                      boxShadow: '0 0 8px var(--accent-primary)',
+                    }}
+                  />
+                  <span style={{ fontWeight: 500 }}>Generating response...</span>
+                </div>
+              )}
+
+              {/* Error State */}
+              {errorMessage && (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '12px 18px',
+                    margin: '14px 0',
+                    backgroundColor: 'var(--status-error-bg, #fef2f2)',
+                    border: '1px solid var(--status-error-border, #fecaca)',
+                    borderRadius: 'var(--radius-md)',
+                    color: 'var(--status-error, #b91c1c)',
+                    fontSize: 'var(--text-sm)',
+                  }}
+                >
+                  <span>{errorMessage}</span>
+                  {onRetry && (
+                    <button
+                      type="button"
+                      onClick={onRetry}
+                      style={{
+                        padding: '4px 10px',
+                        backgroundColor: 'transparent',
+                        border: '1px solid var(--status-error, #b91c1c)',
+                        color: 'var(--status-error, #b91c1c)',
+                        borderRadius: 'var(--radius-xs)',
+                        fontSize: 'var(--text-xs)',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Retry
+                    </button>
+                  )}
+                </div>
+              )}
+
               <div ref={bottomRef} style={{ height: '20px' }} />
             </div>
           )}
@@ -117,7 +189,7 @@ export default function ChatWorkspace({
             width: '100%',
           }}
         >
-          <Composer onSend={onSendMessage} />
+          <Composer onSend={onSendMessage} disabled={isLoading} />
         </div>
       </div>
     </div>

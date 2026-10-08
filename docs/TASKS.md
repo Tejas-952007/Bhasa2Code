@@ -635,35 +635,28 @@ Convert current user request, T14 NLP result, T15 Context Package, Study Mode st
 
 ---
 
-# 10. EPIC E06 — Context Manager
+# 10. EPIC E06 — Frontend ↔ FastAPI API Integration
 
-### T21 — Create Context Manager
+### T21 — Frontend ↔ FastAPI API Integration
 
-Flow:
+**Goal:** Connect the T20 React/Vite frontend to the FastAPI backend, replacing deterministic frontend mock behavior with real backend API calls while preserving the visual design and component architecture.
 
-```text
-Current Request
-+
-Current Code
-+
-Current Task
-+
-Recent Messages
-+
-Session Information
-↓
-Context Manager
-```
-
-**Dependencies:** T07, T20
+**Dependencies:** T20
 
 **Acceptance Criteria:**
+- Real FastAPI routes created under `/api/v1` (`/health`, `/sessions`, `/chat`, `/code/validate`, `/code/run`)
+- Frontend centralized API client in `frontend/src/services/api.js`
+- Local CORS configured for `http://localhost:5173` and `http://127.0.0.1:5173`
+- Session creation, listing, retrieval, renaming, and deletion persisted in SQLite
+- Real chat generation through T14 NLP → T15 Context → T16 Prompt → T17 Ollama → T18 Validation
+- Code validation and secure Docker sandbox execution gated through T18/T19
+- Follow-up context and session reopen verified end-to-end
+- Seamless loading state (`Generating response...`) and graceful error handling
+- Zero mock data in chat and session paths
+- All backend tests (477 passed) and frontend tests pass
+- Documentation complete in `docs/11_development/API_INTEGRATION.md` and `docs/06_architecture/ARCHITECTURE.md`
 
-- Context stored per session
-- Relevant context returned
-- Context size controlled
-
-**Status:** TODO
+**Status:** DONE
 
 ---
 

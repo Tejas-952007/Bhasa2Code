@@ -133,6 +133,26 @@ Additional rules:
                        React Frontend
 ```
 
+### 3.1 T21 Integrated Application Pipeline
+
+```text
+React/Vite
+     ↓
+FastAPI /api/v1
+     ↓
+Application Orchestration
+     ├── NLP
+     ├── Context
+     ├── Prompt
+     ├── Ollama
+     ├── Validation
+     └── Sandbox
+     ↓
+JSON Response
+     ↓
+React
+```
+
 ---
 
 # 4. Major Components

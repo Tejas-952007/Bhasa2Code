@@ -10,6 +10,7 @@ export default function Header({
   onOpenSettings,
   onToggleSidebar,
   sidebarCollapsed = false,
+  serverStatus = { state: 'ready', label: 'Local · Ready' },
 }) {
   return (
     <header
@@ -93,7 +94,7 @@ export default function Header({
 
       {/* Right: Model Status & Settings */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-        <Status state="ready" label="Local · Ready" />
+        <Status state={serverStatus?.state || 'ready'} label={serverStatus?.label || 'Local · Ready'} />
 
         <Button
           variant="ghost"

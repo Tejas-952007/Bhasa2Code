@@ -2,23 +2,25 @@ import React, { useState } from 'react';
 import CodeToolbar from './CodeToolbar';
 import ValidationStatus from './ValidationStatus';
 import { Terminal } from 'lucide-react';
+import { validateCode, runCode } from '../../services/api';
 
 export default function CodeArtifact({
   initialCode = '',
   filename = 'main.py',
   language = 'python',
   initialValidation = 'VALID',
-  initialExecution = 'SUCCESS',
+  initialExecution = null,
   initialOutput = '',
-  durationMs = 152.4,
+  durationMs = 0,
 }) {
   const [code, setCode] = useState(initialCode);
   const [isEditing, setIsEditing] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
-  const [showOutput, setShowOutput] = useState(true);
+  const [showOutput, setShowOutput] = useState(Boolean(initialOutput));
   const [output, setOutput] = useState(initialOutput);
   const [executionStatus, setExecutionStatus] = useState(initialExecution);
   const [validationStatus, setValidationStatus] = useState(initialValidation);
+  const [currentDurationMs, setCurrentDurationMs] = useState(durationMs);
 
   const lines = code.split('\n');
 
@@ -26,21 +28,49 @@ export default function CodeArtifact({
     navigator.clipboard?.writeText(code);
   };
 
-  const handleValidate = () => {
-    // Demo validation feedback
-    setValidationStatus('VALID');
+  const handleValidate = async () => {
+    try {
+      const res = await validateCode({ language, code });
+      setValidationStatus(res.is_valid ? 'VALID' : 'INVALID');
+      if (!res.is_valid && res.diagnostics && res.diagnostics.length > 0) {
+        setOutput(res.diagnostics.join('\n'));
+        setShowOutput(true);
+      }
+    } catch (err) {
+      setValidationStatus('INVALID');
+      setOutput(err.message || 'Validation failed');
+      setShowOutput(true);
+    }
   };
 
-  const handleRun = () => {
+  const handleRun = async () => {
     setIsRunning(true);
-    setTimeout(() => {
+    setShowOutput(true);
+    setOutput('Running secure sandbox...');
+    try {
+      const res = await runCode({ language, code });
       setIsRunning(false);
-      setShowOutput(true);
-      setExecutionStatus('SUCCESS');
-      if (!output) {
-        setOutput("Program executed successfully.\nResult: 15.0\n(Demo sandbox result)");
+      setExecutionStatus(res.status);
+      setCurrentDurationMs(res.duration_ms || 0);
+
+      if (res.status === 'VALIDATION_FAILED') {
+        setValidationStatus('INVALID');
+        setOutput(
+          res.diagnostics?.join('\n') || 'Validation failed prior to execution.'
+        );
+      } else if (res.status === 'SANDBOX_ERROR') {
+        setOutput(
+          res.diagnostics?.join('\n') || 'Sandbox unavailable: Docker runtime is not accessible.'
+        );
+      } else {
+        const out = res.stdout || res.stderr || (res.diagnostics || []).join('\n');
+        setOutput(out || `(Process finished with exit code ${res.exit_code})`);
       }
-    }, 600);
+    } catch (err) {
+      setIsRunning(false);
+      setExecutionStatus('ERROR');
+      setOutput(err.message || 'Failed to execute code in sandbox.');
+    }
   };
 
   return (
@@ -98,7 +128,7 @@ export default function CodeArtifact({
             <ValidationStatus
               type="execution"
               status={executionStatus}
-              durationMs={durationMs}
+              durationMs={currentDurationMs}
             />
           )}
         </div>
