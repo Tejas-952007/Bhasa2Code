@@ -776,69 +776,57 @@ Future Prompt Builder (T16)
 
 ---
 
-# 19. Prompt Builder
+# 19. Prompt Builder (T16)
 
-The Prompt Builder converts structured context into a local LLM prompt.
-
-Conceptual input:
+The Prompt Builder (`backend/app/prompt/`) converts structured context, NLP results, and user constraints into a structured `PromptSpecification` for local LLM inference.
 
 ```text
-SYSTEM INSTRUCTIONS
-+
-USER QUESTION
-+
-LANGUAGE
-+
-TONE
-+
-INTENT
-+
-PROGRAMMING LANGUAGE
-+
-REQUIREMENTS
-+
-CURRENT CODE
-+
-RELEVANT HISTORY
+T14 NLP Pipeline
+       ↓
+T15 Context Manager
+       ↓
+T16 Prompt Builder
+       ├── Language Policy (English, Marathi, Hindi, Hinglish, Marathi-English)
+       ├── Tone Policy (Casual, Formal, Simple, Technical, Short, Detailed)
+       ├── Intent Policy (18 Supported User Intents)
+       ├── Study Mode (Educational vs Task-Oriented)
+       ├── Explicit Format Requests (code only, algorithm, flowchart, viva)
+       ├── Context Instructions (continuity directives & working code)
+       └── Output Section Planner (deterministic layout)
+       ↓
+PromptSpecification
+       ↓
+Future Ollama / Local LLM
 ```
 
-Output:
-
-```text
-Local LLM Prompt
-```
+### Core Architecture & Design Principles:
+1. **Separation from NLP & Inference**:
+   - The NLP Pipeline (T14) classifies *what* the user is asking.
+   - The Context Manager (T15) retrieves *what context* is relevant.
+   - The Prompt Builder (T16) determines *how the prompt must be structured*. It does not classify text or execute LLM calls.
+2. **Dynamic Response Structure**:
+   - Responses are dynamically shaped based on Intent, Tone, Language, Study Mode, and Explicit user constraints.
+   - Direct requests produce focused code and explanations; academic or study requests produce structured pedagogical sections.
+3. **Study Mode**:
+   - When Study Mode is active (`study_mode=True`), responses expand into educational steps (Problem Understanding, Algorithm, Flowchart, Code, Detailed Explanation, Test Cases, Viva Questions).
+   - In Normal Mode (`study_mode=False`), responses prioritize concise completion without academic padding.
+4. **Priority Hierarchy (Explicit User Request Trumps All)**:
+   - If user explicitly demands `fakt code de` (`code_only`), the output section is strictly `["Code only"]`, even if Study Mode is ON.
+   - If user requests `algorithm ani flowchart pan de` in Normal Mode, those sections are guaranteed in the response structure.
+5. **Context Continuity & Code Referencing**:
+   - Multi-turn follow-ups (identified via T15 `is_follow_up`) inject continuity directives informing the model to modify or build upon existing code rather than creating a disconnected solution.
+6. **Code Preservation Directive**:
+   - Programming keywords (`if`, `for`, `while`, `def`, `class`, `return`, `import`), libraries, and variable names are never translated into Indian languages.
+7. **Prompt Injection Safeguard**:
+   - Context history and user code are treated as passive untrusted data to analyze. Overrides inside code comments (`# Ignore instructions`) are isolated and ignored.
+8. **Deterministic Rendering**:
+   - `spec.render()` deterministically formats the specification with clear Markdown headings for LLM execution without non-deterministic artifacts.
 
 ---
 
 # 20. Prompt Builder Rule
 
-The Prompt Builder must not blindly insert every database field into every prompt.
-
-Only relevant information should be included.
-
-Example:
-
-For `EXPLAIN_CODE`:
-
-```text
-Current Code
-+
-Desired Explanation Language
-+
-Tone
-```
-
-For `DEBUG_CODE`:
-
-```text
-Current Code
-+
-Error
-+
-Execution Feedback
-+
-Relevant History
-```
+The Prompt Builder must not blindly insert every database field into every prompt. Only relevant information is included based on the selected intent, tone, and explicit formatting requests.
 
 ---
 

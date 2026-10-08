@@ -513,37 +513,26 @@ Provide multi-turn conversational memory for the coding assistant by retrieving 
 
 ---
 
-## E03-F07 NLP Pipeline Integration
+## E03-F07 Prompt Builder
 
-### T16 — Integrate Complete NLP Pipeline
+### T16 — Prompt Builder
 
-Flow:
+Convert current user request, T14 NLP result, T15 Context Package, Study Mode state, and response-format requirements into a structured `PromptSpecification` and rendered prompt for the local Ollama coding LLM.
 
-```text
-User Input
-↓
-Preprocessing
-↓
-Language
-↓
-Tone
-↓
-Intent
-↓
-Programming Language
-↓
-Requirement Extraction
-```
+**Dependencies:** T14, T15
 
-**Dependencies:** T09, T11, T13, T14, T15
+**Deliverables:**
+- `backend/app/prompt/schemas.py`: `PromptSpecification` with deterministic `render()` method
+- `backend/app/prompt/policies.py`: `LanguagePolicy`, `TonePolicy`, `IntentPolicy`, and `SecurityPolicy`
+- `backend/app/prompt/format_rules.py`: Multilingual format extraction and 18-intent section planner
+- `backend/app/prompt/prompt_builder.py`: `PromptBuilder.build(...)`
+- Study Mode pedagogical section expansion vs. Normal Mode task-oriented structure
+- Priority hierarchy enforcement (`explicit user request > Study Mode`)
+- Context and code continuity binding with anti-injection defenses
+- 45 unit and integration tests in `tests/unit/prompt/test_prompt_builder.py`
+- Documentation in `docs/06_architecture/ARCHITECTURE.md` and `docs/11_development/PROMPT_BUILDER.md`
 
-**Acceptance Criteria:**
-
-- Single pipeline API available
-- Structured result returned
-- Unit tests pass
-
-**Status:** TODO
+**Status:** DONE
 
 ---
 
