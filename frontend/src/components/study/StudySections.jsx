@@ -1,4 +1,5 @@
 import React from 'react';
+import VisualFlowchart from './VisualFlowchart';
 
 export default function StudySections({ studyData }) {
   if (!studyData) return null;
@@ -70,24 +71,14 @@ export default function StudySections({ studyData }) {
         </div>
       )}
 
-      {/* 3. Flowchart */}
-      {flowchart && (
+      {/* 3. Flowchart (Rich Visual Graph like Image 5) */}
+      {(flowchart || studyData.flowchartNodes) && (
         <div>
-          <h4 style={sectionHeaderStyle}>Flowchart</h4>
-          <pre
-            style={{
-              padding: '12px 16px',
-              backgroundColor: 'var(--bg-subtle)',
-              border: '1px solid var(--border-color)',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: 'var(--text-xs)',
-              color: 'var(--text-primary)',
-              lineHeight: '1.4',
-              overflowX: 'auto',
-            }}
-          >
-            {flowchart}
-          </pre>
+          <h4 style={sectionHeaderStyle}>Algorithm Flowchart</h4>
+          <VisualFlowchart
+            flowchart={flowchart}
+            flowchartNodes={studyData.flowchartNodes}
+          />
         </div>
       )}
 

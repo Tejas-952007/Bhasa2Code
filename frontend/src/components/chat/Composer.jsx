@@ -39,14 +39,14 @@ export default function Composer({ onSend, disabled = false, placeholder = "Ask 
     <div
       style={{
         border: '1px solid var(--border-color)',
-        borderRadius: 'var(--radius-md)',
+        borderRadius: 'var(--radius-lg)',
         backgroundColor: 'var(--bg-surface)',
-        boxShadow: 'var(--shadow-xs)',
+        boxShadow: '0 4px 18px rgba(15, 23, 42, 0.06)',
         transition: 'border-color var(--transition-fast), box-shadow var(--transition-fast)',
-        padding: '6px 10px',
+        padding: '10px 14px',
         display: 'flex',
         alignItems: 'flex-end',
-        gap: '8px',
+        gap: '10px',
       }}
       className="b2c-composer-container"
     >

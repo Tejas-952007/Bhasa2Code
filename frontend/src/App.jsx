@@ -103,6 +103,15 @@ export default function App() {
     }
   };
 
+  const handleSelectView = (view) => {
+    if (view === 'study') {
+      setIsStudyMode(true);
+      setActiveView('chat');
+    } else {
+      setActiveView(view);
+    }
+  };
+
   return (
     <AppShell
       sessions={sessions}
@@ -110,7 +119,7 @@ export default function App() {
       onSelectSession={handleSelectSession}
       onNewChat={handleNewChat}
       activeView={activeView}
-      onSelectView={setActiveView}
+      onSelectView={handleSelectView}
       isStudyMode={isStudyMode}
       onToggleStudyMode={setIsStudyMode}
     >

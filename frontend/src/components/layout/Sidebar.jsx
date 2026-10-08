@@ -38,23 +38,23 @@ export default function Sidebar({
   const navItemStyle = (isActive) => ({
     display: 'flex',
     alignItems: 'center',
-    gap: '8px',
+    gap: '10px',
     width: '100%',
-    padding: '6px 10px',
+    padding: '8px 12px',
     borderRadius: 'var(--radius-sm)',
     fontSize: 'var(--text-sm)',
-    color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-    backgroundColor: isActive ? 'var(--bg-subtle)' : 'transparent',
-    fontWeight: isActive ? 600 : 400,
+    color: isActive ? 'var(--accent-text)' : 'var(--text-secondary)',
+    backgroundColor: isActive ? 'var(--accent-subtle)' : 'transparent',
+    fontWeight: isActive ? 600 : 500,
     textAlign: 'left',
     transition: 'all var(--transition-fast)',
-    borderLeft: isActive ? '2px solid var(--accent-primary)' : '2px solid transparent',
+    borderLeft: isActive ? '3px solid var(--accent-primary)' : '3px solid transparent',
   });
 
   return (
     <aside
       style={{
-        width: '240px',
+        width: '250px',
         height: '100%',
         backgroundColor: 'var(--bg-sidebar)',
         borderRight: '1px solid var(--border-color)',
@@ -66,24 +66,56 @@ export default function Sidebar({
       }}
     >
       {/* Top Half: New Chat & Recent Sessions */}
-      <div style={{ padding: '12px 10px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ padding: '14px 12px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {/* + New Chat Button */}
-        <Button
-          variant="secondary"
-          size="md"
-          icon={Plus}
+        <button
+          type="button"
           onClick={onNewChat}
           style={{
             width: '100%',
-            justifyContent: 'flex-start',
-            backgroundColor: 'var(--bg-surface)',
-            border: '1px solid var(--border-color)',
-            boxShadow: 'var(--shadow-xs)',
+            height: '40px',
+            padding: '0 12px',
+            borderRadius: 'var(--radius-md)',
+            backgroundColor: 'var(--accent-primary)',
+            color: '#ffffff',
+            border: 'none',
+            fontSize: 'var(--text-sm)',
             fontWeight: 600,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+            boxShadow: '0 2px 6px rgba(37, 99, 235, 0.25)',
+            transition: 'all var(--transition-fast)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'var(--accent-hover)';
+            e.currentTarget.style.transform = 'translateY(-1px)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.35)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'var(--accent-primary)';
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 2px 6px rgba(37, 99, 235, 0.25)';
           }}
         >
-          New Chat
-        </Button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Plus size={18} strokeWidth={2.5} />
+            <span>New Chat</span>
+          </div>
+          <span
+            style={{
+              fontSize: '0.68rem',
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              padding: '2px 6px',
+              borderRadius: 'var(--radius-xs)',
+              letterSpacing: '0.02em',
+              fontWeight: 500,
+            }}
+          >
+            ⌘N
+          </span>
+        </button>
 
         {/* Recent Sessions */}
         <div>

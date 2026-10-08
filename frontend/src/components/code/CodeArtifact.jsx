@@ -46,12 +46,12 @@ export default function CodeArtifact({
   return (
     <div
       style={{
-        border: '1px solid var(--border-color)',
+        border: '1px solid var(--border-code)',
         borderRadius: 'var(--radius-md)',
         backgroundColor: 'var(--bg-code)',
         overflow: 'hidden',
         margin: 'var(--space-3) 0',
-        boxShadow: 'var(--shadow-xs)',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
       }}
     >
       {/* Code Header Bar */}
@@ -60,9 +60,9 @@ export default function CodeArtifact({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '6px 12px',
+          padding: '8px 14px',
           backgroundColor: 'var(--bg-code-header)',
-          borderBottom: '1px solid var(--border-color)',
+          borderBottom: '1px solid var(--border-code)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -71,20 +71,21 @@ export default function CodeArtifact({
               fontFamily: 'var(--font-mono)',
               fontSize: 'var(--text-xs)',
               fontWeight: 600,
-              color: 'var(--text-primary)',
+              color: '#f1f5f9',
             }}
           >
             {filename}
           </span>
           <span
             style={{
-              fontSize: '0.7rem',
+              fontSize: '0.68rem',
               textTransform: 'uppercase',
-              color: 'var(--text-muted)',
-              backgroundColor: 'var(--bg-surface)',
-              padding: '1px 5px',
+              color: '#93c5fd',
+              backgroundColor: '#1e293b',
+              padding: '2px 6px',
               borderRadius: 'var(--radius-xs)',
-              border: '1px solid var(--border-color)',
+              border: '1px solid #334155',
+              fontWeight: 600,
             }}
           >
             {language}
@@ -104,21 +105,22 @@ export default function CodeArtifact({
       </div>
 
       {/* Code Body */}
-      <div style={{ position: 'relative', overflowX: 'auto' }}>
+      <div style={{ position: 'relative', overflowX: 'auto', backgroundColor: 'var(--bg-code)' }}>
         {isEditing ? (
           <div style={{ display: 'flex' }}>
             {/* Line numbers column */}
             <div
               style={{
-                padding: '12px 8px',
+                padding: '12px 10px',
                 textAlign: 'right',
                 userSelect: 'none',
-                color: 'var(--text-muted)',
+                color: '#64748b',
                 fontFamily: 'var(--font-mono)',
                 fontSize: 'var(--text-xs)',
-                lineHeight: '1.5',
-                borderRight: '1px solid var(--border-subtle)',
-                backgroundColor: 'rgba(0, 0, 0, 0.01)',
+                lineHeight: '1.55',
+                borderRight: '1px solid var(--border-code)',
+                backgroundColor: 'rgba(0, 0, 0, 0.25)',
+                minWidth: '42px',
               }}
             >
               {lines.map((_, i) => (
@@ -132,16 +134,16 @@ export default function CodeArtifact({
               spellCheck={false}
               style={{
                 flex: 1,
-                padding: '12px',
+                padding: '12px 14px',
                 fontFamily: 'var(--font-mono)',
                 fontSize: 'var(--text-xs)',
-                lineHeight: '1.5',
+                lineHeight: '1.55',
                 backgroundColor: 'transparent',
                 border: 'none',
                 outline: 'none',
                 resize: 'none',
-                minHeight: `${Math.max(lines.length * 20, 160)}px`,
-                color: 'var(--text-primary)',
+                minHeight: `${Math.max(lines.length * 22, 160)}px`,
+                color: '#f1f5f9',
                 whiteSpace: 'pre',
               }}
             />
@@ -150,10 +152,10 @@ export default function CodeArtifact({
           <div
             style={{
               display: 'flex',
-              padding: '10px 0',
+              padding: '12px 0',
               fontFamily: 'var(--font-mono)',
               fontSize: 'var(--text-xs)',
-              lineHeight: '1.5',
+              lineHeight: '1.55',
             }}
           >
             {/* Line Numbers */}
@@ -162,9 +164,9 @@ export default function CodeArtifact({
                 padding: '0 12px',
                 textAlign: 'right',
                 userSelect: 'none',
-                color: 'var(--text-muted)',
-                borderRight: '1px solid var(--border-subtle)',
-                minWidth: '40px',
+                color: '#64748b',
+                borderRight: '1px solid var(--border-code)',
+                minWidth: '42px',
               }}
             >
               {lines.map((_, i) => (
@@ -173,7 +175,7 @@ export default function CodeArtifact({
             </div>
 
             {/* Code Lines */}
-            <div style={{ padding: '0 12px', flex: 1, overflowX: 'auto' }}>
+            <div style={{ padding: '0 14px', flex: 1, overflowX: 'auto', color: '#e2e8f0' }}>
               {lines.map((line, i) => (
                 <div key={i} style={{ whiteSpace: 'pre' }}>
                   {line || ' '}
@@ -190,9 +192,9 @@ export default function CodeArtifact({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '6px 12px',
-          borderTop: '1px solid var(--border-color)',
-          backgroundColor: 'var(--bg-surface)',
+          padding: '8px 12px',
+          borderTop: '1px solid var(--border-code)',
+          backgroundColor: 'var(--bg-code-header)',
         }}
       >
         <CodeToolbar
@@ -210,12 +212,15 @@ export default function CodeArtifact({
             onClick={() => setShowOutput(!showOutput)}
             style={{
               fontSize: 'var(--text-xs)',
-              color: 'var(--text-secondary)',
+              color: '#94a3b8',
               display: 'flex',
               alignItems: 'center',
-              gap: '4px',
-              padding: '2px 6px',
+              gap: '5px',
+              padding: '4px 8px',
+              borderRadius: 'var(--radius-xs)',
             }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = '#f1f5f9')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#94a3b8')}
           >
             <Terminal size={12} />
             <span>{showOutput ? 'Hide Output' : 'View Output'}</span>

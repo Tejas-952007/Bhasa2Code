@@ -93,72 +93,64 @@ export default function SettingsPage({ onClose }) {
             </div>
           </div>
 
-          {/* 2. AI Model */}
+          {/* 2. Coding Model Selection */}
           <div>
             <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>
-              Local AI Model (Ollama)
+              Coding Model
             </label>
             <select
               value={model}
               onChange={(e) => setModel(e.target.value)}
               style={{
                 width: '100%',
-                padding: '8px 10px',
+                padding: '9px 12px',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-color)',
                 backgroundColor: 'var(--bg-surface)',
                 color: 'var(--text-primary)',
                 fontSize: 'var(--text-sm)',
                 outline: 'none',
+                cursor: 'pointer',
               }}
             >
-              <option value="qwen2.5-coder:3b">qwen2.5-coder:3b (Recommended default)</option>
-              <option value="qwen2.5-coder:7b">qwen2.5-coder:7b</option>
-              <option value="deepseek-coder:6.7b">deepseek-coder:6.7b</option>
+              <option value="qwen2.5-coder:3b">Qwen 2.5 Coder 3B (Fast & Recommended)</option>
+              <option value="qwen2.5-coder:7b">Qwen 2.5 Coder 7B (High Accuracy)</option>
+              <option value="deepseek-coder:6.7b">DeepSeek Coder 6.7B (Advanced)</option>
             </select>
           </div>
 
-          {/* 3. Code Execution */}
+          {/* 3. Code Editor Font Size */}
           <div>
             <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>
-              Code Execution
+              Editor Font Size
             </label>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '10px 12px',
-                backgroundColor: 'var(--bg-subtle)',
-                borderRadius: 'var(--radius-sm)',
-                border: '1px solid var(--border-color)',
-              }}
-            >
-              <div>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500 }}>Secure Isolated Sandbox</div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-                  Runs code in an isolated container with bounded memory and CPU.
-                </div>
-              </div>
-              <span
-                style={{
-                  fontSize: 'var(--text-xs)',
-                  color: 'var(--status-success)',
-                  fontWeight: 600,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                }}
-              >
-                <Check size={14} /> Enabled
-              </span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              {['Small (13px)', 'Default (14px)', 'Large (16px)'].map((sizeOpt, idx) => (
+                <button
+                  key={sizeOpt}
+                  type="button"
+                  style={{
+                    flex: 1,
+                    padding: '7px 8px',
+                    borderRadius: 'var(--radius-sm)',
+                    border: idx === 1 ? '2px solid var(--accent-primary)' : '1px solid var(--border-color)',
+                    backgroundColor: idx === 1 ? 'var(--accent-subtle)' : 'var(--bg-surface)',
+                    color: idx === 1 ? 'var(--accent-text)' : 'var(--text-primary)',
+                    fontWeight: idx === 1 ? 600 : 400,
+                    fontSize: 'var(--text-xs)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {sizeOpt}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* 4. Privacy & Data Storage */}
+          {/* 4. Workspace Data Management */}
           <div>
             <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>
-              Privacy & Data Storage
+              Workspace Data
             </label>
             <div
               style={{
@@ -171,25 +163,8 @@ export default function SettingsPage({ onClose }) {
                 gap: '8px',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--text-primary)' }}>
-                  Local Storage
-                </span>
-                <span
-                  style={{
-                    fontSize: 'var(--text-xs)',
-                    color: 'var(--status-success)',
-                    fontWeight: 600,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                  }}
-                >
-                  <Check size={14} /> 100% On-Device
-                </span>
-              </div>
-              <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: '1.4', margin: 0 }}>
-                All conversations, generated code, and notes are saved exclusively on your local device. No telemetry or external cloud sync.
+              <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: '1.45', margin: 0 }}>
+                Manage your local session history, saved snippets, and generated study notes.
               </p>
               <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
                 <Button
@@ -198,15 +173,15 @@ export default function SettingsPage({ onClose }) {
                   onClick={() => alert('Conversation history cleared')}
                   style={{ fontSize: 'var(--text-xs)' }}
                 >
-                  Clear History
+                  Clear Chat History
                 </Button>
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() => alert('Workspace data exported')}
+                  onClick={() => alert('Workspace notes exported')}
                   style={{ fontSize: 'var(--text-xs)' }}
                 >
-                  Export Data
+                  Export Workspace Notes
                 </Button>
               </div>
             </div>

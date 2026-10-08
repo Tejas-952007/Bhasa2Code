@@ -1,46 +1,80 @@
 import React from 'react';
 import CodeArtifact from '../code/CodeArtifact';
 import StudySections from '../study/StudySections';
+import { Sparkles } from 'lucide-react';
 
 export default function AssistantMessage({ message, isStudyMode = false }) {
   const { content, codeBlock, explanation, example, study } = message;
 
   const sectionHeaderStyle = {
     fontSize: 'var(--text-xs)',
-    fontWeight: 600,
+    fontWeight: 700,
     textTransform: 'uppercase',
-    letterSpacing: '0.05em',
+    letterSpacing: '0.06em',
     color: 'var(--text-muted)',
-    marginTop: 'var(--space-3)',
-    marginBottom: 'var(--space-1)',
+    marginTop: 'var(--space-4)',
+    marginBottom: 'var(--space-2)',
   };
 
   return (
     <div
       style={{
-        padding: 'var(--space-4) 0',
-        borderBottom: '1px solid var(--border-subtle)',
+        margin: '16px 0',
+        padding: '20px 22px',
+        backgroundColor: 'var(--bg-surface)',
+        borderRadius: 'var(--radius-lg)',
+        border: '1px solid var(--border-color)',
+        boxShadow: 'var(--shadow-sm)',
       }}
     >
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
-          marginBottom: 'var(--space-2)',
+          justifyContent: 'space-between',
+          marginBottom: '14px',
+          paddingBottom: '10px',
+          borderBottom: '1px solid var(--border-subtle)',
         }}
       >
-        <span
-          style={{
-            fontSize: 'var(--text-xs)',
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            color: 'var(--text-primary)',
-          }}
-        >
-          Bhasha2Code
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div
+            style={{
+              width: '22px',
+              height: '22px',
+              borderRadius: 'var(--radius-xs)',
+              background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+              color: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Sparkles size={12} />
+          </div>
+          <span
+            style={{
+              fontSize: 'var(--text-sm)',
+              fontWeight: 700,
+              color: 'var(--text-primary)',
+            }}
+          >
+            Bhasha2Code
+          </span>
+          <span
+            style={{
+              fontSize: '0.68rem',
+              color: 'var(--status-success)',
+              backgroundColor: 'var(--status-success-bg)',
+              border: '1px solid var(--status-success-border)',
+              padding: '1px 6px',
+              borderRadius: 'var(--radius-xs)',
+              fontWeight: 600,
+            }}
+          >
+            Local AI
+          </span>
+        </div>
       </div>
 
       {/* Main Text Content */}

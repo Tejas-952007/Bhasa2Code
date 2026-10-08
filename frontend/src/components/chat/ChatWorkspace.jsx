@@ -65,16 +65,16 @@ export default function ChatWorkspace({
         style={{
           flex: 1,
           overflowY: 'auto',
-          padding: 'var(--space-4) var(--space-6)',
+          padding: '20px 24px',
           display: 'flex',
           flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
         <div
           style={{
-            maxWidth: '820px',
+            maxWidth: '880px',
             width: '100%',
-            margin: '0 auto',
             flex: 1,
             display: 'flex',
             flexDirection: 'column',
@@ -95,7 +95,7 @@ export default function ChatWorkspace({
                   />
                 )
               )}
-              <div ref={bottomRef} style={{ height: '16px' }} />
+              <div ref={bottomRef} style={{ height: '20px' }} />
             </div>
           )}
         </div>
@@ -104,15 +104,16 @@ export default function ChatWorkspace({
       {/* Bottom Composer Bar */}
       <div
         style={{
-          padding: '12px 20px 16px',
+          padding: '12px 24px 18px',
           backgroundColor: 'var(--bg-app)',
-          borderTop: '1px solid var(--border-subtle)',
+          borderTop: '1px solid var(--border-color)',
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
         <div
           style={{
-            maxWidth: '820px',
-            margin: '0 auto',
+            maxWidth: '880px',
             width: '100%',
           }}
         >
