@@ -374,26 +374,35 @@ class LanguageDetectionResult(BaseModel):
 
 # 11. Tone Detection
 
-Tone detector identifies:
+The Tone Detection component determines the user's desired communication style to guide the Prompt Builder and local LLM response generation.
+
+### Supported Tone Classes:
+- `CASUAL`: Informal, friendly, conversational, slang-oriented requests.
+- `FORMAL`: Polite, respectful, professional, academic phrasing.
+- `SIMPLE`: Explicit requests for beginner-friendly, plain language, or non-technical analogies.
+- `TECHNICAL`: Explicit requests for low-level architecture, internals, Big-O proofs, and algorithmic mechanics.
+- `SHORT`: Explicit requests for concise, direct, one-line, or code-only responses.
+- `DETAILED`: Explicit requests for comprehensive, step-by-step walk-throughs with edge cases and examples.
+
+### Labeled Tone Dataset (T10):
+Located in `data/datasets/tone/`:
+- `tone_dataset.csv` / `tone_dataset.jsonl`: 600 balanced, unique coding queries across 6 languages (English, Hindi, Marathi, Hinglish, Marathi-English, Hindi-English).
+- Stratified splits: `tone_train.csv` (70%), `tone_validation.csv` (15%), `tone_test.csv` (15%).
+- Dataset schema: `id`, `text`, `tone`, `language`, `domain`.
+- Verified via `scripts/validate_tone_dataset.py`.
+
+### Future Tone Classifier Boundary (T11):
+The classifier (TF-IDF + Logistic Regression / Linear SVM) will consume preprocessed text from T08 and output the dominant tone with confidence:
 
 ```text
-CASUAL
-FORMAL
-SIMPLE
-TECHNICAL
-SHORT
-DETAILED
+PreprocessedText
+      ↓
+ToneClassifier (T11)
+      ↓
+ToneClassificationResult (tone, confidence)
 ```
 
-The result is used by the Prompt Builder.
-
-Example:
-
-```text
-User Tone = SIMPLE
-```
-
-can instruct the LLM to explain concepts using beginner-friendly language.
+The result instructs the Prompt Builder to modulate explanation depth and vocabulary (e.g., `User Tone = SIMPLE` instructs beginner-friendly analogies, while `User Tone = SHORT` instructs minimal code-first answers).
 
 ---
 

@@ -1,0 +1,811 @@
+"""Deterministic builder script for the Bhasha2Code labeled Tone Dataset (T10).
+
+Constructs 600 high-quality, realistic coding queries across 6 tone labels and 6 language varieties:
+- Tones: CASUAL, FORMAL, SIMPLE, TECHNICAL, SHORT, DETAILED (100 each)
+- Languages: English, Hindi, Marathi, Hinglish, Marathi-English, Hindi-English
+- Domain: coding
+"""
+
+import csv
+import json
+import os
+import random
+from typing import Dict, List
+
+DATASET_DIR = os.path.join("data", "datasets", "tone")
+RANDOM_SEED = 42
+
+TONE_SAMPLES: Dict[str, Dict[str, List[str]]] = {
+    "CASUAL": {
+        "English": [
+            "bro can you check why my python loop is infinite",
+            "dude this sql join is completely broken help me out",
+            "hey man why does this javascript promise keep rejecting",
+            "yo check this react hook real quick",
+            "bro what is wrong with my binary search code",
+            "dude how do i fix this null pointer exception",
+            "hey can you see why my django server crashed",
+            "yo why is my docker container exiting immediately",
+            "bro take a look at this recursion bug",
+            "dude check this regex for email matching",
+            "hey man write me a quick script to parse this json",
+            "yo why is my css grid looking totally weird",
+            "bro my flask api is returning 500 error help",
+            "dude why is my git rebase complaining about conflicts",
+            "hey man explain what this lambda function is doing",
+            "bro how do i reverse this linked list without extra space",
+            "yo my spring boot app won't connect to postgres help me bro",
+        ],
+        "Hindi": [
+            "अरे भाई यह कोड बार-बार क्रैश क्यों हो रहा है",
+            "यार मेरा पायथन लूप रुक ही नहीं रहा ज़रा देख",
+            "भाई यह एसक्यूएल क्वेरी बहुत स्लो चल रही है देखना",
+            "अरे दोस्त इस फंक्शन में क्या गड़बड़ है बता ना",
+            "यार यह रिकर्शन समझ ही नहीं आ रहा ज़रा देख लो",
+            "भाई मेरा डेटाबेस कनेक्ट नहीं हो रहा क्या करूँ",
+            "अरे यार यह नल पॉइंटर एरर क्यों आ रहा है",
+            "भाई इस डिक्शनरी को सॉर्ट करने का कोई जुगाड़ बता",
+            "यार यह लिस्ट कॉम्प्रिहेंशन काम नहीं कर रहा देखना",
+            "अरे भाई इस क्लास का ऑब्जेक्ट कैसे बनाऊँ बता ना",
+            "यार इस बाइनरी ट्री को ट्रैवर्स करने का कोड देख ना",
+            "भाई यह प्रॉमिस रिजेक्ट हो रहा है क्या सीन है",
+            "अरे यार यह एपीआई 404 दे रही है कुछ समझ नहीं आ रहा",
+            "भाई मेरा गिट कमिट रिजेक्ट हो गया क्या करूँ यार",
+            "यार यह सी प्रोग्राम सेगफौल्ट दे रहा है देख",
+            "अरे भाई इस स्ट्रिंग को रिवर्स करने का कोड देखना",
+            "यार मेरा जावा कोड कंपाइल नहीं हो रहा मदद कर भाई",
+        ],
+        "Marathi": [
+            "अरे भावा हा पायथन कोड का क्रॅश होतोय बघ ना",
+            "मित्रा माझा एसक्यूएल क्वेरी खूप स्लो चालतोय जरा बघ",
+            "अरे हा लूप थांबतच नाहीये काय झालंय नक्की",
+            "भावा या फंक्शनमध्ये काय चुकलंय सांग ना",
+            "मित्रा मला हा बायनरी सर्च कोड नीट चालवून दाखव ना",
+            "अरे यार हा नल पॉइंटर एरर का येतोय सांगशील का",
+            "भावा माझा डेटाबेस कनेक्ट होत नाहीये काय करू",
+            "मित्रा हा रिकर्शन मला अजिबात समजत नाहीये बघ जरा",
+            "अरे भावा हा रिएक्ट हुक का रिरेंडर करतोय बघ ना",
+            "मित्रा या लिस्ट कॉम्प्रिहेन्शन मध्ये काय गडबड आहे",
+            "भावा माझा गिट पुश रिजेक्ट झाला यार काय करू",
+            "अरे हा सी कोड सेगफॉल्ट देतोय जरा बघशील का",
+            "मित्रा या स्ट्रिंग रिव्हर्सच्या कोडमध्ये काय चूक आहे",
+            "भावा हा फ्लास्क सर्व्हर 500 एरर का देतोय बघ ना",
+            "अरे मित्रा ही डिक्शनरी सॉर्ट होत नाहीये बघ जरा",
+            "भावा या जावा क्लासचा ऑब्जेक्ट बनत नाहीये काय सीन आहे",
+            "अरे मित्रा हा प्रॉमिस रिजेक्ट का होतोय सांग ना",
+        ],
+        "Hinglish": [
+            "bro ye python code me kya scene hai check kar na",
+            "bhai mera sql join chal hi nahi raha dekh na yaar",
+            "arre bhai ye loop infinite kyu ja raha hai bata na",
+            "bro is function me error aa raha hai dekh lena",
+            "yaar ye null pointer exception dimaag kharab kar raha hai",
+            "bhai ye react state update nahi ho rahi kya karu",
+            "bro mera api 500 throw kar raha hai thoda help kar de",
+            "yaar ye git merge conflict kaise solve karu bata na",
+            "bhai ye list comprehension me syntax error kyu hai",
+            "bro is binary search code ko check kar na please",
+            "yaar ye docker container baar baar crash ho raha hai",
+            "bhai ye recursion samajh nahi aa raha help kar na",
+            "bro is string ko reverse karne ka mast tareeka bata",
+            "yaar ye spring boot app port bind nahi kar raha",
+            "bhai ye c++ pointer ka lafda kya hai dekh na",
+            "bro ye regex match nahi kar raha kyu re",
+            "yaar ye database query itna time kyu le rahi hai",
+        ],
+        "Marathi-English": [
+            "bro ha python code madhe kay bug aahe check kar na",
+            "bhai majha sql query run hot nahiye thoda bagh na",
+            "arre bro ha loop infinite chaltayt kay karu sang na",
+            "bro ya function madhe type error yetoy bagh na yaar",
+            "bhai majha react component re-render hotoy ka te sang",
+            "bro ha c++ pointer error solve kar na please",
+            "bhai ya dictionary madhun key kashi kadhaychi re",
+            "arre bro majha git push fail zalay kay karu sangu shakto ka",
+            "bro ha django server run hot nahiye bagh na zara",
+            "bhai ya binary tree code madhe kay mistake aahe sang na",
+            "bro ha api call fail hotoy bagh na kay scene aahe",
+            "bhai ya regex madhe email match hot nahiye re",
+            "bro majha flask app 404 detoy kay chuklay te bagh na",
+            "bhai ya array madhla duplicate kasa find karaycha sang na",
+            "bro ha database connection timeout detoy bagh na",
+            "bhai ya javascript async await madhe kay zol zalay sang na",
+        ],
+        "Hindi-English": [
+            "bhai is python function me kya issue hai dekh na",
+            "bro mera sql query syntax error de raha hai help kar",
+            "arre bhai ye react useEffect infinite loop me chala gaya",
+            "bro is java code me null pointer kyu aa raha hai yaar",
+            "bhai ye c++ segmentation fault kaise debug karu bata na",
+            "bro is array ko sort karne me kya dikkat hai check kar",
+            "yaar is django model me migration error aa raha hai",
+            "bhai mera git rebase atack gaya hai help karde na",
+            "bro ye docker build fail ho raha hai dekh na zara",
+            "bhai is express server me cors error aa raha hai re",
+            "bro ye binary search logic galat result de raha hai kyu",
+            "yaar ye recursion stack overflow de raha hai dekh na",
+            "bhai is dictionary me se value kaise fetch karu bro",
+            "bro ye api response parse nahi ho raha check kar na",
+            "bhai is string slice me off-by-one error aa raha hai",
+            "arre bro ye database index kyu use nahi ho raha bata na",
+        ],
+    },
+    "FORMAL": {
+        "English": [
+            "Please explain the architecture and design of this Python module.",
+            "Kindly review the implementation of this binary search algorithm.",
+            "Could you please assist in resolving this database deadlock situation?",
+            "Please provide a comprehensive code review of this pull request.",
+            "Kindly verify the correctness of this mathematical sorting logic.",
+            "Would you be so kind as to explain the functionality of this class?",
+            "Please analyze the potential security vulnerabilities in this API handler.",
+            "Could you kindly assist in optimizing this database query plan?",
+            "Please provide guidance on refactoring this legacy Java codebase.",
+            "Kindly clarify the role of this middleware function in the request pipeline.",
+            "Please assist in diagnosing the cause of this memory leak.",
+            "Could you please verify the thread-safety of this singleton implementation?",
+            "Please explain how this asynchronous event loop processes incoming tasks.",
+            "Kindly recommend best practices for structuring this microservice repository.",
+            "Please review this Dockerfile configuration for production compliance.",
+            "Could you kindly clarify the expected behavior of this unit test suite?",
+            "Please advise on the optimal indexing strategy for this relational table.",
+        ],
+        "Hindi": [
+            "कृपया इस पायथन फंक्शन के कार्यप्रणाली की व्याख्या करें।",
+            "कृपया इस बाइनरी सर्च ट्री के कोड का निरीक्षण कीजिए।",
+            "क्या आप इस डेटाबेस क्वेरी में आई त्रुटि को सुधारने में सहायता करेंगे?",
+            "कृपया इस एल्गोरिदम की शुद्धता की पुष्टि कीजिए।",
+            "कृपया इस जावास्क्रिप्ट कोड की समीक्षा प्रस्तुत करें।",
+            "कृपया इस क्लास की संरचना और कार्य को विस्तार से समझाइए।",
+            "क्या आप इस एपीआई एंडपॉइंट के सुरक्षा मानकों का विश्लेषण कर सकते हैं?",
+            "कृपया इस रिकर्सिव फंक्शन के निष्पादन क्रम को स्पष्ट कीजिए।",
+            "कृपया इस मेमोरी लीक समस्या के निवारण हेतु मार्गदर्शन प्रदान करें।",
+            "क्या आप इस माइक्रोसर्विस आर्किटेक्चर के सर्वोत्तम तौर-तरीके साझा करेंगे?",
+            "कृपया इस एसक्यूएल ट्रांजैक्शन की एसीआईडी विशेषताओं का परीक्षण करें।",
+            "कृपया इस यूनिट टेस्ट सुइट के परिणामों का मूल्यांकन कीजिए।",
+            "क्या आप इस डॉकर कॉन्फिगरेशन के सुधार हेतु सुझाव देंगे?",
+            "कृपया इस मल्टीथ्रेडेड कोड की थ्रेड-सुरक्षा का विश्लेषण करें।",
+            "कृपया इस डेटा स्ट्रक्चर के उपयोग के औचित्य को स्पष्ट करें।",
+            "कृपया इस कोड के रिफैक्टरिंग हेतु पेशेवर सिफारिशें प्रस्तुत कीजिए।",
+            "क्या आप इस कैशिंग रणनीति के लाभ और हानियों का विवरण देंगे?",
+        ],
+        "Marathi": [
+            "कृपया या पायथन फंक्शनच्या कार्यपद्धतीचे स्पष्टीकरण द्यावे.",
+            "कृपया या बायनरी सर्च अल्गोरिदमच्या अंमलबजावणीचे परीक्षण करावे.",
+            "आपण कृपया या डेटाबेस क्वेरीमधील त्रुटी निवारणासाठी मार्गदर्शन करावे.",
+            "कृपया या अल्गोरिदमच्या अचूकतेची पडताळणी करावी ही विनंती.",
+            "कृपया या जावास्क्रिप्ट कोडचे व्यावसायिक पुनरावलोकन सादर करावे.",
+            "कृपया या क्लासच्या संरचनेचे आणि उद्दिष्टांचे स्पष्टीकरण करावे.",
+            "आपण कृपया या एपीआय हँडलरमधील सुरक्षा त्रुटींचे विश्लेषण करावे.",
+            "कृपया या रिकर्सिव्ह फंक्शनच्या अंमलबजावणीचा क्रम स्पष्ट करावा.",
+            "कृपया या मेमरी लीक समस्येचे निराकरण करण्यासाठी योग्य उपाय सुचवावे.",
+            "आपण कृपया या मायक्रोसर्व्हिस रचनेच्या सर्वोत्तम पद्धती सांगाव्यात.",
+            "कृपया या एसक्यूएल ट्रॅन्झॅक्शनच्या नियमांचे मूल्यांकन करावे.",
+            "कृपया या युनिट टेस्ट निकालांचे सखोल विश्लेषण करावे ही नम्र विनंती.",
+            "आपण कृपया या डॉकर फाईलच्या कार्यक्षमतेबाबत मार्गदर्शन करावे.",
+            "कृपया या मल्टीथ्रेडेड प्रोग्रामच्या थ्रेड-सुरक्षिततेची तपासणी करावी.",
+            "कृपया या डेटा स्ट्रक्चरच्या निवडीचे कारण स्पष्ट करावे.",
+            "कृपया या जुन्या कोडच्या पुनर्रचनेसाठी योग्य सल्ला द्यावा ही विनंती.",
+            "आपण कृपया या कॅशिंग रचनेच्या परिणामांचे मूल्यमापन करावे.",
+        ],
+        "Hinglish": [
+            "Kripya is Python code ki working process explain kijiye.",
+            "Please is binary search algorithm ka formal review provide kijiye.",
+            "Kya aap kripya is database deadlock issue ko resolve karne me help karenge?",
+            "Please is function implementation ki correctness verify kijiye.",
+            "Kindly is SQL transaction logic ka formal verification perform kijiye.",
+            "Kya aap kripya is API authentication handler ka security analysis karenge?",
+            "Please is recursive method ke execution trace ko clarify kijiye.",
+            "Kindly is memory leak issue ko resolve karne ke liye guidance provide kare.",
+            "Kya aap kripya is microservice architecture ke best practices recommend karenge?",
+            "Please is Docker container configuration ka production review kijiye.",
+            "Kindly is multithreaded logic ki thread safety analyze karke bataye.",
+            "Kya aap kripya is data structure selection ka justification explain karenge?",
+            "Please is pull request ke changes ka professional assessment provide kijiye.",
+            "Kindly is caching mechanism ki efficiency evaluate karke report kijiye.",
+            "Kya aap kripya is unit test coverage ka formal evaluation perform karenge?",
+            "Please is class hierarchy ke refactoring options outline kijiye.",
+            "Kindly is database indexing strategy par professional feedback provide kare.",
+        ],
+        "Marathi-English": [
+            "Krupaya ya Python function chi karyapadhati explain karavi he vinanti.",
+            "Please ya binary search algorithm che formal code review dya.",
+            "Aapan krupaya ya database query madhil error solve karnyasaathi guidance dyave.",
+            "Krupaya ya implementation chi correctness verify karun sangavi.",
+            "Please ya React component lifecycle execution che formal explanation dya.",
+            "Aapan krupaya ya API security parameters che audit karave.",
+            "Krupaya ya recursive algorithm chya step flow che vivaran karave.",
+            "Please ya memory leak problem sathi professional solution suggest kara.",
+            "Aapan krupaya ya microservice structure saathi standard guidelines recommend karavya.",
+            "Krupaya ya Docker configuration chi production readiness check karavi.",
+            "Please ya multithreaded Java code chi synchronization safety inspect kara.",
+            "Aapan krupaya ya database index optimization saathi formal recommendations dyavya.",
+            "Krupaya ya legacy codebase chya refactoring plan che review karave.",
+            "Please ya unit test suite chya test assertions che evaluation karun dya.",
+            "Aapan krupaya ya caching layer chya architecture var opinion vyakta karave.",
+            "Krupaya ya distributed system model madhil data consistency explain karavi.",
+        ],
+        "Hindi-English": [
+            "Kripya is Python function ka formal code walkthrough provide kijiye.",
+            "Please is binary tree traversal logic ki validity confirm kijiye.",
+            "Kya aap kripya is relational database query ke execution plan ko review karenge?",
+            "Please is API authentication middleware ke security aspects evaluate kijiye.",
+            "Kindly is asynchronous task pipeline ki reliability verify kijiye.",
+            "Kya aap kripya is C++ memory allocation strategy par formal feedback denge?",
+            "Please is error handling mechanism ka professional analysis kijiye.",
+            "Kindly is microservice endpoint ke response format ka validation kijiye.",
+            "Kya aap kripya is multithreaded process ke race conditions check karenge?",
+            "Please is database normalization structure par guidance provide kijiye.",
+            "Kindly is Dockerfile configuration ko enterprise standards ke anusaar review kare.",
+            "Kya aap kripya is algorithm ke correctness proof ko explain karenge?",
+            "Please is pull request ke architectural impact ko summarize kijiye.",
+            "Kindly is caching layer ke data invalidation policy ko review kijiye.",
+            "Kya aap kripya is exception handling hierarchy ka evaluation karenge?",
+            "Please is service layer dependency injection setup ka review kijiye.",
+        ],
+    },
+    "SIMPLE": {
+        "English": [
+            "Explain this recursion concept using very simple words for a beginner.",
+            "Can you explain how binary search works in simple layman terms?",
+            "Please explain what an API is like I am a five-year-old child.",
+            "Explain object-oriented programming with easy real-life examples.",
+            "How does a hash table work, explain it in the simplest way possible.",
+            "Explain what a database index does without using complicated technical jargon.",
+            "Can you explain async and await using a simple real-world analogy?",
+            "What is a pointer in C, please explain in simple beginner-friendly language.",
+            "Explain how merge sort works using simple step-by-step everyday concepts.",
+            "Please break down how Docker works in very basic and easy terms.",
+            "Can you explain Git branches using a simple tree drawing analogy?",
+            "What is a REST API, please explain simply without complex terms.",
+            "Explain what an interface in Java does in simple everyday words.",
+            "Can you explain time complexity Big-O in the easiest possible way?",
+            "Explain what a stack and queue are using simple lunchroom line examples.",
+            "Please explain the difference between SQL and NoSQL in plain easy English.",
+            "Explain what recursion base case means in plain simple beginner words.",
+        ],
+        "Hindi": [
+            "इस रिकर्शन को बिल्कुल आसान और सरल शब्दों में समझाओ।",
+            "बाइनरी सर्च कैसे काम करता है, किसी नौसिखिए के लिए आसान भाषा में बताओ।",
+            "डेटाबेस इंडेक्स क्या होता है, बिना कठिन शब्दों के आसान उदाहरण से समझाओ।",
+            "ऑब्जेक्ट ओरिएंटेड प्रोग्रामिंग को रोजमर्रा की ज़िंदगी के आसान उदाहरण से समझाइए।",
+            "हैश टेबल का मतलब बिल्कुल बच्चों की तरह आसान भाषा में बताओ।",
+            "पॉइंटर क्या होता है, एकदम शुरुआत करने वाले छात्र की तरह आसान तरीके से समझाओ।",
+            "मर्ज सॉर्ट कैसे काम करता है, एकदम आसान और सरल स्टेप्स में समझाइए।",
+            "एपीआई क्या होती है, बिना किसी टेक्निकल शब्द के आसान भाषा में समझाइए।",
+            "डॉकर क्या होता है, किसी गैर-तकनीकी व्यक्ति को जैसे समझाते हैं वैसे बताओ।",
+            "गिट शाखाएं क्या हैं, एक साधारण पेड़ के उदाहरण से समझाइए।",
+            "रेस्ट एपीआई का क्या अर्थ है, एकदम सादे और सरल रूप में समझाइए।",
+            "जावा इंटरफेस क्या होता है, रोजमर्रा के जीवन के आसान उदाहरण से समझाओ।",
+            "बिग-ओ समय जटिलता को सबसे आसान तरीके से समझाइए।",
+            "स्टैक और कतार में क्या अंतर है, साधारण लाइन के उदाहरण से समझाइए।",
+            "एसक्यूएल और नोएसक्यूएल का अंतर बिल्कुल सरल और आम बोलचाल में बताओ।",
+            "पायथन लिस्ट और टपल में फर्क एकदम आसान भाषा में समझाइए।",
+            "असिंक और अवाइट को किसी रेस्टोरेंट के आसान उदाहरण से समझाइए।",
+        ],
+        "Marathi": [
+            "हा रिकर्शन संकल्पना अगदी सोप्या भाषेत नवशिक्यासाठी समजावून सांग.",
+            "बायनरी सर्च कसा चालतो हे साध्या आणि सोप्या शब्दांत स्पष्ट कर.",
+            "डेटाबेस इंडेक्स म्हणजे नक्की काय, कोणत्याही कठीण शब्दांशिवाय सोपे करून सांग.",
+            "ऑब्जेक्ट ओरिएंटेड प्रोग्रामिंग दैनंदिन जीवनातील सोप्या उदाहरणाने समजाव.",
+            "हॅश टेबलचे काम अगदी लहान मुलाला समजेल अशा सोप्या भाषेत सांग.",
+            "पॉइंटर काय असतो हे नवशिक्या विद्यार्थ्याला समजेल अशा साध्या भाषेत सांग.",
+            "मर्ज सॉर्ट कसा काम करतो हे एकदम सोप्या पायऱ्यांमध्ये समजावून सांग.",
+            "एपीआय म्हणजे काय, रोजच्या व्यवहारातील साध्या उदाहरणाने समजाव.",
+            "डॉकर काय असते हे कोडिंग न समजणाऱ्या माणसाला समजेल अशा सोप्या भाषेत सांग.",
+            "गिट ब्रांचेस काय आहेत हे साध्या झाडाच्या फांद्यांच्या उदाहरणाने सांग.",
+            "रेस्ट एपीआय चा अर्थ कोणत्याही तांत्रिक शब्दांशिवाय सोप्या भाषेत सांग.",
+            "जावा मधील इंटरफेस म्हणजे काय हे साध्या घरगुती उदाहरणाने समजावून सांग.",
+            "बिग-ओ नोटेशन अगदी सोप्या आणि साध्या पद्धतीने समजावून सांगशील का.",
+            "स्टॅक आणि क्यू मधील फरक साध्या रांगेच्या उदाहरणाने स्पष्ट कर.",
+            "एसक्यूएल आणि नोएसक्यूएल मधील फरक सोप्या आणि सुटसुटीत भाषेत सांग.",
+            "पायथन मधील लिस्ट आणि टपल यातील फरक अगदी सोप्या भाषेत सांग.",
+            "असिंक आणि अवाईट चा अर्थ साध्या हॉटेलच्या उदाहरणाने समजावून सांग.",
+        ],
+        "Hinglish": [
+            "bro is recursion ko ekdum simple aur easy language me samjhao na",
+            "binary search kaise kaam karta hai layman terms me simple explain karo",
+            "database index kya hai bina kisi heavy technical jargon ke simple batao",
+            "oop concepts ko daily life ke easy examples ke saath simple explain karo",
+            "hash table kya hoti hai ekdum beginner friendly tareeke se samjhao",
+            "c pointer ko ekdum basic words me simple explain karke batao",
+            "merge sort algorithm ko simple aur aasan bhasha me samjhana please",
+            "api kya hota hai like explain to a five year old kid in simple words",
+            "docker container ko simple real life analogy deke samjhao na",
+            "git branch kya hai simple aasan bhasha me beginner ke liye explain karo",
+            "rest api ko ekdum simple tareeke se samjhao bina complex terms ke",
+            "java interface kya hota hai simple kitchen analogy se explain karo",
+            "big-o time complexity ko sabse aasan aur simple way me explain karo",
+            "stack vs queue ka difference ekdum simple line ke example se batao",
+            "sql vs nosql ko simple everyday language me explain karke batao",
+            "async await ko restaurant waiter ke simple example se samjhao",
+            "python list vs tuple difference ekdum easy words me simple explain karo",
+        ],
+        "Marathi-English": [
+            "bro ha recursion concept ekdum simple language madhe samjhav na",
+            "binary search kasa chalto he simple layman words madhe explain kar",
+            "database index kay asto te bina jargon simple shabdat sang na",
+            "oop concepts daily life chya simple example sobat samjavun sang",
+            "hash table kay ahe te beginner la samjel asa ekdum simple sang",
+            "pointer concept c madhe simple beginner friendly way ne samjhav",
+            "merge sort kasa hoto te simple steps madhe aasan bhashat sang",
+            "api kay asate te five year old kid la samjel itkya simple padhatine sang",
+            "docker container simple everyday example deun explain kar na",
+            "git branches kay ahet te simple tree chya analogy ne samjav",
+            "rest api kay ahe te bina technical words simple bhashat sang",
+            "java interface concept simple real life example ne explain kar",
+            "big-o notation concept sarvat simple aani easy way madhe sang",
+            "stack aani queue madhla farak simple counter line example ne sang",
+            "sql vs nosql difference ekdum simple aani plain shabdat explain kar",
+            "async await concept simple hotel order example ne samjhav na",
+        ],
+        "Hindi-English": [
+            "is recursion logic ko bilkul simple aur easy way me samjhao",
+            "binary search algorithm ko simple beginner perspective se explain karo",
+            "database index ka funda simple bina kisi jargon ke explain karo",
+            "object oriented programming ko simple daily life example se samjhana",
+            "hash table working ko simple aur aasan bhasha me explain karo",
+            "pointers concept ko ekdum simple beginner friendly language me batao",
+            "merge sort kaise kaam karta hai simple visual analogy se samjhao",
+            "api architecture ko simple restaurant analogy se explain kijiye",
+            "docker virtualization ko simple packing box analogy se samjhao",
+            "git workflow ko simple drawing book analogy se explain karo",
+            "rest api endpoints ko simple phone directory analogy se samjhao",
+            "interface and abstract class difference simple words me samjhao",
+            "time complexity big-o notation ko simple grocery store example se batao",
+            "stack and queue data structure ko simple cafeteria example se samjhao",
+            "sql relational database vs nosql ko simple aasan bhasha me batao",
+            "asynchronous programming ko simple everyday routine se explain karo",
+        ],
+    },
+    "TECHNICAL": {
+        "English": [
+            "Analyze the algorithmic time and space complexity with formal Big-O proofs.",
+            "Explain the low-level memory layout, heap fragmentation, and garbage collection internals.",
+            "Compare the cache locality and CPU branch prediction behavior of arrays versus linked lists.",
+            "Detail the kernel-level system calls involved in this socket network read operation.",
+            "Analyze the lock contention, CAS concurrency, and memory barrier semantics here.",
+            "Explain the compilation AST transformation and bytecode generation for this statement.",
+            "Evaluate the B-Tree leaf node page split algorithm and WAL write-ahead logging mechanics.",
+            "Explain the internal implementation of vtables and dynamic dispatch in C++ compilers.",
+            "Analyze the TCP three-way handshake and congestion window windowing algorithms.",
+            "Detail the cryptographic hashing collision resistance and avalanche effect of this cipher.",
+            "Explain the transactional isolation anomaly guarantees across Read Committed and Serializable.",
+            "Evaluate the GPU SIMD vectorization and memory bandwidth saturation for this kernel.",
+            "Explain how the JVM JIT compiler optimizes escape analysis and loop unrolling.",
+            "Analyze the Raft consensus leader election and log replication fault tolerance protocols.",
+            "Explain the asynchronous epoll event loop multiplexing architecture at the OS level.",
+            "Detail the memory consistency model and happens-before relationships in concurrent Java.",
+            "Analyze the bloom filter false positive probability formula and bit array sizing equations.",
+        ],
+        "Hindi": [
+            "इस एल्गोरिदम की समय और स्थान जटिलता का औपचारिक बिग-ओ विश्लेषण प्रस्तुत करें।",
+            "निम्न-स्तरीय मेमोरी लेआउट, हीप फ्रैग्मेंटेशन और कचरा संग्रह की आंतरिक प्रणाली समझाइए।",
+            "ऐरे और लिंक्ड लिस्ट के कैश लोकैलिटी तथा सीपीयू ब्रांच प्रिडिक्शन की तुलना करें।",
+            "सॉकेट नेटवर्क रीड ऑपरेशन में प्रयुक्त कर्नेल सिस्टम कॉल्स का तकनीकी विवरण दें।",
+            "मल्टीथ्रेडिंग में लॉक कंटेंशन, सीएएस समवर्ती और मेमोरी बैरियर सिमेंटिक्स का विश्लेषण कीजिए।",
+            "कंपाइलर एएसटी रूपांतरण और बाइटकोड जनरेशन की आंतरिक प्रक्रिया को विस्तार से समझाइए।",
+            "बी-ट्री लीफ नोड स्प्लिटिंग तथा राइट-अहेड लॉगिंग (डब्ल्यूएएल) की आंतरिक कार्यप्रणाली स्पष्ट करें।",
+            "सी++ कंपाइलर में वी-टेबल और डायनामिक डिस्पैच की आंतरिक कार्यप्रणाली का तकनीकी विश्लेषण करें।",
+            "टीसीपी थ्री-वे हैंडशेक और कंजेशन विंडो एल्गोरिदम का तकनीकी विवरण प्रदान कीजिए।",
+            "क्रिप्टोग्राफिक हैश कोलिजन रेजिस्टेंस तथा एवलांच प्रभाव का गणितीय विश्लेषण प्रस्तुत करें।",
+            "रीड कमिटेड और सीरियलाइजेबल आइसोलेशन स्तरों के ट्रांजैक्शनल विसंगति गारंटियों का विश्लेषण करें।",
+            "इस कर्नेल के जीपीयू सिमडी वेक्टराइजेशन और मेमोरी बैंडविड्थ संतृप्ति का मूल्यांकन कीजिए।",
+            "जेवीएम जेआईटी कंपाइलर के एस्केप एनालिसिस और लूप अनरोलिंग ऑप्टिमाइजेशन को समझाइए।",
+            "राफ्ट सर्वसम्मति प्रोटोकॉल के लीडर चुनाव और लॉग प्रतिकृति तंत्र का तकनीकी विवरण दें।",
+            "ऑपरेटिंग सिस्टम स्तर पर एपोल इवेंट लूप मल्टीप्लेक्सिंग आर्किटेक्चर को समझाइए।",
+            "जावा में मेमोरी संगति मॉडल और हैपन्स-बिफोर संबंधों का विस्तृत तकनीकी विश्लेषण करें।",
+            "ब्लूम फिल्टर फॉल्स पॉजिटिव संभाव्यता सूत्र और बिट ऐरे साइजिंग समीकरणों का विश्लेषण कीजिए।",
+        ],
+        "Marathi": [
+            "या अल्गोरिदमची वेळ आणि जागा जटिलता औपचारिक बिग-ओ सिद्धांतासह तपासा.",
+            "मेमरी लेआउट, हीप फ्रॅगमेंटेशन आणि कचरा संकलन (गारबेज कलेक्शन) ची अंतर्गत कार्यप्रणाली स्पष्ट करा.",
+            "अॅरे आणि लिंक्ड लिस्ट मधील कॅश लोकॅलिटी आणि सीपीयू ब्रांच प्रेडिक्शनची तुलना करा.",
+            "सॉकेट नेटवर्क रीड ऑपरेशनमधील कर्नल सिस्टम कॉल्सचे तांत्रिक विश्लेषण सादर करा.",
+            "मल्टीथ्रेडिंग मधील लॉक कंटेंशन, सीएएस समवर्ती आणि मेमरी बॅरियर नियमांचे विश्लेषण करा.",
+            "कंपायलर एएसटी ट्रान्सफॉर्मेशन आणि बाइटकोड निर्मितीची अंतर्गत तांत्रिक प्रक्रिया स्पष्ट करा.",
+            "बी-ट्री नोड स्प्लिटिंग आणि राइट-अहेड लॉगिंग (डब्ल्यूएएल) च्या कार्यप्रणालीचे तांत्रिक विवरण द्या.",
+            "सी++ कंपायलर मधील व्ही-टेबल आणि डायनॅमिक डिस्पॅच अंमलबजावणीचे तांत्रिक विश्लेषण करा.",
+            "टीसीपी थ्री-वे हँडशेक आणि कन्जेशन कंट्रोल अल्गोरिदमचे सखोल तांत्रिक विवरण द्या.",
+            "क्रिप्टोग्राफिक हॅश कोल्युजन रेझिस्टन्स आणि एव्हलाँच इफेक्टचे गणितीय विश्लेषण सादर करा.",
+            "रीड कमिटेड आणि सिरीअलायझेबल मधील ट्रॅन्झॅक्शनल विसंगती हमींचे सखोल तांत्रिक परीक्षण करा.",
+            "जीपीयू सिमडी व्हेक्टरायझेशन आणि मेमरी बँडविड्थ कार्यक्षमतेचे तांत्रिक मूल्यांकन करा.",
+            "जेव्हीएम जेआयटी कंपायलरच्या एस्केप अॅनालिसिस आणि लूप अनरोलिंग ऑप्टिमायझेशन स्पष्ट करा.",
+            "राफ्ट कॉन्सेन्सस अल्गोरिदममधील लीडर इलेक्शन आणि लॉग रेप्लिकेशनचे तांत्रिक विश्लेषण करा.",
+            "ऑपरेटिंग सिस्टम पातळीवरील इपोल इव्हेंट लूप मल्टिप्लेक्सिंग संरचनेचे तांत्रिक स्पष्टीकरण द्या.",
+            "जावामधील मेमरी कन्सिस्टन्सी मॉडेल आणि हॅपन्स-बिफोर नियमांचे सखोल तांत्रिक विश्लेषण करा.",
+            "ब्लूम फिल्टर फॉल्स पॉझिटिव्ह संभाव्यता सूत्र आणि बिट अॅरे आकाराचे तांत्रिक विश्लेषण करा.",
+        ],
+        "Hinglish": [
+            "is algorithm ki asymptotic time and space complexity ka formal Big-O proof do",
+            "low-level memory alignment, heap fragmentation, aur GC internals ko technically explain karo",
+            "array vs linked list ka cache locality aur CPU instruction pipeline impact compare karo",
+            "socket read me kernel level syscall context switching ka deep technical breakdown do",
+            "lock contention, atomic CAS instructions, aur memory barriers ka concurrency analysis do",
+            "compiler AST parsing aur intermediate representation bytecode generation technically explain karo",
+            "B+ tree node split semantics aur write-ahead logging (WAL) disk flush mechanisms explain karo",
+            "C++ vtable pointer resolution aur virtual method table dispatch mechanics ko technically explain karo",
+            "TCP sliding window congestion avoidance aur slow start mechanics technically analyze karo",
+            "cryptographic SHA hash function ka bit permutation aur avalanche effect technically describe karo",
+            "database isolation levels me phantom reads aur write skew anomalies ka deep technical comparison do",
+            "GPU warp scheduling aur global memory coalescing optimization techniques explain karo",
+            "JVM C2 JIT compiler escape analysis aur scalar replacement passes ko technically evaluate karo",
+            "Raft distributed consensus state machine replication aur split-brain handling analyze karo",
+            "Linux epoll I/O multiplexing O(1) event readiness notification architecture explain karo",
+            "Java memory model (JMM) happens-before guarantee aur volatile instruction barriers analyze karo",
+            "bloom filter hash collision probability calculation aur optimal bit vector sizing explain karo",
+        ],
+        "Marathi-English": [
+            "ya algorithm chi algorithmic time aani space complexity formal Big-O madhe technically explain kar",
+            "low-level memory allocation, heap paging aani garbage collection internals technically analyze kar",
+            "array vs linked list cache misses aani branch mispredictions compare kar",
+            "network socket IO madhle OS kernel syscalls aani context switch overhead technically sang",
+            "concurrency locks, atomic CAS primitives aani memory barriers technically explain kar",
+            "compiler parsing, abstract syntax tree transformation aani bytecode emit mechanics sang",
+            "database B-Tree index node splitting aani WAL disk sync protocols technically explain kar",
+            "C++ dynamic dispatch, vtable pointer table resolution aani ABI overhead technically analyze kar",
+            "TCP transport layer connection handshake aani congestion window dynamics explain kar",
+            "cryptographic hash collision entropy aani avalanche diffusion metrics technically explain kar",
+            "database transaction isolation serializability anomalies aani MVCC mechanics detail madhe sang",
+            "GPU architecture SIMD execution threads aani memory bus latency technically evaluate kar",
+            "JVM JIT runtime compiler hotspot escape analysis optimizations technically explain kar",
+            "Raft cluster quorum election protocol aani log consistency invariance technically sang",
+            "Linux epoll file descriptor polling mechanism aani edge-triggered event model explain kar",
+            "multithreaded shared memory memory visibility aani volatile hardware fencing technically sang",
+        ],
+        "Hindi-English": [
+            "is algorithm ka algorithmic time complexity and memory footprint technically analyze kijiye",
+            "low-level pointer manipulation, memory leaks, aur heap layout ko technically breakdown karo",
+            "data structure memory cache locality and instruction prefetching ko technically compare karo",
+            "operating system kernel I/O subsystem syscalls ka technical flow evaluate kijiye",
+            "multithreaded lock contention, mutex spinlocks, aur race conditions ka technical analysis do",
+            "language grammar parsing, AST node tree, aur opcode emission ko technically explain karo",
+            "relational database B+Tree page serialization and dirty page buffer flush technically describe karo",
+            "C++ virtual inheritance, vptr offset adjustments, aur runtime dispatch technically explain karo",
+            "network protocol packet loss recovery and TCP window scaling technically analyze karo",
+            "cryptographic encryption block cipher rounds and substitution boxes technically explain karo",
+            "SQL ACID guarantees across transaction isolation levels ka rigorous technical evaluation do",
+            "parallel computing SIMD register utilization and memory coalescing technically explain karo",
+            "JVM bytecode tier-1 and tier-2 JIT compilation optimizations technically analyze kijiye",
+            "distributed consensus fault tolerance and Byzantine fault limits technically explain karo",
+            "system-level non-blocking I/O event multiplexer internals technically analyze kijiye",
+            "concurrent programming memory model cache coherency protocols technically explain karo",
+        ],
+    },
+    "SHORT": {
+        "English": [
+            "Just give me the Python code, nothing else.",
+            "Short answer only please.",
+            "Provide a one-line explanation of this error.",
+            "Give me the code directly without any explanation.",
+            "Keep the response brief and concise.",
+            "Only output the corrected SQL query.",
+            "Just write the function, no descriptions.",
+            "Give me a quick 2-bullet summary of the fix.",
+            "Direct answer only, no fluff or introduction.",
+            "Provide only the command to run.",
+            "Quick one-sentence answer only please.",
+            "Just fix the bug and return the code.",
+            "Give me a minimal code snippet for this.",
+            "Only show the regex pattern.",
+            "Keep it under 3 lines total.",
+            "Just output the JSON format.",
+            "Give me the shortest working solution.",
+        ],
+        "Hindi": [
+            "बस कोड दीजिए, कोई व्याख्या नहीं।",
+            "केवल संक्षिप्त उत्तर चाहिए।",
+            "एक लाइन में इस एरर का कारण बताइए।",
+            "सीधा सही कोड दो, बिना किसी विवरण के।",
+            "उत्तर बहुत छोटा और सीधा होना चाहिए।",
+            "सिर्फ सुधारी हुई एसक्यूएल क्वेरी लिखिए।",
+            "फंक्शन का कोड दो बस, बाकी कुछ नहीं।",
+            "केवल दो बुलेट पॉइंट में समाधान बताओ।",
+            "सीधा जवाब दो, कोई भूमिका मत बांधो।",
+            "सिर्फ रन करने वाली कमांड बताइए।",
+            "एक वाक्य में संक्षिप्त उत्तर दीजिए।",
+            "बस बग ठीक करो और कोड वापस दो।",
+            "इसके लिए न्यूनतम कोड का टुकड़ा दीजिए।",
+            "सिर्फ रेगेक्स पैटर्न दिखाइए।",
+            "उत्तर तीन पंक्तियों से कम में रखिए।",
+            "केवल जेसन फॉर्मेट आउटपुट कीजिए।",
+            "सबसे छोटा काम करने वाला कोड दीजिए।",
+        ],
+        "Marathi": [
+            "फक्त कोड दे, बाकी काहीही नको.",
+            "अगदी थोडक्यात उत्तर द्या.",
+            "एका ओळीत या एररचे कारण सांग.",
+            "थेट बरोबर कोड दे, स्पष्टीकरण देऊ नकोस.",
+            "उत्तर अगदी संक्षिप्त आणि मोजके असावे.",
+            "फक्त दुरुस्त केलेली एसक्यूएल क्वेरी दाखव.",
+            "फंक्शनचा कोड दे बस, काही समजावू नकोस.",
+            "फक्त दोन मुद्द्यांत उत्तर सांग.",
+            "थेट उत्तर दे, लांबलचक भाषण नको.",
+            "फक्त टर्मिनलवर रन करायची कमांड सांग.",
+            "एका वाक्यात मोजके उत्तर दे.",
+            "फक्त बग फिक्स कर आणि कोड पाठव.",
+            "यासाठी सर्वात छोटा कोड दे.",
+            "फक्त रेगेक्स पॅटर्न लिहून दे.",
+            "उत्तर तीन ओळींपेक्षा लहान ठेव.",
+            "फक्त जेसन फॉरमॅट आउटपुट दे.",
+            "सर्वात लहान चालणारा कोड दे.",
+        ],
+        "Hinglish": [
+            "fakt code de bro no explanation needed",
+            "short me answer do bas",
+            "ek line me explain karo ye error",
+            "just code de do bina kisi lecture ke",
+            "ekdum brief and crisp answer chahiye",
+            "only correct SQL query likho",
+            "bas function ka code likh ke do",
+            "quick two bullet points me fix batao",
+            "direct answer no extra text please",
+            "sirf run karne wali command do",
+            "one liner answer do bas",
+            "just bug fix karke code de do",
+            "minimal code snippet do iska",
+            "only regex pattern chahiye",
+            "three lines ke andar wrap up karo",
+            "just JSON format return karo",
+            "shortest working code de do",
+        ],
+        "Marathi-English": [
+            "fakt code de na bro kahi explain nako karu",
+            "short madhe sang fakt answer",
+            "one line madhe ya error cha reason sang",
+            "direct code pahije explanation nako",
+            "ekdum brief answer dya please",
+            "fakt correct SQL query type karun de",
+            "just function code de baaki nako",
+            "quick don bullets madhe sang solution",
+            "direct answer dya no intro",
+            "fakt terminal command dya",
+            "ekach sentence madhe short answer de",
+            "just bug fix kar aani code de",
+            "minimal code de ya logic sathi",
+            "only regex string dya",
+            "teen lines chya aath answer theva",
+            "fakt json data output dya",
+        ],
+        "Hindi-English": [
+            "just provide the code, no explanation",
+            "short me batao bas ek line me",
+            "only corrected code chahiye no comments",
+            "direct solution do bina explanation ke",
+            "brief me answer do please",
+            "sirf modified SQL query return karo",
+            "just function implementation de do",
+            "quick bullet point fix batao",
+            "direct output do no extra explanation",
+            "only terminal command share karo",
+            "single sentence me clarify karo bas",
+            "just fix the issue and give code",
+            "minimal snippet do is task ka",
+            "only regex pattern provide kijiye",
+            "keep response under three sentences",
+            "just JSON response return karo",
+        ],
+    },
+    "DETAILED": {
+        "English": [
+            "Explain this code step by step with complete details and examples.",
+            "Please provide a comprehensive and detailed breakdown of this implementation.",
+            "Explain every line of this function, covering all edge cases and nuances.",
+            "Give a detailed tutorial on building this feature from scratch.",
+            "Walk through the entire algorithmic execution trace with an end-to-end example.",
+            "Provide a thorough, in-depth explanation of how this authentication pipeline works.",
+            "Explain this architecture in exhaustive detail, including potential failure modes.",
+            "Give a comprehensive, detailed guide on profiling and debugging this memory leak.",
+            "Explain how this database index functions in complete, exhaustive detail.",
+            "Provide a step-by-step detailed walkthrough with full diagrams and code comments.",
+            "Explain the complete lifecycle of this request from client to database and back.",
+            "Provide an in-depth, thorough analysis of every single component in this file.",
+            "Explain this sorting algorithm thoroughly with step-by-step array state diagrams.",
+            "Give a complete, exhaustive breakdown of why this edge case produces unexpected output.",
+            "Explain every parameter, configuration option, and edge case in this setup.",
+            "Provide an extensive, detailed tutorial on writing unit tests for this controller.",
+            "Walk through the complete error recovery and retry flow in full detail.",
+        ],
+        "Hindi": [
+            "इस कोड को हर एक स्टेप के साथ पूरी तरह विस्तार से उदाहरण सहित समझाओ।",
+            "कृपया इस इम्प्लीमेंटेशन का संपूर्ण और सविस्तर विश्लेषण प्रदान करें।",
+            "इस फंक्शन की प्रत्येक पंक्ति को समझाइए, सभी संभावित त्रुटियों और सीमाओं सहित।",
+            "शुरुआत से लेकर अंत तक इस फीचर को बनाने का विस्तृत ट्यूटोरियल दीजिए।",
+            "एक संपूर्ण उदाहरण लेकर पूरे एल्गोरिदम का चरण-दर-चरण विवरण समझाइए।",
+            "यह ऑथेंटिकेशन पाइपलाइन कैसे काम करती है, इसका संपूर्ण और गहन विवरण दीजिए।",
+            "इस आर्किटेक्चर को पूरी बारीकी से समझाइए, जिसमें संभावित विफलताएं भी शामिल हों।",
+            "मेमोरी लीक को खोजने और ठीक करने की पूरी विस्तृत गाइड प्रदान कीजिए।",
+            "डेटाबेस इंडेक्स कैसे काम करता है, इसका संपूर्ण और विस्तृत विवरण प्रस्तुत करें।",
+            "हर एक स्टेप को विस्तार से कमेंट्स और उदाहरणों के साथ समझाइए।",
+            "क्लाइंट से डेटाबेस तक के पूरे अनुरोध चक्र को विस्तार से स्पष्ट कीजिए।",
+            "इस फाइल के प्रत्येक कंपोनेंट का गहन और संपूर्ण विश्लेषण प्रस्तुत करें।",
+            "इस सॉर्टिंग एल्गोरिदम को प्रत्येक चरण के ऐरे स्टेट के साथ विस्तार से समझाइए।",
+            "यह विशेष स्थिति अवांछित परिणाम क्यों दे रही है, इसका पूरा विस्तृत कारण समझाइए।",
+            "इस सेटअप के प्रत्येक पैरामीटर और कॉन्फ़िगरेशन को विस्तार से स्पष्ट कीजिए।",
+            "इस कंट्रोलर के यूनिट टेस्ट लिखने का विस्तृत और संपूर्ण ट्यूटोरियल प्रदान करें।",
+            "एरर रिकवरी और पुनः प्रयास की पूरी प्रक्रिया को विस्तार से समझाइए।",
+        ],
+        "Marathi": [
+            "हा कोड प्रत्येक पायरीसह सविस्तर उदाहरणांसह समजावून सांगा.",
+            "कृपया या अंमलबजावणीचे सर्वसमावेशक आणि सखोल विश्लेषण सादर करा.",
+            "या फंक्शनमधील प्रत्येक ओळ समजावून सांगा, सर्व संभाव्य त्रुटींसह.",
+            "सुरुवातीपासून शेवटपर्यंत हे फीचर तयार करण्याचे संपूर्ण आणि सविस्तर मार्गदर्शन करा.",
+            "एका पूर्ण उदाहरणासह या अल्गोरिदमचा प्रत्येक टप्पा सविस्तरपणे स्पष्ट करा.",
+            "ही ऑथेंटिकेशन पद्धत कशी कार्य करते याचे संपूर्ण आणि सखोल विश्लेषण द्या.",
+            "या रचनेचे सविस्तर विवरण द्या, ज्यामध्ये सर्व संभाव्य धोके स्पष्ट केले असतील.",
+            "मेमरी लीक शोधण्यासाठी आणि दुरुस्त करण्यासाठी सविस्तर आणि परिपूर्ण मार्गदर्शक द्या.",
+            "डेटाबेस इंडेक्स कसा कार्य करतो याचे संपूर्ण सविस्तर स्पष्टीकरण द्या.",
+            "प्रत्येक पायरीचे सविस्तर विवरण कोड मधील टिप्पण्यांसह समजावून सांगा.",
+            "क्लायंटपासून डेटाबेसपर्यंतच्या संपूर्ण विनंती चक्राचे सविस्तर वर्णन करा.",
+            "या फाईलमधील प्रत्येक घटकाचे सखोल आणि सर्वसमावेशक विश्लेषण सादर करा.",
+            "हा सॉर्टिंग अल्गोरिदम प्रत्येक टप्प्याच्या अॅरे स्थितीसह सविस्तर स्पष्ट करा.",
+            "हा विशिष्ट प्रसंग चुकीचा निकाल का देतो याचे संपूर्ण आणि सविस्तर कारण सांगा.",
+            "या सेटअपमधील प्रत्येक पॅरामीटर आणि पर्यायाचे सविस्तर स्पष्टीकरण द्या.",
+            "या कंट्रोलरसाठी चाचण्या लिहिण्याचे संपूर्ण आणि सविस्तर मार्गदर्शन करा.",
+            "एरर रिकव्हरी आणि पुन्हा प्रयत्न करण्याच्या संपूर्ण प्रक्रियेचे सविस्तर वर्णन करा.",
+        ],
+        "Hinglish": [
+            "is code ko step by step full detail me example ke saath samjhao",
+            "please is implementation ka comprehensive and detailed explanation provide karo",
+            "is function ki har ek line detail me explain karo covering all edge cases",
+            "scratch se ye feature build karne ka complete detailed tutorial de do",
+            "poore algorithm ka step by step execution trace detail me samjhao",
+            "ye authentication flow deeply and in complete detail explain karo",
+            "is system architecture ko thoroughly and in extensive detail break down karo",
+            "memory leak profile karne ka exhaustive detailed guide provide kijiye",
+            "database index working ko step by step poori detail me explain karo",
+            "detailed walkthrough provide karo along with code comments and examples",
+            "client se database tak complete request lifecycle detail me explain karo",
+            "is file ke har component ka in-depth detailed analysis karke batao",
+            "sorting algorithm ka har ek iteration state detail me explain karo",
+            "ye edge case unexpected output kyu deta hai detail me analyze karo",
+            "har configuration parameter ko detail me explain karke clarify karo",
+            "controller ke unit tests ka complete and detailed tutorial de do",
+            "error recovery and retry logic ko complete detail me walkthrough karo",
+        ],
+        "Marathi-English": [
+            "ha code step by step full detail madhe with examples explain kar",
+            "please ya implementation cha comprehensive aani detailed review dya",
+            "ya function chi pratyek line detail madhe samjav with all edge cases",
+            "scratch pasun he feature develop karaycha complete detailed guide dya",
+            "entire algorithm execution step by step detail madhe walkthrough kar",
+            "ya auth pipeline cha deeply detailed explanation dya na please",
+            "ha architecture exhaustively detailed way ne explain kar with failure points",
+            "memory leak debug karnyacha exhaustive detailed tutorial dya",
+            "database index kasa work karto te full detail madhe samjavun sang",
+            "step by step detailed walkthrough dya with code comments",
+            "client to database complete request flow detail madhe explain kar",
+            "ya script madhla pratyek function thoroughly detailed analyze kar",
+            "sorting algorithm cha har step detail madhe array state dakhvun sang",
+            "ha edge case ka fail hoto te complete detail madhe sang na",
+            "setup madhle sagale parameters detail madhe explain karun dya",
+            "ya controller sathi unit tests lihinyacha complete detailed tutorial dya",
+        ],
+        "Hindi-English": [
+            "is code ko thoroughly step by step detail me explain kijiye",
+            "please is architecture ka complete detailed breakdown provide karo",
+            "is method ke each and every line ko detail me samjhao with edge cases",
+            "from scratch to deployment complete detailed tutorial de dijiye",
+            "algorithm execution flow ko complete trace ke saath detail me samjhao",
+            "is security protocol ko exhaustive detail me analyze karke explain karo",
+            "system architecture ke failure modes ko detailed perspective se samjhao",
+            "memory leak detection and resolution ka detailed guide provide karo",
+            "database indexing and storage engine mechanics detail me explain kijiye",
+            "step by step detailed explanation with illustrative code examples provide karo",
+            "end to end request lifecycle ko detail me walkthrough karke batao",
+            "codebase modular structure ka detailed architectural breakdown dijiye",
+            "sorting and searching comparisons ko complete detail me cover kijiye",
+            "edge case behavioral anomaly ko detail me dissect karke samjhao",
+            "application configuration parameters ko comprehensively detail me explain karo",
+            "automated testing strategy ka full detailed implementation plan dijiye",
+        ],
+    },
+}
+
+
+def build_dataset() -> List[Dict]:
+    """Compile dataset into a list of normalized dictionary rows."""
+    dataset = []
+    seen_texts = set()
+    current_id = 1
+
+    for tone, lang_dict in TONE_SAMPLES.items():
+        for lang, samples in lang_dict.items():
+            for text in samples:
+                clean_text = text.strip()
+                if clean_text in seen_texts:
+                    raise ValueError(f"Duplicate sample detected: '{clean_text}'")
+                seen_texts.add(clean_text)
+
+                dataset.append(
+                    {
+                        "id": current_id,
+                        "text": clean_text,
+                        "tone": tone,
+                        "language": lang,
+                        "domain": "coding",
+                    }
+                )
+                current_id += 1
+
+    return dataset
+
+
+def split_dataset(
+    dataset: List[Dict],
+    train_ratio: float = 0.70,
+    val_ratio: float = 0.15,
+) -> Dict[str, List[Dict]]:
+    """Deterministically stratify dataset by tone label."""
+    rng = random.Random(RANDOM_SEED)
+
+    by_tone: Dict[str, List[Dict]] = {}
+    for item in dataset:
+        by_tone.setdefault(item["tone"], []).append(item)
+
+    train_set: List[Dict] = []
+    val_set: List[Dict] = []
+    test_set: List[Dict] = []
+
+    for tone, items in sorted(by_tone.items()):
+        shuffled = list(items)
+        rng.shuffle(shuffled)
+
+        n = len(shuffled)
+        n_train = int(round(n * train_ratio))
+        n_val = int(round(n * val_ratio))
+
+        train_chunk = shuffled[:n_train]
+        val_chunk = shuffled[n_train : n_train + n_val]
+        test_chunk = shuffled[n_train + n_val :]
+
+        train_set.extend(train_chunk)
+        val_set.extend(val_chunk)
+        test_set.extend(test_chunk)
+
+    # Sort each split deterministically by id
+    train_set.sort(key=lambda x: x["id"])
+    val_set.sort(key=lambda x: x["id"])
+    test_set.sort(key=lambda x: x["id"])
+
+    return {"train": train_set, "validation": val_set, "test": test_set}
+
+
+def write_csv(filepath: str, rows: List[Dict]) -> None:
+    """Write list of row dicts to CSV."""
+    with open(filepath, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["id", "text", "tone", "language", "domain"])
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def write_jsonl(filepath: str, rows: List[Dict]) -> None:
+    """Write list of row dicts to JSONL."""
+    with open(filepath, "w", encoding="utf-8") as f:
+        for row in rows:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def main() -> None:
+    os.makedirs(DATASET_DIR, exist_ok=True)
+
+    dataset = build_dataset()
+    print(f"Compiled {len(dataset)} unique tone samples.")
+
+    # Write complete dataset
+    full_csv = os.path.join(DATASET_DIR, "tone_dataset.csv")
+    full_jsonl = os.path.join(DATASET_DIR, "tone_dataset.jsonl")
+    write_csv(full_csv, dataset)
+    write_jsonl(full_jsonl, dataset)
+    print(f"Wrote full dataset to {full_csv} and {full_jsonl}")
+
+    # Generate splits
+    splits = split_dataset(dataset)
+    for split_name, split_rows in splits.items():
+        split_csv = os.path.join(DATASET_DIR, f"tone_{split_name}.csv")
+        write_csv(split_csv, split_rows)
+        print(f"Wrote {len(split_rows)} samples to {split_csv}")
+
+
+if __name__ == "__main__":
+    main()

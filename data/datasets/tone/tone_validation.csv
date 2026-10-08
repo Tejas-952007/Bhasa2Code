@@ -1,0 +1,91 @@
+id,text,tone,language,domain
+1,bro can you check why my python loop is infinite,CASUAL,English,coding
+26,यार यह लिस्ट कॉम्प्रिहेंशन काम नहीं कर रहा देखना,CASUAL,Hindi,coding
+28,यार इस बाइनरी ट्री को ट्रैवर्स करने का कोड देख ना,CASUAL,Hindi,coding
+30,अरे यार यह एपीआई 404 दे रही है कुछ समझ नहीं आ रहा,CASUAL,Hindi,coding
+54,arre bhai ye loop infinite kyu ja raha hai bata na,CASUAL,Hinglish,coding
+58,bro mera api 500 throw kar raha hai thoda help kar de,CASUAL,Hinglish,coding
+65,yaar ye spring boot app port bind nahi kar raha,CASUAL,Hinglish,coding
+72,bro ya function madhe type error yetoy bagh na yaar,CASUAL,Marathi-English,coding
+78,bhai ya binary tree code madhe kay mistake aahe sang na,CASUAL,Marathi-English,coding
+85,bhai is python function me kya issue hai dekh na,CASUAL,Hindi-English,coding
+89,bhai ye c++ segmentation fault kaise debug karu bata na,CASUAL,Hindi-English,coding
+90,bro is array ko sort karne me kya dikkat hai check kar,CASUAL,Hindi-English,coding
+94,bhai is express server me cors error aa raha hai re,CASUAL,Hindi-English,coding
+96,yaar ye recursion stack overflow de raha hai dekh na,CASUAL,Hindi-English,coding
+98,bro ye api response parse nahi ho raha check kar na,CASUAL,Hindi-English,coding
+105,Kindly verify the correctness of this mathematical sorting logic.,FORMAL,English,coding
+108,Could you kindly assist in optimizing this database query plan?,FORMAL,English,coding
+110,Kindly clarify the role of this middleware function in the request pipeline.,FORMAL,English,coding
+117,Please advise on the optimal indexing strategy for this relational table.,FORMAL,English,coding
+128,कृपया इस एसक्यूएल ट्रांजैक्शन की एसीआईडी विशेषताओं का परीक्षण करें।,FORMAL,Hindi,coding
+131,कृपया इस मल्टीथ्रेडेड कोड की थ्रेड-सुरक्षा का विश्लेषण करें।,FORMAL,Hindi,coding
+136,कृपया या बायनरी सर्च अल्गोरिदमच्या अंमलबजावणीचे परीक्षण करावे.,FORMAL,Marathi,coding
+143,कृपया या मेमरी लीक समस्येचे निराकरण करण्यासाठी योग्य उपाय सुचवावे.,FORMAL,Marathi,coding
+163,Kya aap kripya is data structure selection ka justification explain karenge?,FORMAL,Hinglish,coding
+166,Kya aap kripya is unit test coverage ka formal evaluation perform karenge?,FORMAL,Hinglish,coding
+170,Please ya binary search algorithm che formal code review dya.,FORMAL,Marathi-English,coding
+181,Krupaya ya legacy codebase chya refactoring plan che review karave.,FORMAL,Marathi-English,coding
+185,Kripya is Python function ka formal code walkthrough provide kijiye.,FORMAL,Hindi-English,coding
+189,Kindly is asynchronous task pipeline ki reliability verify kijiye.,FORMAL,Hindi-English,coding
+194,Please is database normalization structure par guidance provide kijiye.,FORMAL,Hindi-English,coding
+206,Explain what a database index does without using complicated technical jargon.,SIMPLE,English,coding
+214,Can you explain time complexity Big-O in the easiest possible way?,SIMPLE,English,coding
+217,Explain what recursion base case means in plain simple beginner words.,SIMPLE,English,coding
+227,"गिट शाखाएं क्या हैं, एक साधारण पेड़ के उदाहरण से समझाइए।",SIMPLE,Hindi,coding
+231,"स्टैक और कतार में क्या अंतर है, साधारण लाइन के उदाहरण से समझाइए।",SIMPLE,Hindi,coding
+232,एसक्यूएल और नोएसक्यूएल का अंतर बिल्कुल सरल और आम बोलचाल में बताओ।,SIMPLE,Hindi,coding
+240,पॉइंटर काय असतो हे नवशिक्या विद्यार्थ्याला समजेल अशा साध्या भाषेत सांग.,SIMPLE,Marathi,coding
+246,जावा मधील इंटरफेस म्हणजे काय हे साध्या घरगुती उदाहरणाने समजावून सांग.,SIMPLE,Marathi,coding
+247,बिग-ओ नोटेशन अगदी सोप्या आणि साध्या पद्धतीने समजावून सांगशील का.,SIMPLE,Marathi,coding
+253,binary search kaise kaam karta hai layman terms me simple explain karo,SIMPLE,Hinglish,coding
+256,hash table kya hoti hai ekdum beginner friendly tareeke se samjhao,SIMPLE,Hinglish,coding
+279,rest api kay ahe te bina technical words simple bhashat sang,SIMPLE,Marathi-English,coding
+283,sql vs nosql difference ekdum simple aani plain shabdat explain kar,SIMPLE,Marathi-English,coding
+292,api architecture ko simple restaurant analogy se explain kijiye,SIMPLE,Hindi-English,coding
+297,time complexity big-o notation ko simple grocery store example se batao,SIMPLE,Hindi-English,coding
+301,Analyze the algorithmic time and space complexity with formal Big-O proofs.,TECHNICAL,English,coding
+323,कंपाइलर एएसटी रूपांतरण और बाइटकोड जनरेशन की आंतरिक प्रक्रिया को विस्तार से समझाइए।,TECHNICAL,Hindi,coding
+327,क्रिप्टोग्राफिक हैश कोलिजन रेजिस्टेंस तथा एवलांच प्रभाव का गणितीय विश्लेषण प्रस्तुत करें।,TECHNICAL,Hindi,coding
+337,अॅरे आणि लिंक्ड लिस्ट मधील कॅश लोकॅलिटी आणि सीपीयू ब्रांच प्रेडिक्शनची तुलना करा.,TECHNICAL,Marathi,coding
+349,ऑपरेटिंग सिस्टम पातळीवरील इपोल इव्हेंट लूप मल्टिप्लेक्सिंग संरचनेचे तांत्रिक स्पष्टीकरण द्या.,TECHNICAL,Marathi,coding
+354,array vs linked list ka cache locality aur CPU instruction pipeline impact compare karo,TECHNICAL,Hinglish,coding
+356,"lock contention, atomic CAS instructions, aur memory barriers ka concurrency analysis do",TECHNICAL,Hinglish,coding
+360,TCP sliding window congestion avoidance aur slow start mechanics technically analyze karo,TECHNICAL,Hinglish,coding
+373,"concurrency locks, atomic CAS primitives aani memory barriers technically explain kar",TECHNICAL,Marathi-English,coding
+379,database transaction isolation serializability anomalies aani MVCC mechanics detail madhe sang,TECHNICAL,Marathi-English,coding
+380,GPU architecture SIMD execution threads aani memory bus latency technically evaluate kar,TECHNICAL,Marathi-English,coding
+388,operating system kernel I/O subsystem syscalls ka technical flow evaluate kijiye,TECHNICAL,Hindi-English,coding
+391,relational database B+Tree page serialization and dirty page buffer flush technically describe karo,TECHNICAL,Hindi-English,coding
+392,"C++ virtual inheritance, vptr offset adjustments, aur runtime dispatch technically explain karo",TECHNICAL,Hindi-English,coding
+397,JVM bytecode tier-1 and tier-2 JIT compilation optimizations technically analyze kijiye,TECHNICAL,Hindi-English,coding
+406,Only output the corrected SQL query.,SHORT,English,coding
+416,Just output the JSON format.,SHORT,English,coding
+431,सिर्फ रेगेक्स पैटर्न दिखाइए।,SHORT,Hindi,coding
+432,उत्तर तीन पंक्तियों से कम में रखिए।,SHORT,Hindi,coding
+434,सबसे छोटा काम करने वाला कोड दीजिए।,SHORT,Hindi,coding
+452,fakt code de bro no explanation needed,SHORT,Hinglish,coding
+454,ek line me explain karo ye error,SHORT,Hinglish,coding
+467,just JSON format return karo,SHORT,Hinglish,coding
+473,ekdum brief answer dya please,SHORT,Marathi-English,coding
+481,minimal code de ya logic sathi,SHORT,Marathi-English,coding
+486,short me batao bas ek line me,SHORT,Hindi-English,coding
+487,only corrected code chahiye no comments,SHORT,Hindi-English,coding
+489,brief me answer do please,SHORT,Hindi-English,coding
+499,keep response under three sentences,SHORT,Hindi-English,coding
+500,just JSON response return karo,SHORT,Hindi-English,coding
+507,"Explain this architecture in exhaustive detail, including potential failure modes.",DETAILED,English,coding
+512,"Provide an in-depth, thorough analysis of every single component in this file.",DETAILED,English,coding
+515,"Explain every parameter, configuration option, and edge case in this setup.",DETAILED,English,coding
+520,"इस फंक्शन की प्रत्येक पंक्ति को समझाइए, सभी संभावित त्रुटियों और सीमाओं सहित।",DETAILED,Hindi,coding
+529,इस फाइल के प्रत्येक कंपोनेंट का गहन और संपूर्ण विश्लेषण प्रस्तुत करें।,DETAILED,Hindi,coding
+547,हा सॉर्टिंग अल्गोरिदम प्रत्येक टप्प्याच्या अॅरे स्थितीसह सविस्तर स्पष्ट करा.,DETAILED,Marathi,coding
+552,is code ko step by step full detail me example ke saath samjhao,DETAILED,Hinglish,coding
+555,scratch se ye feature build karne ka complete detailed tutorial de do,DETAILED,Hinglish,coding
+566,har configuration parameter ko detail me explain karke clarify karo,DETAILED,Hinglish,coding
+569,ha code step by step full detail madhe with examples explain kar,DETAILED,Marathi-English,coding
+575,ha architecture exhaustively detailed way ne explain kar with failure points,DETAILED,Marathi-English,coding
+588,from scratch to deployment complete detailed tutorial de dijiye,DETAILED,Hindi-English,coding
+589,algorithm execution flow ko complete trace ke saath detail me samjhao,DETAILED,Hindi-English,coding
+594,step by step detailed explanation with illustrative code examples provide karo,DETAILED,Hindi-English,coding
+598,edge case behavioral anomaly ko detail me dissect karke samjhao,DETAILED,Hindi-English,coding

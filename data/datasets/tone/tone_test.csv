@@ -1,0 +1,91 @@
+id,text,tone,language,domain
+4,yo check this react hook real quick,CASUAL,English,coding
+5,bro what is wrong with my binary search code,CASUAL,English,coding
+12,yo why is my css grid looking totally weird,CASUAL,English,coding
+14,dude why is my git rebase complaining about conflicts,CASUAL,English,coding
+15,hey man explain what this lambda function is doing,CASUAL,English,coding
+18,अरे भाई यह कोड बार-बार क्रैश क्यों हो रहा है,CASUAL,Hindi,coding
+29,भाई यह प्रॉमिस रिजेक्ट हो रहा है क्या सीन है,CASUAL,Hindi,coding
+32,यार यह सी प्रोग्राम सेगफौल्ट दे रहा है देख,CASUAL,Hindi,coding
+36,मित्रा माझा एसक्यूएल क्वेरी खूप स्लो चालतोय जरा बघ,CASUAL,Marathi,coding
+55,bro is function me error aa raha hai dekh lena,CASUAL,Hinglish,coding
+70,bhai majha sql query run hot nahiye thoda bagh na,CASUAL,Marathi-English,coding
+76,arre bro majha git push fail zalay kay karu sangu shakto ka,CASUAL,Marathi-English,coding
+82,bhai ya array madhla duplicate kasa find karaycha sang na,CASUAL,Marathi-English,coding
+87,arre bhai ye react useEffect infinite loop me chala gaya,CASUAL,Hindi-English,coding
+95,bro ye binary search logic galat result de raha hai kyu,CASUAL,Hindi-English,coding
+101,Please explain the architecture and design of this Python module.,FORMAL,English,coding
+103,Could you please assist in resolving this database deadlock situation?,FORMAL,English,coding
+109,Please provide guidance on refactoring this legacy Java codebase.,FORMAL,English,coding
+116,Could you kindly clarify the expected behavior of this unit test suite?,FORMAL,English,coding
+129,कृपया इस यूनिट टेस्ट सुइट के परिणामों का मूल्यांकन कीजिए।,FORMAL,Hindi,coding
+130,क्या आप इस डॉकर कॉन्फिगरेशन के सुधार हेतु सुझाव देंगे?,FORMAL,Hindi,coding
+132,कृपया इस डेटा स्ट्रक्चर के उपयोग के औचित्य को स्पष्ट करें।,FORMAL,Hindi,coding
+144,आपण कृपया या मायक्रोसर्व्हिस रचनेच्या सर्वोत्तम पद्धती सांगाव्यात.,FORMAL,Marathi,coding
+157,Kya aap kripya is API authentication handler ka security analysis karenge?,FORMAL,Hinglish,coding
+158,Please is recursive method ke execution trace ko clarify kijiye.,FORMAL,Hinglish,coding
+167,Please is class hierarchy ke refactoring options outline kijiye.,FORMAL,Hinglish,coding
+171,Aapan krupaya ya database query madhil error solve karnyasaathi guidance dyave.,FORMAL,Marathi-English,coding
+176,Please ya memory leak problem sathi professional solution suggest kara.,FORMAL,Marathi-English,coding
+191,Please is error handling mechanism ka professional analysis kijiye.,FORMAL,Hindi-English,coding
+195,Kindly is Dockerfile configuration ko enterprise standards ke anusaar review kare.,FORMAL,Hindi-English,coding
+202,Can you explain how binary search works in simple layman terms?,SIMPLE,English,coding
+205,"How does a hash table work, explain it in the simplest way possible.",SIMPLE,English,coding
+210,Please break down how Docker works in very basic and easy terms.,SIMPLE,English,coding
+215,Explain what a stack and queue are using simple lunchroom line examples.,SIMPLE,English,coding
+219,"बाइनरी सर्च कैसे काम करता है, किसी नौसिखिए के लिए आसान भाषा में बताओ।",SIMPLE,Hindi,coding
+220,"डेटाबेस इंडेक्स क्या होता है, बिना कठिन शब्दों के आसान उदाहरण से समझाओ।",SIMPLE,Hindi,coding
+248,स्टॅक आणि क्यू मधील फरक साध्या रांगेच्या उदाहरणाने स्पष्ट कर.,SIMPLE,Marathi,coding
+255,oop concepts ko daily life ke easy examples ke saath simple explain karo,SIMPLE,Hinglish,coding
+270,binary search kasa chalto he simple layman words madhe explain kar,SIMPLE,Marathi-English,coding
+271,database index kay asto te bina jargon simple shabdat sang na,SIMPLE,Marathi-English,coding
+272,oop concepts daily life chya simple example sobat samjavun sang,SIMPLE,Marathi-English,coding
+275,merge sort kasa hoto te simple steps madhe aasan bhashat sang,SIMPLE,Marathi-English,coding
+289,hash table working ko simple aur aasan bhasha me explain karo,SIMPLE,Hindi-English,coding
+291,merge sort kaise kaam karta hai simple visual analogy se samjhao,SIMPLE,Hindi-English,coding
+300,asynchronous programming ko simple everyday routine se explain karo,SIMPLE,Hindi-English,coding
+316,Detail the memory consistency model and happens-before relationships in concurrent Java.,TECHNICAL,English,coding
+317,Analyze the bloom filter false positive probability formula and bit array sizing equations.,TECHNICAL,English,coding
+325,सी++ कंपाइलर में वी-टेबल और डायनामिक डिस्पैच की आंतरिक कार्यप्रणाली का तकनीकी विश्लेषण करें।,TECHNICAL,Hindi,coding
+338,सॉकेट नेटवर्क रीड ऑपरेशनमधील कर्नल सिस्टम कॉल्सचे तांत्रिक विश्लेषण सादर करा.,TECHNICAL,Marathi,coding
+339,"मल्टीथ्रेडिंग मधील लॉक कंटेंशन, सीएएस समवर्ती आणि मेमरी बॅरियर नियमांचे विश्लेषण करा.",TECHNICAL,Marathi,coding
+340,कंपायलर एएसटी ट्रान्सफॉर्मेशन आणि बाइटकोड निर्मितीची अंतर्गत तांत्रिक प्रक्रिया स्पष्ट करा.,TECHNICAL,Marathi,coding
+342,सी++ कंपायलर मधील व्ही-टेबल आणि डायनॅमिक डिस्पॅच अंमलबजावणीचे तांत्रिक विश्लेषण करा.,TECHNICAL,Marathi,coding
+352,is algorithm ki asymptotic time and space complexity ka formal Big-O proof do,TECHNICAL,Hinglish,coding
+353,"low-level memory alignment, heap fragmentation, aur GC internals ko technically explain karo",TECHNICAL,Hinglish,coding
+365,Raft distributed consensus state machine replication aur split-brain handling analyze karo,TECHNICAL,Hinglish,coding
+371,array vs linked list cache misses aani branch mispredictions compare kar,TECHNICAL,Marathi-English,coding
+385,is algorithm ka algorithmic time complexity and memory footprint technically analyze kijiye,TECHNICAL,Hindi-English,coding
+386,"low-level pointer manipulation, memory leaks, aur heap layout ko technically breakdown karo",TECHNICAL,Hindi-English,coding
+390,"language grammar parsing, AST node tree, aur opcode emission ko technically explain karo",TECHNICAL,Hindi-English,coding
+393,network protocol packet loss recovery and TCP window scaling technically analyze karo,TECHNICAL,Hindi-English,coding
+407,"Just write the function, no descriptions.",SHORT,English,coding
+408,Give me a quick 2-bullet summary of the fix.,SHORT,English,coding
+409,"Direct answer only, no fluff or introduction.",SHORT,English,coding
+411,Quick one-sentence answer only please.,SHORT,English,coding
+421,"सीधा सही कोड दो, बिना किसी विवरण के।",SHORT,Hindi,coding
+424,"फंक्शन का कोड दो बस, बाकी कुछ नहीं।",SHORT,Hindi,coding
+441,"फंक्शनचा कोड दे बस, काही समजावू नकोस.",SHORT,Marathi,coding
+462,one liner answer do bas,SHORT,Hinglish,coding
+465,only regex pattern chahiye,SHORT,Hinglish,coding
+466,three lines ke andar wrap up karo,SHORT,Hinglish,coding
+468,shortest working code de do,SHORT,Hinglish,coding
+475,just function code de baaki nako,SHORT,Marathi-English,coding
+477,direct answer dya no intro,SHORT,Marathi-English,coding
+496,just fix the issue and give code,SHORT,Hindi-English,coding
+498,only regex pattern provide kijiye,SHORT,Hindi-English,coding
+518,इस कोड को हर एक स्टेप के साथ पूरी तरह विस्तार से उदाहरण सहित समझाओ।,DETAILED,Hindi,coding
+519,कृपया इस इम्प्लीमेंटेशन का संपूर्ण और सविस्तर विश्लेषण प्रदान करें।,DETAILED,Hindi,coding
+528,क्लाइंट से डेटाबेस तक के पूरे अनुरोध चक्र को विस्तार से स्पष्ट कीजिए।,DETAILED,Hindi,coding
+532,इस सेटअप के प्रत्येक पैरामीटर और कॉन्फ़िगरेशन को विस्तार से स्पष्ट कीजिए।,DETAILED,Hindi,coding
+534,एरर रिकवरी और पुनः प्रयास की पूरी प्रक्रिया को विस्तार से समझाइए।,DETAILED,Hindi,coding
+541,"या रचनेचे सविस्तर विवरण द्या, ज्यामध्ये सर्व संभाव्य धोके स्पष्ट केले असतील.",DETAILED,Marathi,coding
+551,एरर रिकव्हरी आणि पुन्हा प्रयत्न करण्याच्या संपूर्ण प्रक्रियेचे सविस्तर वर्णन करा.,DETAILED,Marathi,coding
+559,memory leak profile karne ka exhaustive detailed guide provide kijiye,DETAILED,Hinglish,coding
+564,sorting algorithm ka har ek iteration state detail me explain karo,DETAILED,Hinglish,coding
+572,scratch pasun he feature develop karaycha complete detailed guide dya,DETAILED,Marathi-English,coding
+573,entire algorithm execution step by step detail madhe walkthrough kar,DETAILED,Marathi-English,coding
+583,setup madhle sagale parameters detail madhe explain karun dya,DETAILED,Marathi-English,coding
+584,ya controller sathi unit tests lihinyacha complete detailed tutorial dya,DETAILED,Marathi-English,coding
+592,memory leak detection and resolution ka detailed guide provide karo,DETAILED,Hindi-English,coding
+600,automated testing strategy ka full detailed implementation plan dijiye,DETAILED,Hindi-English,coding

@@ -348,7 +348,7 @@ DETAILED
 - Training/test split created
 - Data quality checked
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 
