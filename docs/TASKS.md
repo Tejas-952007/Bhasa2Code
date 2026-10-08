@@ -544,15 +544,20 @@ Convert current user request, T14 NLP result, T15 Context Package, Study Mode st
 
 **Goal:** Connect backend to local Ollama service.
 
-**Dependencies:** T03
+**Dependencies:** T03, T14, T15, T16
 
 **Acceptance Criteria:**
 
-- Ollama health check works
-- Model configuration externalized
-- Backend detects unavailable model safely
+- Ollama health check works (`/api/version` and `/api/tags` via `OllamaClient.health_check()`)
+- Model configuration externalized via `OllamaSettings` (`OLLAMA_BASE_URL`, `OLLAMA_MODEL`, `OLLAMA_TIMEOUT_SECONDS`, `OLLAMA_TEMPERATURE`, `OLLAMA_NUM_CTX`)
+- Backend detects unavailable daemon (`OllamaUnavailableError`) and missing model (`OllamaModelNotFoundError`) safely
+- Synchronous completion via `OllamaClient.generate()` parsing tokens, nanosecond-to-millisecond durations, and completion flags
+- `LLMService` integrates directly with T16 `PromptSpecification` and preserves code keywords & instruction hierarchy
+- 21 isolated unit tests with mocked `httpx.MockTransport` passing in <0.5s
+- 7 live integration & benchmark tests validating smoke, full pipeline, Study Mode, explicit format, code-only, multi-turn follow-up, and latency statistics
+- Complete documentation in `docs/06_architecture/ARCHITECTURE.md` and `docs/11_development/OLLAMA_INTEGRATION.md`
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 

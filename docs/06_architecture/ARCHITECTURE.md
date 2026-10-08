@@ -830,24 +830,55 @@ The Prompt Builder must not blindly insert every database field into every promp
 
 ---
 
-# 21. LLM Service
+# 21. LLM Service & Ollama Integration (T17)
 
-Technology:
+Implemented in `backend/app/llm/`.
+
+The LLM Service coordinates between the Prompt Builder (`T16`) and the local Ollama LLM daemon (`T17`).
+
+### Pipeline Progression:
 
 ```text
-Ollama
+User Message
+      ↓
+T14 NLP Pipeline (Preprocessing → Language → Tone → Intent)
+      ↓
+T15 Context Manager (Sliding window history, Code artifacts, Ownership checks)
+      ↓
+T16 Prompt Builder (Language/Tone/Intent policies, Study Mode, Section Planning)
+      ↓
+PromptSpecification (Structured specification & .render())
+      ↓
+T17 LLM Service (OllamaClient HTTP transport over 127.0.0.1:11434)
+      ↓
+Local Ollama Model (qwen2.5-coder:3b)
+      ↓
+LLMResponse (Generated text, token counts, latency ms, completion flag)
 ```
 
-Responsibilities:
-
-- Connect to local model
-- Send prompts
-- Stream output
-- Handle model errors
-- Track latency
-- Return structured/raw output to Response Engine
-
-Ollama must remain isolated behind an internal service interface.
+### Core Architectural Guarantees:
+1. **Strictly Local & Offline**:
+   - Zero external cloud API calls (no OpenAI, Gemini, Anthropic, or external endpoints).
+   - Operates exclusively over `http://127.0.0.1:11434`.
+2. **Hardware Adaptive**:
+   - Discovers installed models via `GET /api/tags`.
+   - Primary default model: `qwen2.5-coder:3b` (1.9 GB, 3.1B params).
+   - Supports automated CPU fallback when NVIDIA GPU driver communication is unavailable.
+   - Model name is configurable via `OLLAMA_MODEL` environment variable.
+3. **Transport Isolation (`OllamaClient`)**:
+   - Isolates `httpx` transport from the rest of the application.
+   - Maps network errors to domain exceptions (`OllamaUnavailableError`, `OllamaModelNotFoundError`, `OllamaTimeoutError`, `OllamaGenerationError`).
+4. **Prompt Builder Integration**:
+   - Consumes `PromptSpecification` directly without reconstructing or altering prompt policies.
+   - Dispatches deterministic prompt rendered by `spec.render()`.
+5. **Code Preservation**:
+   - Never post-processes, modifies, or translates programming syntax or keywords.
+6. **Prompt Injection Boundary**:
+   - Treats conversation history and user code strictly as passive context data.
+   - Security directives explicitly prohibit execution of system-level overrides located in user snippets.
+7. **Privacy-Preserving Telemetry**:
+   - Does not log complete prompts or code by default.
+   - Emits structured telemetry containing model name, total duration (ms), prompt tokens, and completion tokens.
 
 ---
 
