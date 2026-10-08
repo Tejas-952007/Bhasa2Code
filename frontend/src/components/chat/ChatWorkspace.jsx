@@ -12,6 +12,7 @@ export default function ChatWorkspace({
   errorMessage = null,
   onRetry = null,
   onSendMessage,
+  onUpdateMessageCode = null,
   activeSessionTitle = 'Python Calculator',
   contextHint = 'Using current session context',
 }) {
@@ -95,6 +96,10 @@ export default function ChatWorkspace({
                     key={msg.id}
                     message={msg}
                     isStudyMode={isStudyMode}
+                    onSelectSuggestion={(s) => onSendMessage && onSendMessage(s)}
+                    onCodeChange={(newCode) =>
+                      onUpdateMessageCode && onUpdateMessageCode(msg.id, newCode)
+                    }
                   />
                 )
               )}

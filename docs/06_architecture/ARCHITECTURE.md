@@ -150,8 +150,20 @@ Application Orchestration
      ↓
 JSON Response
      ↓
-React
+T21 Real API Integration
+     ↓
+API Response
+     ↓
+T22 Response Formatting
+     ├── Text (MarkdownContent)
+     ├── Code (CodeArtifact + Inline Edit)
+     ├── Study (VisualFlowchart + Sections)
+     ├── Validation (ValidationDetails)
+     └── Execution (ExecutionResult Console)
+     ↓
+Final Coding & Study Workspace
 ```
+
 
 ---
 

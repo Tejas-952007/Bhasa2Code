@@ -223,6 +223,33 @@ export function adaptChatResponse(chatResp) {
     };
   }
 
+  const intent = chatResp.nlp?.intent || '';
+  const isFollowUp = intent === 'MODIFY_CODE' || intent === 'DEBUG_CODE';
+
+  // Build subtle, relevant suggestions (max 3-4)
+  const suggestions = [];
+  if (codeBlock) {
+    if (!isFollowUp) {
+      suggestions.push('Add input validation');
+      suggestions.push('Handle division by zero');
+      suggestions.push('Explain this code step by step');
+    } else {
+      suggestions.push('Add unit tests');
+      suggestions.push('Format with type annotations');
+      suggestions.push('Run secure sandbox');
+    }
+  }
+
+  // Extract changes if this is an update
+  const changes = [];
+  if (isFollowUp && chatResp.assistant_message.explanation) {
+    chatResp.assistant_message.explanation.forEach((exp) => {
+      if (/add|handl|fix|updat|check|validat/i.test(exp)) {
+        changes.push(exp);
+      }
+    });
+  }
+
   const assistantMessage = {
     id: chatResp.assistant_message.id,
     role: 'assistant',
@@ -232,6 +259,10 @@ export function adaptChatResponse(chatResp) {
     codeBlock,
     study,
     nlp: chatResp.nlp,
+    suggestions,
+    changes: changes.length > 0 ? changes : undefined,
+    isFollowUp,
+    activeContext: isFollowUp && primaryCode ? { filename: primaryCode.filename } : null,
   };
 
   const userMessage = {

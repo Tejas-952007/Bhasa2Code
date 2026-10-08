@@ -131,6 +131,8 @@ def get_session(
         metadata = msg.context_metadata or {}
         code_block = metadata.get("code_block")
         study = metadata.get("study")
+        explanation = metadata.get("explanation") or []
+        example = metadata.get("example")
 
         # If not stored in context_metadata, look up generated code artifacts
         if not code_block:
@@ -155,6 +157,8 @@ def get_session(
                 tone=msg.tone,
                 code_block=code_block,
                 study=study,
+                explanation=explanation,
+                example=example,
                 created_at=msg.created_at.isoformat() if msg.created_at else "",
             )
         )

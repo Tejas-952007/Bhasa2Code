@@ -60,7 +60,10 @@ class MessageItemResponse(BaseModel):
     tone: Optional[str] = None
     code_block: Optional[Dict[str, Any]] = None
     study: Optional[Dict[str, Any]] = None
+    explanation: Optional[List[str]] = Field(default_factory=list)
+    example: Optional[str] = None
     created_at: str
+
 
 
 class SessionDetailResponse(BaseModel):

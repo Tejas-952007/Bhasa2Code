@@ -199,6 +199,23 @@ export default function App() {
     }
   };
 
+  const handleUpdateMessageCode = (messageId, newCode) => {
+    setMessages((prev) =>
+      prev.map((m) => {
+        if (m.id === messageId && m.codeBlock) {
+          return {
+            ...m,
+            codeBlock: {
+              ...m.codeBlock,
+              code: newCode,
+            },
+          };
+        }
+        return m;
+      })
+    );
+  };
+
   const handleSelectView = (view) => {
     if (view === 'study') {
       setIsStudyMode(true);
@@ -232,6 +249,7 @@ export default function App() {
           errorMessage={errorMessage}
           onRetry={lastFailedPrompt ? () => handleSendMessage(lastFailedPrompt) : null}
           onSendMessage={handleSendMessage}
+          onUpdateMessageCode={handleUpdateMessageCode}
           activeSessionTitle={currentSession ? currentSession.title : 'Workspace'}
         />
       )}
