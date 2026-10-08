@@ -1,0 +1,17 @@
+# Minimal secure Python sandbox image
+FROM python:3.12-slim
+
+# Security: Create unprivileged non-root user
+RUN groupadd -g 1000 sandbox && \
+    useradd -u 1000 -g sandbox -m -s /bin/sh sandbox && \
+    mkdir -p /workspace && \
+    chown -R sandbox:sandbox /workspace
+
+WORKDIR /workspace
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+USER sandbox
+
+CMD ["python3", "--version"]

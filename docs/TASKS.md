@@ -584,33 +584,28 @@ Convert current user request, T14 NLP result, T15 Context Package, Study Mode st
 
 ---
 
-# 9. EPIC E05 — Prompt Builder
+### T19 — Safe Code Sandbox
 
-### T19 — Implement Prompt Templates
+**Goal:** Implement secure, isolated Docker runtime execution layer for validated user and LLM-generated code.
 
-Prompt categories:
-
-```text
-Code Generation
-Debugging
-Explanation
-Optimization
-Conversion
-Review
-Suggestion
-Study
-```
-
-**Dependencies:** T16, T18
+**Dependencies:** T18
 
 **Acceptance Criteria:**
 
-- Prompts centralized
-- Context variables supported
-- User language respected
-- Requested tone respected
+- Docker-based isolated code execution for Python, C, C++, Java, and JavaScript (SQL excluded from runtime execution)
+- Mandatory T18 validation gate: syntactically invalid code is rejected (`VALIDATION_FAILED`) without starting Docker
+- Strict container isolation: `--network none`, `--cap-drop ALL`, `--read-only` rootfs, non-root user (`sandbox: UID 1000`)
+- Hardened resource constraints: wall-clock timeout (3.0s), memory limit (256MB), CPU limit (0.5), PID limit (64), output limit (64KB)
+- In-memory tarball injection to ephemeral Docker volumes: zero host paths or project files mounted
+- Execution status model (`SUCCESS`, `RUNTIME_ERROR`, `TIMEOUT`, `RESOURCE_LIMIT`, `VALIDATION_FAILED`, `UNSUPPORTED`, `SANDBOX_ERROR`, `OUTPUT_LIMIT`)
+- Structured `SandboxResult` schema capturing bounded stdout, stderr, exit code, duration_ms, and sanitized diagnostics
+- Guaranteed cleanup of temporary containers and volumes in `finally` blocks
+- 39 offline unit tests passing without requiring Docker
+- 19 live integration tests passing under `RUN_DOCKER_SANDBOX=1` verifying the complete mandatory security matrix
+- Architecture & development documentation complete (`docs/11_development/SAFE_CODE_SANDBOX.md`)
 
-**Status:** TODO
+**Status:** DONE
+
 
 ---
 

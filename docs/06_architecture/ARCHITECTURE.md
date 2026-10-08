@@ -998,6 +998,30 @@ ResponseValidationResult
 T19 Safe Code Sandbox (Runtime Execution)
 ```
 
+### Complete Code Evaluation Pipeline:
+```text
+T17 Ollama
+      ↓
+Generated Response
+      ↓
+T18 Validation
+      ↓
+T19 Safe Sandbox
+      ├── Python
+      ├── C
+      ├── C++
+      ├── Java
+      └── JavaScript
+      ↓
+Runtime Result
+      ↓
+Future Response Formatter / Storage
+```
+
+### Core Distinction:
+- **T18 = Is this code syntactically valid?** (Static and AST-level syntax checks without running code)
+- **T19 = What happens when this code runs safely?** (Isolated container execution with bounds on time, memory, CPU, PIDs, output, and network)
+
 ### Critical Operational Boundaries:
 - **T17 = Generation**: Generates conversational text, explanations, and code.
 - **T18 = Static/Syntax Validation**: Static and parser-assisted syntax verification without code execution.
