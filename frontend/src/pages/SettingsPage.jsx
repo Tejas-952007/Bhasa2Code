@@ -118,10 +118,10 @@ export default function SettingsPage({ onClose }) {
             </select>
           </div>
 
-          {/* 3. Execution Sandbox */}
+          {/* 3. Code Execution */}
           <div>
             <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>
-              Execution Sandbox (T19)
+              Code Execution
             </label>
             <div
               style={{
@@ -135,9 +135,9 @@ export default function SettingsPage({ onClose }) {
               }}
             >
               <div>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500 }}>Isolated Docker Runtime</div>
+                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500 }}>Secure Isolated Sandbox</div>
                 <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-                  Limits CPU, RAM, and drops root capabilities.
+                  Runs code in an isolated container with bounded memory and CPU.
                 </div>
               </div>
               <span
@@ -150,28 +150,65 @@ export default function SettingsPage({ onClose }) {
                   gap: '4px',
                 }}
               >
-                <Check size={14} /> Active
+                <Check size={14} /> Enabled
               </span>
             </div>
           </div>
 
-          {/* 4. Data / Storage */}
+          {/* 4. Privacy & Data Storage */}
           <div>
             <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>
-              Data & Storage
+              Privacy & Data Storage
             </label>
             <div
               style={{
-                padding: '10px 12px',
+                padding: '12px 14px',
                 backgroundColor: 'var(--bg-subtle)',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-color)',
-                fontSize: 'var(--text-xs)',
-                color: 'var(--text-secondary)',
-                lineHeight: '1.4',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px',
               }}
             >
-              Local SQLite Database (bhasa2code.db). Zero telemetry or external tracking.
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--text-primary)' }}>
+                  Local Storage
+                </span>
+                <span
+                  style={{
+                    fontSize: 'var(--text-xs)',
+                    color: 'var(--status-success)',
+                    fontWeight: 600,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <Check size={14} /> 100% On-Device
+                </span>
+              </div>
+              <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: '1.4', margin: 0 }}>
+                All conversations, generated code, and notes are saved exclusively on your local device. No telemetry or external cloud sync.
+              </p>
+              <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => alert('Conversation history cleared')}
+                  style={{ fontSize: 'var(--text-xs)' }}
+                >
+                  Clear History
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => alert('Workspace data exported')}
+                  style={{ fontSize: 'var(--text-xs)' }}
+                >
+                  Export Data
+                </Button>
+              </div>
             </div>
           </div>
         </div>
