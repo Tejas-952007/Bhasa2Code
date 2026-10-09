@@ -711,27 +711,32 @@ Transform the raw structured backend response into a consistent, professional, r
 
 ---
 
-### T24 — Implement Code Response Parser
+### T24 — Real-Time Code Validation & Execution UX
 
-Expected output structure:
-
-```text
-Explanation
-Code
-Language
-Warnings
-Suggestions
-```
-
-**Dependencies:** T23
+**Dependencies:** T18, T19, T20, T21, T22, T23
 
 **Acceptance Criteria:**
 
-- Code extracted reliably
-- Markdown/code fences handled
-- Plain-text responses handled safely
+- [x] Code editor state is reliable with single source of truth (draft when editing, displayed code otherwise)
+- [x] Debounced syntax validation (750ms) implemented for real-time feedback during edits
+- [x] Monotonic revision tracking (`revisionRef`) binds validation and execution to exact source revisions
+- [x] Stale validation and execution states immediately marked or cleared upon typing
+- [x] Stale network responses discarded when belonging to older revisions (`validatedRevisionRef`)
+- [x] Inline diagnostics render accurate line, column, and severity badges with clean formatting
+- [x] Explicit Validate action checks latest source revision
+- [x] Safe Run action dispatches exact current code to backend sandbox runner
+- [x] Full validation state model supported (`NOT_VALIDATED`, `VALIDATING`, `VALID`, `INVALID`, `UNSUPPORTED`, `ERROR`)
+- [x] Full execution state model supported (`IDLE`, `VALIDATING`, `RUNNING`, `SUCCESS`, `RUNTIME_ERROR`, `TIMEOUT`, `RESOURCE_LIMIT`, `OUTPUT_LIMIT`, `VALIDATION_FAILED`, `UNSUPPORTED`, `SANDBOX_ERROR`)
+- [x] Standard input (stdin) supported via collapsible program input drawer
+- [x] Stale execution output banner warns user when code changes after a run
+- [x] Duplicate action prevention locks concurrent Run/Validate triggers
+- [x] Flowcharts and diagrams strictly excluded from validation and execution paths
+- [x] Frontend tests pass (`npm test`: 15 passed)
+- [x] Backend regression suite passes (`pytest -q`: 481 passed)
+- [x] Production build passes (`npm run build`)
+- [x] Documentation complete in `docs/11_development/REALTIME_CODE_WORKSPACE.md` and `docs/06_architecture/ARCHITECTURE.md`
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 

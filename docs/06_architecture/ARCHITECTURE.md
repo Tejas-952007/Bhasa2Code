@@ -1083,6 +1083,45 @@ Future Response Formatter / Storage
    - Unrecognized/unsupported languages $\to$ `UNSUPPORTED`
    - Mixture of valid and unsupported $\to$ `UNSUPPORTED`
 
+---
+
+# 24.2. Real-Time Code Workspace & Execution Architecture (T24)
+
+Implemented across `frontend/src/components/code/CodeArtifact.jsx`, `CodeToolbar.jsx`, `ValidationStatus.jsx`, `ValidationDetails.jsx`, `ExecutionResult.jsx`, and backend `backend/app/api/routes/code.py`.
+
+The Real-Time Code Workspace connects interactive editing, debounced syntax validation (T18), and secure containerized runtime execution (T19) while enforcing strict revision synchronization.
+
+### Revision-Matched Workspace Flow:
+
+```text
+Current Source Revision
+         |
+         v
+Debounced T18 Validation
+         |
+         v
+Revision-Matched Diagnostics
+         |
+         v
+Explicit Run Action
+         |
+         v
+Server-Side T18 Gate
+         |
+         v
+T19 Isolated Sandbox
+         |
+         v
+Revision-Matched Execution Result
+```
+
+### Architectural Principles:
+1. **Source of Truth**: The active editor content (draft when editing, displayed code otherwise) is the sole source of truth for all code actions (`Validate`, `Run`, `Save`, `Copy`).
+2. **Monotonic Revision Tracking**: Each edit increments a local revision counter. Validation and execution results are keyed to this revision ID. Late or in-flight API responses for older revisions are discarded automatically.
+3. **Debounced Validation**: Edits schedule a 750ms debounced validation check (`POST /api/v1/code/validate`) and immediately flag existing validation as `NOT_VALIDATED` and execution output as stale.
+4. **Mandatory Server-Side T18 Gate**: The backend `POST /api/v1/code/run` independently executes T18 AST/syntax validation on the exact submitted code before invoking T19 Docker sandbox. Frontend validation badges never authorize execution on the server.
+5. **Execution Isolation & Stale Protection**: Docker execution outputs are linked to the specific code revision that was run. If code is modified after running, execution outputs display a clear stale warning banner or are invalidated to prevent presenting obsolete outputs as current.
+6. **Standard Input Support**: Interactive programs consuming stdin pass bounded standard input securely to the container sandbox.
 
 ---
 

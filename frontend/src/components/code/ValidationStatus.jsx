@@ -22,6 +22,13 @@ export default function ValidationStatus({
       bg: 'var(--status-error-bg)',
       border: 'var(--status-error-border)',
     },
+    VALIDATING: {
+      label: 'Validating...',
+      icon: Clock,
+      color: '#60a5fa',
+      bg: '#1e293b',
+      border: '#3b82f6',
+    },
     NOT_VALIDATED: {
       label: 'Not Validated',
       icon: AlertCircle,
@@ -36,9 +43,23 @@ export default function ValidationStatus({
       bg: 'var(--status-warning-bg)',
       border: 'var(--status-warning-border)',
     },
+    ERROR: {
+      label: 'Validation Error',
+      icon: AlertCircle,
+      color: 'var(--status-error)',
+      bg: 'var(--status-error-bg)',
+      border: 'var(--status-error-border)',
+    },
   };
 
   const executionMap = {
+    RUNNING: {
+      label: 'Running...',
+      icon: Clock,
+      color: '#60a5fa',
+      bg: '#1e293b',
+      border: '#3b82f6',
+    },
     SUCCESS: {
       label: 'Ran successfully',
       icon: Check,
@@ -63,6 +84,34 @@ export default function ValidationStatus({
     RESOURCE_LIMIT: {
       label: 'Resource limit',
       icon: AlertTriangle,
+      color: 'var(--status-error)',
+      bg: 'var(--status-error-bg)',
+      border: 'var(--status-error-border)',
+    },
+    OUTPUT_LIMIT: {
+      label: 'Output limit',
+      icon: AlertTriangle,
+      color: 'var(--status-warning)',
+      bg: 'var(--status-warning-bg)',
+      border: 'var(--status-warning-border)',
+    },
+    VALIDATION_FAILED: {
+      label: 'Validation failed',
+      icon: X,
+      color: 'var(--status-error)',
+      bg: 'var(--status-error-bg)',
+      border: 'var(--status-error-border)',
+    },
+    UNSUPPORTED: {
+      label: 'Unsupported',
+      icon: AlertTriangle,
+      color: 'var(--status-warning)',
+      bg: 'var(--status-warning-bg)',
+      border: 'var(--status-warning-border)',
+    },
+    SANDBOX_ERROR: {
+      label: 'Sandbox error',
+      icon: AlertCircle,
       color: 'var(--status-error)',
       bg: 'var(--status-error-bg)',
       border: 'var(--status-error-border)',

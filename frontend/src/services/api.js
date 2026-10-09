@@ -217,17 +217,19 @@ export async function* streamMessage({ sessionId = null, message, studyMode = fa
 // Code Validate and Run
 // ---------------------------------------------------------------------------
 
-export async function validateCode({ language, code }) {
+export async function validateCode({ language, code, signal }) {
   return await request('/code/validate', {
     method: 'POST',
     body: JSON.stringify({ language, code }),
+    signal,
   });
 }
 
-export async function runCode({ language, code, stdin = '' }) {
+export async function runCode({ language, code, stdin = '', signal }) {
   return await request('/code/run', {
     method: 'POST',
     body: JSON.stringify({ language, code, stdin }),
+    signal,
   });
 }
 

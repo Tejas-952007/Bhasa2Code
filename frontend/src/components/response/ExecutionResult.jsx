@@ -14,6 +14,7 @@ export default function ExecutionResult({
   durationMs = 0,
   diagnostics = [],
   rawOutput = '',
+  isStale = false,
   onClose = null,
 }) {
   const [copied, setCopied] = useState(false);
@@ -127,6 +128,23 @@ export default function ExecutionResult({
           >
             {headerTitle}
           </span>
+          {isStale && (
+            <span
+              style={{
+                fontSize: '0.65rem',
+                color: '#fbbf24',
+                backgroundColor: 'rgba(217, 119, 6, 0.15)',
+                border: '1px solid #d97706',
+                borderRadius: 'var(--radius-xs)',
+                padding: '1px 5px',
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em',
+              }}
+            >
+              Previous Revision
+            </span>
+          )}
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -184,6 +202,23 @@ export default function ExecutionResult({
           )}
         </div>
       </div>
+
+      {isStale && (
+        <div
+          style={{
+            padding: '5px 14px',
+            backgroundColor: '#291804',
+            color: '#fde68a',
+            fontSize: '0.68rem',
+            borderBottom: '1px solid #78350f',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+          }}
+        >
+          <span>⚠️ Code was modified after this execution. Re-run to see updated output.</span>
+        </div>
+      )}
 
       {/* Output Console Pre */}
       <pre

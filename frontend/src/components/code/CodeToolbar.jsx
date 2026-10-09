@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Copy, Check, Edit3, ShieldCheck, Play, Save, X, Loader2 } from 'lucide-react';
+import { Copy, Check, Edit3, ShieldCheck, Play, Save, X, Loader2, ArrowDownToLine } from 'lucide-react';
 
 /**
  * CodeToolbar
  * Primary action bar for CodeArtifact:
- * - Normal mode: Copy, Edit, Validate, Run
- * - Edit mode: Save, Cancel
+ * - Normal mode: Copy, Edit, Validate, Run, Stdin
+ * - Edit mode: Save, Cancel, Validate, Run, Stdin
  */
 export default function CodeToolbar({
   onCopy,
@@ -14,6 +14,8 @@ export default function CodeToolbar({
   onCancel,
   onValidate,
   onRun,
+  onToggleStdin = null,
+  showStdin = false,
   isEditing = false,
   isRunning = false,
   isValidating = false,
@@ -41,73 +43,74 @@ export default function CodeToolbar({
     fontWeight: 500,
   };
 
-  if (isEditing) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-        <button
-          type="button"
-          onClick={onSave}
-          title="Save code changes"
-          style={{
-            ...btnStyle,
-            backgroundColor: '#15803d',
-            color: '#ffffff',
-            borderColor: '#16a34a',
-            fontWeight: 600,
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#166534')}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#15803d')}
-        >
-          <Save size={13} />
-          <span>Save</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={onCancel}
-          title="Cancel editing without saving"
-          style={{
-            ...btnStyle,
-            backgroundColor: '#374151',
-            color: '#e5e7eb',
-            borderColor: '#4b5563',
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#4b5563')}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#374151')}
-        >
-          <X size={13} />
-          <span>Cancel</span>
-        </button>
-      </div>
-    );
-  }
-
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-      <button
-        type="button"
-        style={btnStyle}
-        onClick={handleCopy}
-        title="Copy code to clipboard"
-        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#333c4d')}
-        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#262d3d')}
-      >
-        {copied ? <Check size={13} color="#34d399" /> : <Copy size={13} />}
-        <span>{copied ? 'Copied' : 'Copy'}</span>
-      </button>
+      {isEditing ? (
+        <>
+          <button
+            type="button"
+            onClick={onSave}
+            title="Save code changes"
+            style={{
+              ...btnStyle,
+              backgroundColor: '#15803d',
+              color: '#ffffff',
+              borderColor: '#16a34a',
+              fontWeight: 600,
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#166534')}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#15803d')}
+          >
+            <Save size={13} />
+            <span>Save</span>
+          </button>
 
-      <button
-        type="button"
-        style={btnStyle}
-        onClick={onStartEdit}
-        title="Edit code inline"
-        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#333c4d')}
-        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#262d3d')}
-      >
-        <Edit3 size={13} />
-        <span>Edit</span>
-      </button>
+          <button
+            type="button"
+            onClick={onCancel}
+            title="Cancel editing without saving"
+            style={{
+              ...btnStyle,
+              backgroundColor: '#374151',
+              color: '#e5e7eb',
+              borderColor: '#4b5563',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#4b5563')}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#374151')}
+          >
+            <X size={13} />
+            <span>Cancel</span>
+          </button>
+        </>
+      ) : (
+        <>
+          <button
+            type="button"
+            style={btnStyle}
+            onClick={handleCopy}
+            title="Copy code to clipboard"
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#333c4d')}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#262d3d')}
+          >
+            {copied ? <Check size={13} color="#34d399" /> : <Copy size={13} />}
+            <span>{copied ? 'Copied' : 'Copy'}</span>
+          </button>
 
+          <button
+            type="button"
+            style={btnStyle}
+            onClick={onStartEdit}
+            title="Edit code inline"
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#333c4d')}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#262d3d')}
+          >
+            <Edit3 size={13} />
+            <span>Edit</span>
+          </button>
+        </>
+      )}
+
+      {/* Validate Button */}
       <button
         type="button"
         disabled={isValidating}
@@ -133,6 +136,7 @@ export default function CodeToolbar({
         <span>{isValidating ? 'Validating...' : 'Validate'}</span>
       </button>
 
+      {/* Run Button */}
       <button
         type="button"
         disabled={isRunning}
@@ -162,6 +166,30 @@ export default function CodeToolbar({
         )}
         <span>{isRunning ? 'Running...' : 'Run'}</span>
       </button>
+
+      {/* Stdin Toggle Button */}
+      {onToggleStdin && (
+        <button
+          type="button"
+          onClick={onToggleStdin}
+          title="Toggle Program Input (stdin)"
+          style={{
+            ...btnStyle,
+            backgroundColor: showStdin ? '#1e293b' : '#262d3d',
+            borderColor: showStdin ? '#3b82f6' : '#333c4d',
+            color: showStdin ? '#93c5fd' : '#cbd5e1',
+          }}
+          onMouseEnter={(e) => {
+            if (!showStdin) e.currentTarget.style.backgroundColor = '#333c4d';
+          }}
+          onMouseLeave={(e) => {
+            if (!showStdin) e.currentTarget.style.backgroundColor = '#262d3d';
+          }}
+        >
+          <ArrowDownToLine size={12} />
+          <span>stdin</span>
+        </button>
+      )}
     </div>
   );
 }

@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { Check, X, AlertTriangle, HelpCircle, ChevronDown, ChevronRight } from 'lucide-react';
 
+function parseDiagnostic(diag) {
+  if (typeof diag !== 'string') return { text: String(diag), line: null, col: null, severity: 'ERROR' };
+  const lineColMatch = diag.match(/\(line\s+(\d+)(?:,\s*col(?:umn)?\s*(\d+))?\)/i);
+  const line = lineColMatch ? lineColMatch[1] : null;
+  const col = lineColMatch && lineColMatch[2] ? lineColMatch[2] : null;
+  const sevMatch = diag.match(/^\[(ERROR|WARNING|INFO)\]/i);
+  const severity = sevMatch ? sevMatch[1].toUpperCase() : 'ERROR';
+  const cleanMsg = diag.replace(/^\[(ERROR|WARNING|INFO)\]\s*/i, '').replace(/\(line\s+\d+.*?\)/i, '').trim();
+  return { text: cleanMsg || diag, line, col, severity };
+}
+
 /**
  * ValidationDetails
  * Compact, clear representation of syntax/structural validation status.
@@ -145,23 +156,49 @@ export default function ValidationDetails({
         <div
           style={{
             marginTop: '8px',
-            padding: '8px 10px',
-            backgroundColor: '#1e293b',
-            color: '#f87171',
+            padding: '8px 12px',
+            backgroundColor: '#0f172a',
             borderRadius: 'var(--radius-xs)',
             fontFamily: 'var(--font-mono)',
             fontSize: '0.72rem',
-            lineHeight: '1.4',
-            whiteSpace: 'pre-wrap',
+            lineHeight: '1.45',
             maxHeight: '180px',
             overflowY: 'auto',
+            border: '1px solid #1e293b',
           }}
         >
-          {diagnostics.map((diag, idx) => (
-            <div key={idx} style={{ marginBottom: '2px' }}>
-              {diag}
-            </div>
-          ))}
+          {diagnostics.map((diag, idx) => {
+            const parsed = parseDiagnostic(diag);
+            return (
+              <div key={idx} style={{ marginBottom: '6px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                  {parsed.line && (
+                    <span
+                      style={{
+                        backgroundColor: '#1e293b',
+                        color: '#93c5fd',
+                        border: '1px solid #3b82f6',
+                        padding: '1px 5px',
+                        borderRadius: '3px',
+                        fontSize: '0.65rem',
+                        fontWeight: 600,
+                      }}
+                    >
+                      Line {parsed.line}{parsed.col ? `, Col ${parsed.col}` : ''}
+                    </span>
+                  )}
+                  <span
+                    style={{
+                      color: parsed.severity === 'WARNING' ? '#fde047' : '#f87171',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {parsed.text}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
