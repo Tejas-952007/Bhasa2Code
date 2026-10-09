@@ -1,7 +1,8 @@
 """Transport client for local Ollama HTTP API."""
 
+import json
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, AsyncIterator, Dict, Iterator, List, Optional
 import httpx
 
 from backend.app.llm.config import OllamaSettings, get_ollama_settings
@@ -289,3 +290,106 @@ class OllamaClient:
                 "eval_duration_ns": data.get("eval_duration"),
             },
         )
+
+    async def generate_stream(
+        self,
+        prompt: str,
+        model: Optional[str] = None,
+        system: Optional[str] = None,
+        options: Optional[Dict[str, Any]] = None,
+    ) -> AsyncIterator[Dict[str, Any]]:
+        """Stream completion tokens from Ollama /api/generate via async NDJSON chunks.
+
+        Each yielded dict has the shape:
+            {"token": str, "done": bool}  — for in-progress tokens
+            {"done": True, "total_duration_ms": float, ...stats}  — for final chunk
+
+        Args:
+            prompt: Text prompt to stream from.
+            model: Model name override (defaults to settings.model).
+            system: Optional system instruction text.
+            options: Additional hyperparameters.
+
+        Yields:
+            Dict with token data or final statistics.
+
+        Raises:
+            OllamaUnavailableError: If daemon is unreachable.
+            OllamaModelNotFoundError: If requested model is not installed.
+            OllamaTimeoutError: If connection times out.
+            OllamaGenerationError: On protocol-level errors.
+        """
+        if not prompt or not prompt.strip():
+            raise ValueError("Prompt cannot be empty.")
+
+        target_model = model or self.settings.model
+        generation_options = self.settings.get_generation_options()
+        if options:
+            generation_options.update(options)
+
+        payload: Dict[str, Any] = {
+            "model": target_model,
+            "prompt": prompt,
+            "stream": True,
+            "options": generation_options,
+        }
+        if system:
+            payload["system"] = system
+
+        url = f"{self.settings.base_url}/api/generate"
+
+        try:
+            async with httpx.AsyncClient(timeout=self.settings.timeout_seconds) as async_client:
+                async with async_client.stream("POST", url, json=payload) as resp:
+                    if resp.status_code == 404:
+                        raise OllamaModelNotFoundError(model_name=target_model)
+                    elif resp.status_code != 200:
+                        body = await resp.aread()
+                        raise OllamaGenerationError(
+                            f"Ollama streaming returned HTTP {resp.status_code}: {body.decode()[:200]}",
+                            status_code=resp.status_code,
+                        )
+
+                    async for raw_line in resp.aiter_lines():
+                        raw_line = raw_line.strip()
+                        if not raw_line:
+                            continue
+                        try:
+                            chunk = json.loads(raw_line)
+                        except json.JSONDecodeError:
+                            logger.debug("Ollama stream: non-JSON line skipped: %r", raw_line[:80])
+                            continue
+
+                        token_text = chunk.get("response", "")
+                        is_done = chunk.get("done", False)
+
+                        if is_done:
+                            total_ns = chunk.get("total_duration")
+                            total_ms = float(total_ns) / 1_000_000.0 if total_ns else None
+                            yield {
+                                "done": True,
+                                "token": token_text,
+                                "model": chunk.get("model", target_model),
+                                "total_duration_ms": total_ms,
+                                "prompt_tokens": chunk.get("prompt_eval_count"),
+                                "completion_tokens": chunk.get("eval_count"),
+                            }
+                        else:
+                            yield {"done": False, "token": token_text}
+
+        except OllamaModelNotFoundError:
+            raise
+        except OllamaGenerationError:
+            raise
+        except (httpx.ConnectError, httpx.ConnectTimeout, httpx.NetworkError) as exc:
+            raise OllamaUnavailableError(cause=exc) from exc
+        except httpx.TimeoutException as exc:
+            raise OllamaTimeoutError(
+                timeout_seconds=self.settings.timeout_seconds,
+                cause=exc,
+            ) from exc
+        except Exception as exc:
+            raise OllamaGenerationError(
+                f"Unexpected error during Ollama streaming: {exc}", cause=exc
+            ) from exc
+

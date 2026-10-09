@@ -95,3 +95,58 @@ test('adaptChatResponse correctly transforms ChatResponse schema into view model
   assert.equal(result.assistantMessage.codeBlock.validationStatus, 'VALID');
   assert.equal(result.assistantMessage.study.problemUnderstanding, 'Make calculator');
 });
+
+test('streamMessage streams SSE events and sends client_turn_id', async (t) => {
+  const { streamMessage } = await import('./api.js');
+
+  const sseData = [
+    'event: start\ndata: {"type":"start","session_id":"sess-1","user_message_id":"u-1"}\n\n',
+    'event: token\ndata: {"type":"token","token":"Hello "}\n\n',
+    'event: token\ndata: {"type":"token","token":"World"}\n\n',
+    'event: complete\ndata: {"type":"complete","session_id":"sess-1","message_id":"m-1","assistant_message":{"id":"m-1","content":"Hello World"},"code":[],"nlp":{"language":"ENGLISH"}}\n\n',
+  ];
+
+  let capturedBody = null;
+
+  // Mock global fetch
+  const originalFetch = globalThis.fetch;
+  t.after(() => {
+    globalThis.fetch = originalFetch;
+  });
+
+  globalThis.fetch = async (url, options) => {
+    capturedBody = JSON.parse(options.body);
+    const stream = new ReadableStream({
+      start(controller) {
+        for (const chunk of sseData) {
+          controller.enqueue(new TextEncoder().encode(chunk));
+        }
+        controller.close();
+      },
+    });
+    return new Response(stream, {
+      status: 200,
+      headers: { 'Content-Type': 'text/event-stream' },
+    });
+  };
+
+  const events = [];
+  for await (const evt of streamMessage({
+    sessionId: 'sess-1',
+    message: 'test message',
+    studyMode: false,
+    clientTurnId: 'turn-xyz-123',
+  })) {
+    events.push(evt);
+  }
+
+  assert.equal(capturedBody.client_turn_id, 'turn-xyz-123');
+  assert.equal(capturedBody.message, 'test message');
+  assert.equal(events.length, 4);
+  assert.equal(events[0].type, 'start');
+  assert.equal(events[1].type, 'token');
+  assert.equal(events[1].token, 'Hello ');
+  assert.equal(events[2].token, 'World');
+  assert.equal(events[3].type, 'complete');
+});
+

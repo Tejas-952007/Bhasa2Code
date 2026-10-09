@@ -109,6 +109,107 @@ def detect_language_heuristics(code: str) -> Optional[str]:
     return None
 
 
+NON_CODE_LANGUAGES = {
+    "text",
+    "txt",
+    "plain",
+    "plaintext",
+    "ascii",
+    "flowchart",
+    "diagram",
+    "mermaid",
+    "output",
+    "example",
+    "markdown",
+    "md",
+    "none",
+    "raw",
+}
+
+FLOWCHART_SIGNALS = [
+    "+---",
+    "|   ",
+    "+===",
+    "|===",
+    "-->",
+    "<--",
+    "==>",
+    "├──",
+    "└──",
+    "│",
+    "┌",
+    "┐",
+    "└",
+    "┘",
+    "↓",
+    "↑",
+    "←",
+    "→",
+    "▲",
+    "▼",
+]
+
+
+def is_flowchart_or_diagram(text: str) -> bool:
+    """Identify if text is an ASCII flowchart, tree, or block diagram."""
+    cleaned = text.strip()
+    if not cleaned:
+        return False
+    # Check ASCII box / diagram markers
+    marker_hits = sum(1 for m in FLOWCHART_SIGNALS if m in cleaned)
+    if marker_hits >= 2:
+        return True
+    lines = [l.strip().lower() for l in cleaned.splitlines() if l.strip()]
+    flow_steps = sum(
+        1
+        for l in lines
+        if l in ("start", "stop", "end", "input", "output", "process", "decision", "yes", "no")
+    )
+    if flow_steps >= 2:
+        return True
+    return False
+
+
+def has_code_signals(code: str, lang: str) -> bool:
+    """Verify that a code snippet contains expected syntax signals for the target language."""
+    cleaned = code.strip()
+    if not cleaned:
+        return False
+    if lang == "python":
+        return bool(
+            re.search(
+                r"(\bdef\s+\w+|\bimport\s+\w+|\bfrom\s+\w+\s+import|\bclass\s+\w+|\bprint\s*\(|:\s*$|\bif\b|\bfor\b|\bwhile\b|\breturn\b)",
+                cleaned,
+                re.MULTILINE,
+            )
+        )
+    elif lang in ("c", "cpp"):
+        return bool(re.search(r"(#include|\bint\s+main|\bvoid\s+\w+|\bprintf\s*\(|\bstd::|;|{|})", cleaned))
+    elif lang == "java":
+        return bool(
+            re.search(
+                r"(\bclass\s+\w+|\bpublic\s+static\s+void|\bSystem\.(?:out|err)\.println|;|{|})",
+                cleaned,
+            )
+        )
+    elif lang == "javascript":
+        return bool(
+            re.search(
+                r"(\bfunction\s+\w+|\bconst\s+\w+\s*=|\blet\s+\w+\s*=|\bconsole\.(?:log|error)\(|=>|;|{|})",
+                cleaned,
+            )
+        )
+    elif lang == "sql":
+        return bool(
+            re.search(
+                r"(\bSELECT\s+.+\s+FROM|\bINSERT\s+INTO|\bUPDATE\s+\w+\s+SET|\bDELETE\s+FROM|\bCREATE\s+TABLE)",
+                cleaned,
+                re.IGNORECASE,
+            )
+        )
+    return False
+
+
 def resolve_language(
     declared_language: Optional[str],
     code: str,
@@ -117,26 +218,36 @@ def resolve_language(
     """Resolve programming language following strict priority rules.
 
     Priority:
-    1. Markdown fence language (normalized)
-    2. Upstream language hint (normalized)
-    3. Strong deterministic code heuristics
-    4. None (if unknown/unresolved)
+    1. Filter out explicit non-code declared languages (text, flowchart, ascii, etc.)
+    2. Filter out ASCII diagrams and flowcharts
+    3. Markdown fence language (normalized)
+    4. Strong deterministic code heuristics
+    5. Upstream language hint (normalized) ONLY if code signals match
+    6. None (if unknown/unresolved/diagram)
     """
-    # 1. Markdown fence language
+    # 1. Non-code declared languages
+    if declared_language and declared_language.strip().lower() in NON_CODE_LANGUAGES:
+        return None
+
+    # 2. Block diagram / flowchart content filter
+    if is_flowchart_or_diagram(code):
+        return None
+
+    # 3. Markdown fence language (normalized)
     if declared_language:
         normalized = normalize_language_name(declared_language)
         if normalized:
             return normalized
 
-    # 2. Upstream language hint
+    # 4. Strong code heuristics
+    heuristic_lang = detect_language_heuristics(code)
+    if heuristic_lang:
+        return heuristic_lang
+
+    # 5. Upstream language hint (normalized)
     if language_hint:
         normalized_hint = normalize_language_name(language_hint)
         if normalized_hint:
             return normalized_hint
-
-    # 3. Strong code heuristics
-    heuristic_lang = detect_language_heuristics(code)
-    if heuristic_lang:
-        return heuristic_lang
 
     return None

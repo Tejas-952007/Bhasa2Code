@@ -20,7 +20,7 @@ def parse_sections(text: str) -> Dict[str, str]:
     current_lines: List[str] = []
 
     header_pattern = re.compile(
-        r"^(?:#{1,4}\s+|\d+\.\s+\*{0,2}|\*{2})([A-Za-z0-9\s/_-]+?)(?:\*{2})?:?\s*$"
+        r"^(?:#{1,4}\s+|\d+\.\s+\*{0,2}|\*{2})?([A-Za-z0-9\s/_-]+?)(?:\*{2})?:?\s*$"
     )
 
     for line in lines:
@@ -30,21 +30,21 @@ def parse_sections(text: str) -> Dict[str, str]:
             candidate = match.group(1).strip().lower()
             # Normalize common section names
             key = None
-            if "problem" in candidate or "understanding" in candidate:
+            if "problem" in candidate and ("understanding" in candidate or candidate == "problem"):
                 key = "problem_understanding"
-            elif "algorithm" in candidate or "logic" in candidate:
+            elif candidate.startswith("algorithm") or candidate.startswith("logic"):
                 key = "algorithm"
-            elif "flowchart" in candidate or "diagram" in candidate:
+            elif candidate.startswith("flowchart") or "diagram" in candidate:
                 key = "flowchart"
             elif "viva" in candidate or "interview" in candidate or "question" in candidate:
                 key = "viva_questions"
             elif "point" in candidate or "important" in candidate or "key note" in candidate:
                 key = "important_points"
-            elif "explanation" in candidate or "how it works" in candidate:
+            elif candidate.startswith("explanation") or "how it works" in candidate:
                 key = "explanation"
-            elif "example" in candidate or "usage" in candidate or "output" in candidate:
+            elif candidate.startswith("example") or candidate.startswith("usage") or candidate.startswith("output"):
                 key = "example"
-            elif "code" in candidate:
+            elif candidate.startswith("code"):
                 key = "code"
 
             if key:
@@ -146,15 +146,28 @@ def parse_assistant_response(
         example = _strip_code_blocks(example).strip()
 
     # 4. Study sections
+    flowchart_raw = sections.get("flowchart")
+    if flowchart_raw:
+        # Strip enclosing code fences if model wrapped it in ``` or ```text or ```flowchart
+        flowchart_raw = re.sub(r"^```[a-zA-Z0-9_-]*\s*\n", "", flowchart_raw.strip())
+        flowchart_raw = re.sub(r"\n\s*```$", "", flowchart_raw.strip()).strip()
+
+    has_study_content = bool(
+        study_mode
+        or flowchart_raw
+        or sections.get("algorithm")
+        or sections.get("problem_understanding")
+        or sections.get("viva_questions")
+    )
+
     study_response: Optional[StudySectionResponse] = None
-    if study_mode:
+    if has_study_content:
         prob_under = sections.get("problem_understanding")
         algo_text = sections.get("algorithm", "")
         algo_bullets = parse_bullet_list(algo_text)
         if not algo_bullets and algo_text:
             algo_bullets = [s.strip() for s in algo_text.splitlines() if s.strip()]
 
-        flowchart_text = sections.get("flowchart")
         points_text = sections.get("important_points", "")
         points_bullets = parse_bullet_list(points_text)
         viva_text = sections.get("viva_questions", "")
@@ -163,7 +176,7 @@ def parse_assistant_response(
         study_response = StudySectionResponse(
             problem_understanding=prob_under,
             algorithm=algo_bullets,
-            flowchart=flowchart_text,
+            flowchart=flowchart_raw,
             important_points=points_bullets,
             viva_questions=viva_pairs,
         )

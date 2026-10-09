@@ -685,18 +685,29 @@ Transform the raw structured backend response into a consistent, professional, r
 
 # 11. EPIC E07 — Code Generation
 
-### T23 — Implement Code Generation Service
+### T23 — Streaming, Generation Performance & Response Reliability
 
-**Dependencies:** T20, T21
+**Dependencies:** T20, T21, T22
 
 **Acceptance Criteria:**
 
-- User request converted to prompt
-- Local LLM generates code
-- Programming language retained
-- Result structured correctly
+- [x] Empirical pipeline latency diagnosed and measured before changes (scratch/diagnose_pipeline.py)
+- [x] SSE HTTP streaming implemented on `POST /api/v1/chat/stream` with backward compatibility on `POST /api/v1/chat`
+- [x] Ollama streaming generation wired through FastAPI to React frontend
+- [x] First visible token rendered with low TTFT (~220ms–310ms)
+- [x] Dynamic output token limits configured (`SHORT: 192`, `NORMAL: 384`, `DETAILED: 768`, `STUDY: 768`)
+- [x] Context window size footprint reduced (`num_ctx: 2048` for short queries, `8192` for multi-turn)
+- [x] Request cancellation supported via Stop button and backend disconnect detection
+- [x] Multi-tier duplicate request prevention (`client_turn_id` idempotency + UI debounce & inflight locks)
+- [x] Marathi / Indic response reliability fixed (NLP extraction error resolved; mandatory prompt mandate enforced)
+- [x] Flowchart vs. code separation verified (ASCII diagrams excluded from AST validation and CodeArtifacts)
+- [x] Frontend tests pass (`npm test`)
+- [x] Backend tests pass (`pytest -q`: 481 passed)
+- [x] Production build passes (`npm run build`)
+- [x] Full regression verified with 0 failures
+- [x] Documentation complete in `docs/11_development/STREAMING_PERFORMANCE.md` and `docs/06_architecture/ARCHITECTURE.md`
 
-**Status:** TODO
+**Status:** DONE
 
 ---
 

@@ -117,15 +117,100 @@ export async function deleteSession(sessionId) {
 // Chat
 // ---------------------------------------------------------------------------
 
-export async function sendMessage({ sessionId = null, message, studyMode = false }) {
+export async function sendMessage({ sessionId = null, message, studyMode = false, clientTurnId = null }) {
   return await request('/chat', {
     method: 'POST',
     body: JSON.stringify({
       session_id: sessionId,
       message,
       study_mode: studyMode,
+      client_turn_id: clientTurnId,
     }),
   });
+}
+
+/**
+ * Stream a chat message via SSE (Server-Sent Events) over fetch POST.
+ *
+ * Returns an async generator yielding parsed event objects:
+ *   {type: 'start',    session_id, user_message_id}
+ *   {type: 'token',    token}
+ *   {type: 'complete', session_id, message_id, user_message, assistant_message, nlp, code, study}
+ *   {type: 'error',    code, message}
+ *
+ * @param {Object} params
+ * @param {string|null} params.sessionId
+ * @param {string} params.message
+ * @param {boolean} params.studyMode
+ * @param {string|null} [params.clientTurnId]
+ * @param {AbortSignal} [params.signal] - optional AbortController signal for cancellation
+ */
+export async function* streamMessage({ sessionId = null, message, studyMode = false, clientTurnId = null, signal } = {}) {
+  const url = `${BASE_URL}/chat/stream`;
+
+  let response;
+  try {
+    response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        session_id: sessionId,
+        message,
+        study_mode: studyMode,
+        client_turn_id: clientTurnId,
+      }),
+      signal,
+    });
+  } catch (err) {
+    if (err.name === 'AbortError') return;
+    throw new APIError(
+      'NETWORK_ERROR',
+      'Unable to connect to the backend server. Please verify FastAPI is running.',
+      0
+    );
+  }
+
+  if (!response.ok) {
+    let errorData = null;
+    try { errorData = await response.json(); } catch { /* ignore */ }
+    const msg = errorData?.error?.message || `Stream request failed with status ${response.status}`;
+    throw new APIError(errorData?.error?.code || 'HTTP_ERROR', msg, response.status);
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+
+      // Process complete SSE lines
+      const lines = buffer.split('\n');
+      // Keep the last incomplete line in buffer
+      buffer = lines.pop() ?? '';
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed.startsWith('data:')) continue;
+        const jsonStr = trimmed.slice(5).trim();
+        if (!jsonStr) continue;
+        try {
+          const event = JSON.parse(jsonStr);
+          yield event;
+          // Stop iteration after terminal events
+          if (event.type === 'complete' || event.type === 'error') return;
+        } catch {
+          // Malformed JSON in stream — skip
+        }
+      }
+    }
+  } finally {
+    reader.releaseLock();
+  }
 }
 
 // ---------------------------------------------------------------------------

@@ -83,6 +83,7 @@ class ChatRequest(BaseModel):
     session_id: Optional[str] = None
     message: str
     study_mode: bool = False
+    client_turn_id: Optional[str] = None
 
 
 class ChatUserMessage(BaseModel):

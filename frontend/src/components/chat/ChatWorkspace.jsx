@@ -9,9 +9,11 @@ export default function ChatWorkspace({
   messages = [],
   isStudyMode = false,
   isLoading = false,
+  isStreaming = false,
   errorMessage = null,
   onRetry = null,
   onSendMessage,
+  onStopGeneration = null,
   onUpdateMessageCode = null,
   activeSessionTitle = 'Python Calculator',
   contextHint = 'Using current session context',
@@ -194,7 +196,12 @@ export default function ChatWorkspace({
             width: '100%',
           }}
         >
-          <Composer onSend={onSendMessage} disabled={isLoading} />
+          <Composer
+            onSend={onSendMessage}
+            onStop={onStopGeneration}
+            disabled={isLoading}
+            isStreaming={isLoading || isStreaming}
+          />
         </div>
       </div>
     </div>

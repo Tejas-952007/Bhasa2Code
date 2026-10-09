@@ -178,6 +178,13 @@ class NLPPipeline:
             intent=intent_result,
         )
 
+    def process(
+        self,
+        input_data: Union[str, PreprocessedText, None],
+    ) -> NLPPipelineResult:
+        """Alias for analyze() to provide unified method compatibility."""
+        return self.analyze(input_data)
+
     def __call__(
         self,
         input_data: Union[str, PreprocessedText, None],

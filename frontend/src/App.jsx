@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import AppShell from './components/layout/AppShell';
 import ChatWorkspace from './components/chat/ChatWorkspace';
 import NotesPage from './pages/NotesPage';
@@ -11,10 +11,11 @@ import {
   getSession,
   renameSession,
   deleteSession,
-  sendMessage,
+  streamMessage,
   adaptBackendMessage,
   adaptChatResponse,
 } from './services/api';
+
 
 export default function App() {
   const [sessions, setSessions] = useState([]);
@@ -29,6 +30,15 @@ export default function App() {
     state: 'loading',
     label: 'Connecting...',
   });
+
+  // T23: Prevent duplicate requests — only one stream can be in-flight at a time.
+  const inflightRef = useRef(false);
+  // T23: AbortController ref for cancelling in-progress streams.
+  const abortControllerRef = useRef(null);
+  // T23: Ref to track active session during async streaming (avoids stale closure).
+  const activeSessionIdRef = useRef(activeSessionId);
+  useEffect(() => { activeSessionIdRef.current = activeSessionId; }, [activeSessionId]);
+
 
   // Check health and initialize sessions
   const checkHealthAndLoad = useCallback(async () => {
@@ -140,63 +150,135 @@ export default function App() {
     }
   };
 
-  // Send Message
+  // Send Message (streaming)
   const handleSendMessage = async (text) => {
-    if (!text || !text.trim() || isLoading) return;
+    if (!text || !text.trim()) return;
+
+    // T23: Hard deduplication — block concurrent requests
+    if (inflightRef.current) {
+      console.warn('Bhasha2Code: request already in-flight, ignoring duplicate submission.');
+      return;
+    }
 
     const trimmed = text.trim();
     setErrorMessage(null);
     setLastFailedPrompt(null);
+    inflightRef.current = true;
 
-    // Optimistic user message
-    const tempUserMsg = {
-      id: `temp-${Date.now()}`,
-      role: 'user',
-      content: trimmed,
+    // Create a new AbortController for this stream
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
+    // T23: Optimistic user message
+    const tempUserMsgId = `temp-user-${Date.now()}`;
+    const tempUserMsg = { id: tempUserMsgId, role: 'user', content: trimmed };
+
+    // T23: Streaming placeholder (accumulates tokens live)
+    const tempStreamId = `temp-stream-${Date.now()}`;
+    const tempStreamMsg = {
+      id: tempStreamId,
+      role: 'assistant',
+      content: '',
+      _streaming: true,
     };
-    setMessages((prev) => [...prev, tempUserMsg]);
+
+    setMessages((prev) => [...prev, tempUserMsg, tempStreamMsg]);
     setIsLoading(true);
 
+    // T23: Unique turn identifier for backend deduplication and idempotency
+    const clientTurnId = `turn-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+
+    // Resolve current session ID at call time (not from stale closure)
+    const currentSessionId = activeSessionIdRef.current;
+    let resolvedSessionId = currentSessionId;
+    let confirmedUserMsgId = null;
+
     try {
-      const resp = await sendMessage({
-        sessionId: activeSessionId,
+      for await (const event of streamMessage({
+        sessionId: currentSessionId,
         message: trimmed,
         studyMode: isStudyMode,
-      });
+        clientTurnId,
+        signal: controller.signal,
+      })) {
+        if (event.type === 'start') {
+          resolvedSessionId = event.session_id;
+          confirmedUserMsgId = event.user_message_id;
+          // Update session if it's new
+          if (!currentSessionId || currentSessionId !== resolvedSessionId) {
+            setActiveSessionId(resolvedSessionId);
+            activeSessionIdRef.current = resolvedSessionId;
+          }
+        } else if (event.type === 'token') {
+          // Append token to streaming message
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === tempStreamId
+                ? { ...m, content: m.content + event.token }
+                : m
+            )
+          );
+        } else if (event.type === 'complete') {
+          // Build proper adapted messages from the complete payload
+          const adapted = adaptChatResponse(event);
 
-      const { sessionId, userMessage, assistantMessage } = adaptChatResponse(resp);
+          setMessages((prev) => {
+            // Remove both temp messages, insert real ones
+            const without = prev.filter(
+              (m) => m.id !== tempUserMsgId && m.id !== tempStreamId
+            );
+            return [...without, adapted.userMessage, adapted.assistantMessage];
+          });
 
-      // Replace optimistic message with confirmed and append assistant message
-      setMessages((prev) => {
-        const withoutTemp = prev.filter((m) => m.id !== tempUserMsg.id);
-        return [...withoutTemp, userMessage, assistantMessage];
-      });
+          // Session list refresh
+          try {
+            const updatedSessions = await listSessions();
+            setSessions(updatedSessions);
+          } catch { /* non-fatal */ }
 
-      // If this was a new session without an explicit active ID, update it
-      if (!activeSessionId || activeSessionId !== sessionId) {
-        setActiveSessionId(sessionId);
-        // Refresh session list
-        const updatedSessions = await listSessions();
-        setSessions(updatedSessions);
-      } else {
-        // Update title if it was "New Chat"
-        setSessions((prev) =>
-          prev.map((s) => {
-            if (s.id === sessionId && (s.title === 'New Chat' || s.title === 'Untitled Chat')) {
-              const snippet = trimmed.slice(0, 24) + (trimmed.length > 24 ? '...' : '');
-              return { ...s, title: snippet };
-            }
-            return s;
-          })
-        );
+        } else if (event.type === 'error') {
+          setErrorMessage(event.message || 'Generation failed. Please try again.');
+          setLastFailedPrompt(trimmed);
+          // Remove streaming placeholder, keep user message for retry context
+          setMessages((prev) => prev.filter((m) => m.id !== tempStreamId));
+        }
       }
     } catch (err) {
-      setErrorMessage(err.message || 'Failed to generate response. Please try again.');
-      setLastFailedPrompt(trimmed);
-      // Remove failed optimistic message or leave it
+      if (err.name !== 'AbortError') {
+        setErrorMessage(err.message || 'Failed to generate response. Please try again.');
+        setLastFailedPrompt(trimmed);
+        setMessages((prev) =>
+          prev.filter((m) => m.id !== tempStreamId)
+        );
+      }
     } finally {
+      inflightRef.current = false;
       setIsLoading(false);
     }
+  };
+
+  // T23: Handle user request cancellation (Stop button)
+  const handleStopGeneration = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    inflightRef.current = false;
+    setIsLoading(false);
+    setMessages((prev) =>
+      prev.map((m) =>
+        m._streaming
+          ? {
+              ...m,
+              _streaming: false,
+              content: m.content ? m.content + '\n\n*[Generation stopped]*' : '*[Generation stopped]*',
+            }
+          : m
+      )
+    );
   };
 
   const handleUpdateMessageCode = (messageId, newCode) => {
@@ -246,9 +328,11 @@ export default function App() {
           messages={messages}
           isStudyMode={isStudyMode}
           isLoading={isLoading}
+          isStreaming={isLoading}
           errorMessage={errorMessage}
           onRetry={lastFailedPrompt ? () => handleSendMessage(lastFailedPrompt) : null}
           onSendMessage={handleSendMessage}
+          onStopGeneration={handleStopGeneration}
           onUpdateMessageCode={handleUpdateMessageCode}
           activeSessionTitle={currentSession ? currentSession.title : 'Workspace'}
         />

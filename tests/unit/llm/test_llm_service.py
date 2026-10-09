@@ -29,7 +29,8 @@ def test_ollama_settings_defaults_and_env(monkeypatch):
     assert settings.debug_logging is False
 
     options = settings.get_generation_options()
-    assert options == {"temperature": 0.2, "num_ctx": 8192}
+    # T23: num_predict (600) is now included in default generation options
+    assert options == {"temperature": 0.2, "num_ctx": 8192, "num_predict": 600}
 
     # Test env overrides
     monkeypatch.setenv("OLLAMA_BASE_URL", "http://192.168.1.100:11434/")

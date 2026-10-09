@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 
 from backend.app.api.exceptions import APIException
 from backend.app.api.routes.chat import router as chat_router
+from backend.app.api.routes.chat_stream import router as chat_stream_router
 from backend.app.api.routes.code import router as code_router
 from backend.app.api.routes.health import router as health_router
 from backend.app.api.routes.sessions import router as sessions_router
@@ -67,7 +68,9 @@ async def global_exception_handler(request: Request, exc: Exception) -> JSONResp
 
 
 # Include API routes
+# Note: chat_stream_router must be registered before chat_router (more specific prefix /chat/stream first)
 app.include_router(health_router)
 app.include_router(sessions_router, prefix=settings.API_V1_STR)
+app.include_router(chat_stream_router, prefix=settings.API_V1_STR)
 app.include_router(chat_router, prefix=settings.API_V1_STR)
 app.include_router(code_router, prefix=settings.API_V1_STR)

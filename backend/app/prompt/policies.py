@@ -10,41 +10,66 @@ class LanguagePolicy:
     def get_instruction(language: Optional[str]) -> str:
         lang = (language or "ENGLISH").upper()
 
+        base_mandate = (
+            "RESPONSE LANGUAGE MANDATE:\n"
+            "Respond in the detected user language/style. Do not switch to English unless:\n"
+            "1. The user explicitly requests English, or\n"
+            "2. Programming code/syntax/technical tokens require English.\n"
+        )
+
         if lang == "ENGLISH":
             return (
-                "Respond entirely in English. Use standard professional terminology and standard English for explanations."
+                f"{base_mandate}"
+                "You MUST respond entirely in English. Use standard professional terminology. "
+                "Do NOT use any Marathi, Hindi, or regional language words."
             )
         elif lang == "HINDI":
             return (
-                "Respond in clear Hindi (हिंदी). Provide explanations and descriptions in natural Hindi. "
-                "Keep programming code syntax, keyword tokens (if, for, while, def, class, return, import), "
-                "and technical terms in standard English."
+                f"{base_mandate}"
+                "LANGUAGE DIRECTIVE [CRITICAL — DO NOT IGNORE]: You MUST write ALL explanations, commentary, "
+                "walkthroughs, and prose text in clear Hindi (हिंदी). "
+                "This is a mandatory language policy, not a suggestion. You MUST NOT respond in English prose. "
+                "ONLY exception: keep programming code keywords (if, for, while, def, class, return, import, print), "
+                "library names, variable names, and technical symbol tokens in standard English ASCII."
             )
         elif lang == "MARATHI":
             return (
-                "Respond in clear Marathi (मराठी). Provide explanations, commentary, and descriptions in natural Marathi. "
-                "Keep programming code syntax, keyword tokens (if, for, while, def, class, return, import), "
-                "and technical terms in standard English."
+                f"{base_mandate}"
+                "LANGUAGE DIRECTIVE [CRITICAL — DO NOT IGNORE]: You MUST write ALL explanations, commentary, "
+                "walkthroughs, and prose text in clear Marathi (मराठी). "
+                "This is a mandatory language policy, not a suggestion. You MUST NOT respond in English prose, Hindi, or any other language. "
+                "ONLY exception: keep programming code keywords (if, for, while, def, class, return, import, print), "
+                "library names, variable names, and technical symbol tokens in standard English ASCII."
             )
         elif lang == "HINGLISH":
             return (
-                "Respond naturally in Hindi-English (Hinglish conversational style using Latin script), "
-                "matching the user's conversational manner. Keep code syntax, keywords, and technical symbols in standard English."
+                f"{base_mandate}"
+                "LANGUAGE DIRECTIVE [CRITICAL — DO NOT IGNORE]: You MUST respond in Hindi-English mix (Hinglish). "
+                "Write explanations and commentary naturally mixing Hindi words written in Latin script or Devanagari "
+                "(e.g., 'yeh code', 'iska matlab', 'tum dekh sakte ho'). "
+                "This is mandatory. You MUST NOT respond in pure English or pure Hindi. "
+                "ONLY exception: keep programming code syntax, keywords, and function names in standard English ASCII."
             )
         elif lang == "MARATHI_ENGLISH":
             return (
-                "Respond naturally in Marathi-English (conversational Marathi using Latin script or Devanagari mix, "
-                "matching the user's conversational phrasing like 'bana', 'kar', 'saanga'). "
-                "Keep code syntax, keywords, and technical symbols in standard English."
+                f"{base_mandate}"
+                "LANGUAGE DIRECTIVE [CRITICAL — DO NOT IGNORE]: You MUST respond in Marathi-English mix (conversational Marathi). "
+                "Write explanations and commentary naturally using Marathi words with English technical terminology.\n"
+                "Example style:\n"
+                "Python मध्ये एक simple calculator बनवूया. हा program addition, subtraction, multiplication आणि division support करेल.\n"
+                "Do not force every technical term into Marathi. Keep programming code syntax, keywords, and function names in standard English ASCII."
             )
         elif lang == "HINDI_ENGLISH":
             return (
-                "Respond naturally in Hindi-English mix. Keep all code blocks, syntax keywords, and function names in standard English."
+                f"{base_mandate}"
+                "LANGUAGE DIRECTIVE [CRITICAL — DO NOT IGNORE]: You MUST respond in Hindi-English mix. "
+                "Naturally blend Hindi and English words in your explanations. "
+                "ONLY exception: keep all code blocks, syntax keywords, and function names in standard English ASCII."
             )
         else:
             return (
-                "Respond in clear English. Match any conversational language nuances if requested. "
-                "Keep all code in standard programming syntax."
+                f"{base_mandate}"
+                "LANGUAGE DIRECTIVE: Respond in clear English. Keep all code in standard programming syntax."
             )
 
 

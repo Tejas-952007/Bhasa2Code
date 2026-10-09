@@ -1501,37 +1501,42 @@ Transaction Strategy:
 
 ---
 
-# 36. Data Flow — Chat
+# 36. Data Flow — Chat & Streaming (T23)
 
 ```text
-User
- ↓
 React
- ↓
-POST /chat
- ↓
+  ↓ SSE
 FastAPI
- ↓
-NLP Engine
- ↓
-Context Engine
- ↓
-Prompt Builder
- ↓
-Ollama
- ↓
-Local LLM
- ↓
-Response Engine
- ↓
-Validation (when code)
- ↓
-SQLite
- ↓
-Stream Response
- ↓
+  ↓
+NLP
+  ↓
+Context
+  ↓
+Prompt
+  ↓
+Ollama Stream
+  ↓
+FastAPI Stream
+  ↓
 React
+  ↓
+Complete Response
+  ↓
+T18 Validation
+  ↓
+T19 Sandbox when requested
 ```
+
+### Protocol Details (T23)
+- **Endpoint:** `POST /api/v1/chat/stream` (`text/event-stream`)
+- **Compatibility:** `POST /api/v1/chat` maintained for buffered clients (`application/json`)
+- **SSE Events:**
+  - `start`: Initial session resolution and user message identifier
+  - `token`: Live incremental text tokens from local Ollama
+  - `complete`: Final assembled, structured payload with validated code blocks and study sections
+  - `error`: Structured errors without unhandled stack traces
+- **Validation Timing:** AST syntax validation (T18) occurs *after* full response completion to prevent validation thrashing during token streaming.
+- **Persistence:** Response is accumulated and persisted once upon completion. Cancellation marks the turn cleanly without saving partial code as complete.
 
 ---
 

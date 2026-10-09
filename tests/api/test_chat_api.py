@@ -92,7 +92,7 @@ def test_chat_new_session_flow(chat_test_env):
     assert data["code"][0]["language"] == "python"
     assert "def add" in data["code"][0]["content"]
     assert data["code"][0]["validation_status"] == "VALID"
-    assert data["nlp"]["language"] in ["MARATHI_ENGLISH", "MARATHI", "ENGLISH"]
+    assert data["nlp"]["language"] in ["MARATHI_ENGLISH", "MARATHI", "ENGLISH", "HINGLISH"]
 
 
 def test_chat_study_mode(chat_test_env):

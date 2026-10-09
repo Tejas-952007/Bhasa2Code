@@ -97,6 +97,61 @@ def send_chat_message(
         if existing_session.user_id != user_id:
             raise UnauthorizedSessionAPIError()
         session = existing_session
+
+        # Deduplication check for client_turn_id
+        if payload.client_turn_id:
+            existing_msgs = msg_repo.list_by_session(session_id=session_id)
+            for m in existing_msgs:
+                if (
+                    m.role == "user"
+                    and m.context_metadata
+                    and m.context_metadata.get("client_turn_id") == payload.client_turn_id
+                ):
+                    asst_m = next(
+                        (am for am in existing_msgs if am.role == "assistant" and am.created_at >= m.created_at),
+                        None,
+                    )
+                    if asst_m:
+                        logger.info("Idempotent hit for client_turn_id: %s", payload.client_turn_id)
+                        meta = asst_m.context_metadata or {}
+                        code_meta = meta.get("code_block")
+                        codes = []
+                        if code_meta:
+                            codes.append(
+                                CodeArtifactResponse(
+                                    id=code_meta.get("id", str(uuid.uuid4())),
+                                    language=code_meta.get("language", "python"),
+                                    filename=code_meta.get("filename", "solution.py"),
+                                    content=code_meta.get("code", ""),
+                                    validation_status=code_meta.get("validationStatus", "VALID"),
+                                )
+                            )
+                        study_resp = (
+                            StudySectionResponse(**meta["study"])
+                            if (meta.get("study") and isinstance(meta["study"], dict))
+                            else None
+                        )
+                        return ChatResponse(
+                            session_id=session_id,
+                            user_message=ChatUserMessage(
+                                id=m.id,
+                                content=m.content,
+                                detected_language=m.detected_language,
+                            ),
+                            assistant_message=ChatAssistantMessage(
+                                id=asst_m.id,
+                                content=asst_m.content,
+                                explanation=meta.get("explanation", []),
+                                example=meta.get("example"),
+                            ),
+                            nlp=ChatNLPInfo(
+                                language=asst_m.detected_language or "ENGLISH",
+                                tone=asst_m.tone or "CASUAL",
+                                intent=asst_m.intent or "GENERATE_CODE",
+                            ),
+                            code=codes,
+                            study=study_resp,
+                        )
     else:
         # Create safe title from prompt snippet
         snippet = raw_message[:35].strip()
@@ -111,10 +166,10 @@ def send_chat_message(
 
     # 2. T14 NLP Pipeline Analysis
     try:
-        nlp_result = nlp_pipeline.process(raw_message)
-        detected_lang = nlp_result.language.primary_language.name
-        detected_tone = nlp_result.tone.primary_tone.name
-        detected_intent = nlp_result.intent.primary_intent.name
+        nlp_result = nlp_pipeline.analyze(raw_message)
+        detected_lang = nlp_result.detected_language
+        detected_tone = nlp_result.detected_tone
+        detected_intent = nlp_result.detected_intent
     except Exception as e:
         logger.warning("NLP pipeline encountered error, defaulting attributes: %s", e)
         nlp_result = None
@@ -124,6 +179,7 @@ def send_chat_message(
 
     # 3. Persist User Message
     user_msg_id = str(uuid.uuid4())
+    user_context_meta = {"client_turn_id": payload.client_turn_id} if payload.client_turn_id else None
     user_msg = msg_repo.create(
         id=user_msg_id,
         session_id=session_id,
@@ -132,6 +188,7 @@ def send_chat_message(
         detected_language=detected_lang,
         intent=detected_intent,
         tone=detected_tone,
+        context_metadata=user_context_meta,
         commit=True,
     )
 
@@ -205,8 +262,13 @@ def send_chat_message(
 
     assistant_msg_id = str(uuid.uuid4())
 
-    for idx, block in enumerate(validation_result.code_blocks, 1):
-        block_lang = block.language or lang_hint or "python"
+    VALID_LANGUAGES = {"python", "c", "cpp", "java", "javascript", "sql"}
+    code_idx = 0
+    for block in validation_result.code_blocks:
+        block_lang = (block.language or lang_hint or "python").lower()
+        if block_lang not in VALID_LANGUAGES:
+            continue
+        code_idx += 1
         block_code = block.code
         val_status = block.status.value.upper()
 
@@ -224,7 +286,7 @@ def send_chat_message(
         )
         code_artifacts.append(artifact_resp)
 
-        if idx == 1:
+        if code_idx == 1:
             primary_code_snippet = block_code
             primary_language = block_lang
             primary_code_block_dict = {

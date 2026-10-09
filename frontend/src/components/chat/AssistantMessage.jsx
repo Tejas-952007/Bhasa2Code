@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import ResponseRenderer from '../response/ResponseRenderer';
-import { Terminal, Copy, Check } from 'lucide-react';
+import { Terminal, Copy, Check, Loader2 } from 'lucide-react';
 
 /**
  * AssistantMessage
  * Professional assistant message wrapper.
  * Identity: Bhasha2Code (never "AI", "AI Assistant", or sparkles).
+ *
+ * T23: When message._streaming === true, renders live token text instead of ResponseRenderer.
  */
 export default function AssistantMessage({
   message,
@@ -14,6 +16,7 @@ export default function AssistantMessage({
   onCodeChange = null,
 }) {
   const [copied, setCopied] = useState(false);
+  const isStreaming = Boolean(message._streaming);
 
   const handleCopyFull = () => {
     let fullText = message.content || '';
@@ -35,7 +38,7 @@ export default function AssistantMessage({
         padding: '18px 22px',
         backgroundColor: 'var(--bg-surface)',
         borderRadius: 'var(--radius-lg)',
-        border: '1px solid var(--border-color)',
+        border: `1px solid ${isStreaming ? 'var(--border-color)' : 'var(--border-color)'}`,
         boxShadow: 'var(--shadow-xs)',
       }}
     >
@@ -75,42 +78,88 @@ export default function AssistantMessage({
           >
             Bhasha2Code
           </span>
+          {isStreaming && (
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+                fontSize: 'var(--text-xs)',
+                color: 'var(--text-muted)',
+                fontWeight: 400,
+              }}
+            >
+              <Loader2 size={11} style={{ animation: 'spin 1s linear infinite' }} />
+              Generating…
+            </span>
+          )}
         </div>
 
-        {/* Quiet Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <button
-            type="button"
-            onClick={handleCopyFull}
-            title="Copy assistant response"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '4px',
-              fontSize: 'var(--text-xs)',
-              color: 'var(--text-muted)',
-              backgroundColor: 'transparent',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '3px 6px',
-              borderRadius: 'var(--radius-xs)',
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
-          >
-            {copied ? <Check size={12} color="var(--status-success)" /> : <Copy size={12} />}
-            <span>{copied ? 'Copied' : 'Copy'}</span>
-          </button>
-        </div>
+        {/* Quiet Actions — hidden while streaming */}
+        {!isStreaming && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <button
+              type="button"
+              onClick={handleCopyFull}
+              title="Copy assistant response"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+                fontSize: 'var(--text-xs)',
+                color: 'var(--text-muted)',
+                backgroundColor: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '3px 6px',
+                borderRadius: 'var(--radius-xs)',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+            >
+              {copied ? <Check size={12} color="var(--status-success)" /> : <Copy size={12} />}
+              <span>{copied ? 'Copied' : 'Copy'}</span>
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Response Renderer: Orchestrates text, sections, code artifacts, and study mode */}
-      <ResponseRenderer
-        message={message}
-        isStudyMode={isStudyMode}
-        onSelectSuggestion={onSelectSuggestion}
-        onCodeChange={onCodeChange}
-      />
+      {/* T23: Streaming view — show raw token accumulation with blinking cursor */}
+      {isStreaming ? (
+        <div
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--text-sm)',
+            color: 'var(--text-secondary)',
+            lineHeight: 1.65,
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+            minHeight: '1.5em',
+          }}
+        >
+          {message.content || ''}
+          <span
+            aria-hidden="true"
+            style={{
+              display: 'inline-block',
+              width: '2px',
+              height: '1em',
+              backgroundColor: 'var(--text-primary)',
+              marginLeft: '2px',
+              verticalAlign: 'text-bottom',
+              animation: 'blink 1s step-end infinite',
+            }}
+          />
+        </div>
+      ) : (
+        /* Response Renderer: Orchestrates text, sections, code artifacts, and study mode */
+        <ResponseRenderer
+          message={message}
+          isStudyMode={isStudyMode}
+          onSelectSuggestion={onSelectSuggestion}
+          onCodeChange={onCodeChange}
+        />
+      )}
     </div>
   );
 }
