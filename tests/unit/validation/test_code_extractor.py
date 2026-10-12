@@ -107,3 +107,23 @@ def test_extract_empty_input():
     extractor = CodeExtractor()
     assert extractor.extract_blocks("") == []
     assert extractor.extract_blocks("   ") == []
+
+
+def test_extract_unclosed_fence_after_closed_block():
+    extractor = CodeExtractor()
+    text = (
+        "First complete block:\n"
+        "```python\n"
+        "x = 10\n"
+        "```\n\n"
+        "Second incomplete block truncated:\n"
+        "```python\n"
+        "def compute(a, b):\n"
+        "    return a + "
+    )
+    blocks = extractor.extract_blocks(text)
+    assert len(blocks) == 2
+    assert blocks[0].is_fenced is True
+    assert blocks[0].code == "x = 10"
+    assert blocks[1].is_fenced is False
+    assert "def compute" in blocks[1].code

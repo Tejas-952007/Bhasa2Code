@@ -6,7 +6,7 @@ import ValidationDetails from './ValidationDetails';
 import ExecutionResult from './ExecutionResult';
 import SuggestionList from './SuggestionList';
 import VisualFlowchart from '../study/VisualFlowchart';
-import { GitBranch, CheckCircle2, History, AlertCircle } from 'lucide-react';
+import { GitBranch, CheckCircle2, History, AlertCircle, AlertTriangle } from 'lucide-react';
 
 /**
  * ResponseRenderer
@@ -47,6 +47,7 @@ export default function ResponseRenderer({
       (study.problemUnderstanding ||
         (study.algorithm && study.algorithm.length > 0) ||
         study.flowchart ||
+        (study.flowchartNodes && study.flowchartNodes.length > 0) ||
         (study.importantPoints && study.importantPoints.length > 0) ||
         (study.vivaQuestions && study.vivaQuestions.length > 0))
   );
@@ -84,6 +85,59 @@ export default function ResponseRenderer({
         </div>
       )}
 
+      {/* Incomplete Output Recovery Notice */}
+      {(message.isIncomplete || codeBlock?.validationStatus === 'INCOMPLETE') && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '8px',
+            padding: '10px 14px',
+            marginBottom: '14px',
+            backgroundColor: 'rgba(245, 158, 11, 0.12)',
+            border: '1px solid rgba(245, 158, 11, 0.35)',
+            borderRadius: 'var(--radius-sm)',
+            fontSize: 'var(--text-xs)',
+            color: '#fbbf24',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <AlertTriangle size={15} color="#f59e0b" style={{ flexShrink: 0 }} />
+            <span>
+              {message.isContinuation ? (
+                <>
+                  <strong>Generation truncated again:</strong> Model reached token limit during continuation. The code remains incomplete.
+                </>
+              ) : (
+                <>
+                  <strong>Generation truncated:</strong> Output stopped at token limit or is incomplete.
+                </>
+              )}
+            </span>
+          </div>
+          {onSelectSuggestion && !message.isContinuation && (
+            <button
+              type="button"
+              onClick={() => onSelectSuggestion('Complete the code from where it stopped')}
+              style={{
+                backgroundColor: '#f59e0b',
+                color: '#0f172a',
+                border: 'none',
+                borderRadius: 'var(--radius-xs)',
+                padding: '4px 10px',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              Complete Code
+            </button>
+          )}
+        </div>
+      )}
+
       {/* ------------------------------------------------------------- */}
       {/* CASE A: DEBUGGING WORKSPACE LAYOUT                           */}
       {/* ------------------------------------------------------------- */}
@@ -114,6 +168,7 @@ export default function ResponseRenderer({
                 filename={codeBlock.filename}
                 language={codeBlock.language}
                 initialValidation={codeBlock.validationStatus || 'VALID'}
+                initialDiagnostics={codeBlock.diagnostics || []}
                 initialExecution={codeBlock.executionStatus}
                 initialOutput={codeBlock.output}
                 durationMs={codeBlock.durationMs || 0}
@@ -135,11 +190,14 @@ export default function ResponseRenderer({
         /* 8. Viva Questions                                           */
         /* ----------------------------------------------------------- */
         <>
-          {/* Main prose introduction if present */}
-          {content && (
-            <div style={{ marginBottom: '12px' }}>
-              <MarkdownContent content={content} />
-            </div>
+          {/* Main prose introduction if present and not duplicating study sections */}
+          {content &&
+            !study?.problemUnderstanding?.includes(content.trim()) &&
+            !content.trim().includes(study?.problemUnderstanding?.trim() || '___') &&
+            !/(-->|->|\[start\]|┌──|├──|\[init|arr\[mid\]|mid\s*=|low\s*<=)/i.test(content) && (
+              <div style={{ marginBottom: '12px' }}>
+                <MarkdownContent content={content} />
+              </div>
           )}
 
           {/* 1. Problem Understanding */}
@@ -188,6 +246,7 @@ export default function ResponseRenderer({
                 filename={codeBlock.filename}
                 language={codeBlock.language}
                 initialValidation={codeBlock.validationStatus || 'VALID'}
+                initialDiagnostics={codeBlock.diagnostics || []}
                 initialExecution={codeBlock.executionStatus}
                 initialOutput={codeBlock.output}
                 durationMs={codeBlock.durationMs || 0}
@@ -348,6 +407,7 @@ export default function ResponseRenderer({
                 filename={codeBlock.filename}
                 language={codeBlock.language}
                 initialValidation={codeBlock.validationStatus || 'VALID'}
+                initialDiagnostics={codeBlock.diagnostics || []}
                 initialExecution={codeBlock.executionStatus}
                 initialOutput={codeBlock.output}
                 durationMs={codeBlock.durationMs || 0}

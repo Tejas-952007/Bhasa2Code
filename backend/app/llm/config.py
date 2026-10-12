@@ -2,7 +2,10 @@
 
 import os
 from typing import Any, Dict, List, Optional
+from dotenv import load_dotenv
 from pydantic import BaseModel, Field
+
+load_dotenv()
 
 
 class OllamaSettings(BaseModel):

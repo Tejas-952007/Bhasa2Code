@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Copy, Check, Edit3, ShieldCheck, Play, Save, X, Loader2, ArrowDownToLine } from 'lucide-react';
+import { Copy, Check, Edit3, ShieldCheck, Play, Save, X, Loader2, ArrowDownToLine, Bookmark } from 'lucide-react';
 
 /**
  * CodeToolbar
  * Primary action bar for CodeArtifact:
- * - Normal mode: Copy, Edit, Validate, Run, Stdin
+ * - Normal mode: Copy, Bookmark, Edit, Validate, Run, Stdin
  * - Edit mode: Save, Cancel, Validate, Run, Stdin
  */
 export default function CodeToolbar({
   onCopy,
+  onBookmark = null,
+  isBookmarked = false,
   onStartEdit,
   onSave,
   onCancel,
@@ -16,6 +18,7 @@ export default function CodeToolbar({
   onRun,
   onToggleStdin = null,
   showStdin = false,
+  hasInputRequirement = false,
   isEditing = false,
   isRunning = false,
   isValidating = false,
@@ -96,6 +99,24 @@ export default function CodeToolbar({
             <span>{copied ? 'Copied' : 'Copy'}</span>
           </button>
 
+          {onBookmark && (
+            <button
+              type="button"
+              style={{
+                ...btnStyle,
+                color: isBookmarked ? '#34d399' : '#cbd5e1',
+                borderColor: isBookmarked ? 'rgba(52, 211, 153, 0.4)' : '#333c4d',
+              }}
+              onClick={onBookmark}
+              title="Bookmark snippet to Saved"
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#333c4d')}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#262d3d')}
+            >
+              {isBookmarked ? <Check size={13} color="#34d399" /> : <Bookmark size={13} />}
+              <span>{isBookmarked ? 'Saved' : 'Save'}</span>
+            </button>
+          )}
+
           <button
             type="button"
             style={btnStyle}
@@ -167,27 +188,28 @@ export default function CodeToolbar({
         <span>{isRunning ? 'Running...' : 'Run'}</span>
       </button>
 
-      {/* Stdin Toggle Button */}
+      {/* Program Input Toggle Button */}
       {onToggleStdin && (
         <button
           type="button"
           onClick={onToggleStdin}
-          title="Toggle Program Input (stdin)"
+          title={hasInputRequirement ? 'Program Input (stdin) — Program uses input()' : 'Toggle Program Input (stdin)'}
           style={{
             ...btnStyle,
-            backgroundColor: showStdin ? '#1e293b' : '#262d3d',
-            borderColor: showStdin ? '#3b82f6' : '#333c4d',
-            color: showStdin ? '#93c5fd' : '#cbd5e1',
+            backgroundColor: showStdin ? '#1e293b' : (hasInputRequirement ? '#28251e' : '#262d3d'),
+            borderColor: showStdin ? '#3b82f6' : (hasInputRequirement ? '#d97706' : '#333c4d'),
+            color: showStdin ? '#93c5fd' : (hasInputRequirement ? '#fcd34d' : '#cbd5e1'),
+            fontWeight: hasInputRequirement ? 600 : 500,
           }}
           onMouseEnter={(e) => {
-            if (!showStdin) e.currentTarget.style.backgroundColor = '#333c4d';
+            if (!showStdin && !hasInputRequirement) e.currentTarget.style.backgroundColor = '#333c4d';
           }}
           onMouseLeave={(e) => {
-            if (!showStdin) e.currentTarget.style.backgroundColor = '#262d3d';
+            if (!showStdin && !hasInputRequirement) e.currentTarget.style.backgroundColor = '#262d3d';
           }}
         >
-          <ArrowDownToLine size={12} />
-          <span>stdin</span>
+          <ArrowDownToLine size={12} color={hasInputRequirement ? '#f59e0b' : 'currentColor'} />
+          <span>{hasInputRequirement ? 'Input (req)' : 'Input'}</span>
         </button>
       )}
     </div>

@@ -50,12 +50,14 @@ class ResponseValidator:
         self,
         response_text: str,
         language_hint: Optional[str] = None,
+        done_reason: Optional[str] = None,
     ) -> ResponseValidationResult:
         """Parse response text, extract code blocks, and perform syntax validation.
 
         Args:
             response_text: Raw assistant response text.
             language_hint: Optional programming language hint from upstream context/NLP.
+            done_reason: Optional completion reason from Ollama metadata ('stop', 'length', etc.).
 
         Returns:
             ResponseValidationResult containing aggregate status, block details, and diagnostics.
@@ -82,8 +84,11 @@ class ResponseValidator:
         validated_blocks: List[CodeValidationResult] = []
         all_diagnostics: List[ValidationDiagnostic] = []
 
-        for block in raw_blocks:
-            # Resolve language using priority: fence -> hint -> heuristics -> None
+        is_length_truncated = (done_reason == "length")
+        num_blocks = len(raw_blocks)
+
+        for idx, block in enumerate(raw_blocks):
+            # Resolve language using priority: fence -> heuristics -> hint (with code signals) -> None
             resolved_lang = resolve_language(
                 declared_language=block.declared_language,
                 code=block.code,
@@ -112,17 +117,52 @@ class ResponseValidator:
                     validator="None",
                 )
 
+            # Check if block is incomplete or truncated
+            is_unclosed = not block.is_fenced
+            is_last_block = (idx == num_blocks - 1)
+            is_at_eof = (len(response_text.strip()) - block.end_char) < 50
+
+            if is_unclosed:
+                block_res.status = ValidationStatus.INCOMPLETE
+                block_res.diagnostics.insert(
+                    0,
+                    ValidationDiagnostic(
+                        severity="ERROR",
+                        message="Code block is incomplete or truncated (unclosed code fence).",
+                    ),
+                )
+            elif is_last_block and is_length_truncated:
+                block_res.status = ValidationStatus.INCOMPLETE
+                block_res.diagnostics.insert(
+                    0,
+                    ValidationDiagnostic(
+                        severity="ERROR",
+                        message="Generation stopped at token limit; code block is truncated.",
+                    ),
+                )
+
             validated_blocks.append(block_res)
             all_diagnostics.extend(block_res.diagnostics)
 
         # 3. Aggregate statuses deterministically
         aggregated_status = self._aggregate_statuses([b.status for b in validated_blocks])
+        if is_length_truncated:
+            aggregated_status = ValidationStatus.INCOMPLETE
+            if not any("token limit" in d.message for d in all_diagnostics):
+                all_diagnostics.insert(
+                    0,
+                    ValidationDiagnostic(
+                        severity="WARNING",
+                        message="Generation stopped at token limit; response is incomplete.",
+                    ),
+                )
 
         logger.info(
-            "Response validation finished: status=%s blocks=%d diagnostics=%d",
+            "Response validation finished: status=%s blocks=%d diagnostics=%d done_reason=%s",
             aggregated_status,
             len(validated_blocks),
             len(all_diagnostics),
+            done_reason,
         )
 
         return ResponseValidationResult(
@@ -137,14 +177,17 @@ class ResponseValidator:
         """Deterministic status aggregation rules:
 
         - No blocks: NOT_VALIDATED
+        - Any INCOMPLETE: INCOMPLETE (explicit truncation takes precedence)
         - Any INVALID: INVALID (strict failure propagation)
         - All VALID: VALID
         - All UNSUPPORTED: UNSUPPORTED
         - Mixture of VALID and UNSUPPORTED: UNSUPPORTED (cannot certify partial unknown)
-        - Mixture of VALID and INVALID: INVALID
         """
         if not statuses:
             return ValidationStatus.NOT_VALIDATED
+
+        if any(s == ValidationStatus.INCOMPLETE for s in statuses):
+            return ValidationStatus.INCOMPLETE
 
         if any(s == ValidationStatus.INVALID for s in statuses):
             return ValidationStatus.INVALID

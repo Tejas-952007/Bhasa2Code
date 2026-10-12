@@ -17,11 +17,41 @@ from backend.app.database.engine import init_db
 logger = logging.getLogger("bhasha2code")
 
 
+def cleanup_orphaned_sandbox_resources():
+    """Prune any leaked b2c-run containers or b2c-vol volumes on startup or shutdown."""
+    import subprocess
+    try:
+        res = subprocess.run(
+            ["docker", "ps", "-aq", "--filter", "name=b2c-run"],
+            capture_output=True,
+            text=True,
+            timeout=3.0,
+            check=False,
+        )
+        if res.stdout.strip():
+            cids = res.stdout.strip().split()
+            subprocess.run(["docker", "rm", "-f"] + cids, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5.0, check=False)
+        v_res = subprocess.run(
+            ["docker", "volume", "ls", "-q", "--filter", "name=b2c-vol"],
+            capture_output=True,
+            text=True,
+            timeout=3.0,
+            check=False,
+        )
+        if v_res.stdout.strip():
+            vols = v_res.stdout.strip().split()
+            subprocess.run(["docker", "volume", "rm", "-f"] + vols, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5.0, check=False)
+    except Exception:
+        pass
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Initialize database on startup
     init_db()
+    cleanup_orphaned_sandbox_resources()
     yield
+    cleanup_orphaned_sandbox_resources()
 
 
 app = FastAPI(

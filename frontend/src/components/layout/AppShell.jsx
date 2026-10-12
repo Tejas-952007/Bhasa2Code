@@ -16,6 +16,13 @@ export default function AppShell({
   onSelectView,
   isStudyMode = false,
   onToggleStudyMode,
+  theme,
+  onThemeChange,
+  editorFontSize,
+  onEditorFontSizeChange,
+  codingModel,
+  onCodingModelChange,
+  onClearAllSessions,
 }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -46,7 +53,8 @@ export default function AppShell({
         style={{
           display: 'flex',
           flex: 1,
-          height: 'calc(100vh - 48px)',
+          minHeight: 0,
+          height: 'calc(100vh - 52px)',
           overflow: 'hidden',
           position: 'relative',
         }}
@@ -68,6 +76,7 @@ export default function AppShell({
           style={{
             flex: 1,
             height: '100%',
+            minHeight: 0,
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
@@ -80,7 +89,17 @@ export default function AppShell({
 
       {/* Settings Modal */}
       {showSettings && (
-        <SettingsPage onClose={() => setShowSettings(false)} />
+        <SettingsPage
+          onClose={() => setShowSettings(false)}
+          theme={theme}
+          onThemeChange={onThemeChange}
+          editorFontSize={editorFontSize}
+          onEditorFontSizeChange={onEditorFontSizeChange}
+          codingModel={codingModel}
+          onCodingModelChange={onCodingModelChange}
+          onClearAllSessions={onClearAllSessions}
+          sessionsCount={sessions.length}
+        />
       )}
     </div>
   );

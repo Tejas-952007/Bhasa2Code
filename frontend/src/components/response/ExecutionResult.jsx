@@ -26,7 +26,8 @@ export default function ExecutionResult({
   const isResourceLimit = normalizedStatus === 'RESOURCE_LIMIT';
   const isSandboxError = normalizedStatus === 'SANDBOX_ERROR' || normalizedStatus === 'UNAVAILABLE';
   const isValidationError = normalizedStatus === 'VALIDATION_FAILED';
-  const isRuntimeError = !isSuccess && !isTimeout && !isResourceLimit && !isSandboxError && !isValidationError;
+  const isDependencyError = normalizedStatus === 'DEPENDENCY_ERROR';
+  const isRuntimeError = !isSuccess && !isTimeout && !isResourceLimit && !isSandboxError && !isValidationError && !isDependencyError;
 
   let headerTitle = 'Output';
   let titleColor = '#cbd5e1';
@@ -47,6 +48,10 @@ export default function ExecutionResult({
   } else if (isValidationError) {
     headerTitle = 'Validation Failed';
     titleColor = '#ef4444';
+    statusIcon = AlertCircle;
+  } else if (isDependencyError) {
+    headerTitle = 'Missing Dependency';
+    titleColor = '#f59e0b';
     statusIcon = AlertCircle;
   } else if (isRuntimeError) {
     headerTitle = 'Runtime Error';
@@ -69,6 +74,13 @@ export default function ExecutionResult({
     content = diagnostics && diagnostics.length > 0
       ? `Validation failed prior to execution:\n${diagnostics.join('\n')}`
       : 'Validation failed prior to execution.';
+  } else if (isDependencyError) {
+    content = diagnostics && diagnostics.length > 0
+      ? diagnostics.join('\n')
+      : 'Missing dependency in sandbox environment.';
+    if (stderr && !content.includes(stderr)) {
+      content += `\n\n[Sandbox stderr]:\n${stderr}`;
+    }
   } else {
     // Standard execution output
     if (stdout && stderr) {
@@ -82,7 +94,13 @@ export default function ExecutionResult({
     } else if (diagnostics && diagnostics.length > 0) {
       content = diagnostics.join('\n');
     } else {
-      content = exitCode === 0 ? '(Program produced no stdout output)' : `(Process exited with code ${exitCode})`;
+      content = exitCode === 0
+        ? '(Process completed with Exit code 0 with no stdout output.\nNote: No test assertions or function calls were executed. Defining functions without calling them does not run tests.)'
+        : `(Process exited with code ${exitCode})`;
+    }
+
+    if (stderr && stderr.includes('EOFError')) {
+      content += '\n\n[Tip]: The program requested input via input(), but standard input was empty. Click "Input" in the toolbar to supply input lines.';
     }
   }
 

@@ -64,17 +64,18 @@ export default function Sidebar({
       style={{
         width: '250px',
         height: '100%',
+        minHeight: 0,
+        overflow: 'hidden',
         backgroundColor: 'var(--bg-sidebar)',
         borderRight: '1px solid var(--border-color)',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
         flexShrink: 0,
         userSelect: 'none',
       }}
     >
-      {/* Top Half: New Chat & Recent Sessions */}
-      <div style={{ padding: '14px 12px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {/* Top: New Chat Button */}
+      <div style={{ padding: '14px 12px 10px', flexShrink: 0 }}>
         {/* + New Chat Button */}
         <button
           type="button"
@@ -124,11 +125,21 @@ export default function Sidebar({
             ⌘N
           </span>
         </button>
+      </div>
 
-        {/* Recent Sessions */}
-        <div>
-          <div style={sectionLabelStyle}>Recent</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+      {/* Middle: Scrollable Recent Sessions */}
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,
+          overflowY: 'auto',
+          padding: '4px 12px 12px',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <div style={sectionLabelStyle}>Recent</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
             {sessions.map((session) => {
               const isActive = activeView === 'chat' && session.id === activeSessionId;
               const isEditing = editingSessionId === session.id;
@@ -329,10 +340,9 @@ export default function Sidebar({
               );
             })}
           </div>
-        </div>
       </div>
 
-      {/* Bottom Half: Navigation Sections & Settings */}
+      {/* Bottom: Navigation Sections & Settings */}
       <div
         style={{
           padding: '12px 10px',
@@ -340,6 +350,8 @@ export default function Sidebar({
           display: 'flex',
           flexDirection: 'column',
           gap: '12px',
+          flexShrink: 0,
+          backgroundColor: 'var(--bg-sidebar)',
         }}
       >
         {/* Workspace Tools */}

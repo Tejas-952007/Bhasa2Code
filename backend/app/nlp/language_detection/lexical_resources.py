@@ -17,12 +17,15 @@ TECHNICAL_WORDS = {
     "inheritance", "interface", "null", "undefined", "true", "false", "boolean",
     "integer", "int", "float", "string", "str", "char", "git", "github", "commit",
     "schema", "table", "column", "syntax", "runtime", "thread", "process",
+    # Popular libraries and frameworks
+    "numpy", "pandas", "matplotlib", "scipy", "sklearn", "seaborn", "tensorflow", "pytorch", "keras",
+    "flask", "django", "fastapi", "react", "vue", "angular", "express", "docker", "kubernetes",
     # Devanagari technical loan words
     "कोड", "प्रोग्राम", "फंक्शन", "क्लास", "एरर", "डेटाबेस", "पायथन", "कॅल्क्युलेटर",
 }
 
 # Homographs between Latin Indian transliterations and English
-HOMOGRAPH_WORDS = {"in", "is", "do", "to", "me", "us", "so"}
+HOMOGRAPH_WORDS = {"in", "is", "do", "to", "me", "us", "so", "the"}
 
 UNAMBIGUOUS_ENGLISH_WORDS = {
     "write", "writes", "writing", "explain", "explains", "explained", "how", "does", "work",
@@ -72,23 +75,24 @@ UNAMBIGUOUS_LATIN_MARATHI_WORDS = {
     "pahije", "pahijet", "hava", "havi", "have", "sang", "sanga", "sangna", "samjavun", "samjat", "kalat", "kalala",
     "madhe", "madhye", "madhun", "sathi", "sobat", "sobath",
     "cha", "chi", "che", "chya", "var", "khali", "suddha", "tayar", "dakhva", "kiti",
+    "yat", "ani", "de", "banav", "banva", "kahi", "tar", "karr", "krr", "sangg", "dakhav", "dakva",
 }
 
 UNAMBIGUOUS_LATIN_HINDI_WORDS = {
     "mujhe", "mera", "meri", "mere", "mujhko", "tujhe", "tera", "teri", "tere",
     "hume", "humara", "humari", "humare", "usko", "use", "uska", "uski", "uske",
     "unko", "unhe", "unka", "unki", "unke",
-    "hai", "hain", "ho", "tha", "thi", "the", "raha", "rahi", "rahe",
+    "hai", "hain", "ho", "tha", "thi", "raha", "rahi", "rahe",
     "kya", "kaise", "kaisa", "kaisi", "kab", "kahan", "kyu", "kyun",
     "karo", "karna", "kijiye", "karta", "karti", "karte", "kiya", "kiye", "karke",
     "chahiye", "batao", "bataiye", "samjhao", "samjhado", "samajh", "samjha", "samjhana",
     "mein", "liye", "aur", "lekin",
     "ye", "yeh", "wo", "woh",
     "sakta", "sakti", "sakte", "sake",
-    "banao", "banana", "bana", "dijiye", "dikhao", "bata", "ek",
+    "banao", "banana", "dijiye", "dikhao", "bata", "ek",
 }
 
-SHARED_INDIAN_WORDS = {"nahi", "nahin", "nhi", "kar", "pan", "ha", "hi", "he", "ya"}
+SHARED_INDIAN_WORDS = {"nahi", "nahin", "nhi", "kar", "karr", "krr", "kr", "pan", "ha", "hi", "he", "ya", "bana"}
 
 # Re-exported combined dictionaries for general compatibility
 ENGLISH_WORDS = UNAMBIGUOUS_ENGLISH_WORDS | HOMOGRAPH_WORDS

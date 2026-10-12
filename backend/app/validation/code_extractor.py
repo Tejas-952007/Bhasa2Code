@@ -63,9 +63,9 @@ class CodeExtractor:
             block_id += 1
             last_end = match.end()
 
-        # 2. Check for an unclosed fence at the end of the text if no closed blocks reached the end
+        # 2. Check for an unclosed fence at the end of the text (e.g. truncated streaming or token limit cutoff)
         remaining_text = text[last_end:]
-        if ("```" in remaining_text or "~~~" in remaining_text) and not blocks:
+        if "```" in remaining_text or "~~~" in remaining_text:
             unclosed_match = UNCLOSED_FENCE_PATTERN.search(remaining_text)
             if unclosed_match:
                 lang_str = unclosed_match.group("lang")

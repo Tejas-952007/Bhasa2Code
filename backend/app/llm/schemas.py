@@ -75,7 +75,9 @@ class LLMResponse(BaseModel):
     text: str
     model: str
     total_duration_ms: Optional[float] = None
+    time_to_first_token_ms: Optional[float] = None
     prompt_tokens: Optional[int] = None
     completion_tokens: Optional[int] = None
     done: bool = True
+    done_reason: Optional[str] = "stop"
     raw_metadata: Dict[str, Any] = Field(default_factory=dict)

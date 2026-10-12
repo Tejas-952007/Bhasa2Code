@@ -13,7 +13,7 @@ from backend.app.api.deps import get_current_user_id, get_db, get_llm_service
 from backend.app.database.engine import get_engine_args, init_db
 from backend.app.database.repositories.message_repository import MessageRepository
 from backend.app.database.repositories.user_repository import UserRepository
-from backend.app.llm.exceptions import OllamaUnavailableError
+from backend.app.llm.exceptions import OllamaTimeoutError, OllamaUnavailableError
 from backend.app.main import app
 
 
@@ -229,3 +229,112 @@ def test_stream_ollama_unavailable_error(stream_test_env):
     assert len(error_events) == 1
     assert error_events[0]["data"]["type"] == "error"
     assert "unavailable" in error_events[0]["data"]["message"].lower() or "offline" in error_events[0]["data"]["message"].lower()
+
+
+def test_stream_incomplete_output_emission(stream_test_env):
+    """Verify stream that terminates early with done_reason='length' emits is_incomplete=True."""
+    client, mock_llm, _ = stream_test_env
+
+    async def truncated_stream(prompt_spec, options=None):
+        yield {"token": "```python\ndef calculate(x):\n    return x * ", "done": False}
+        yield {"token": "", "done": True, "done_reason": "length"}
+
+    mock_llm.generate_stream.side_effect = truncated_stream
+
+    resp = client.post(
+        "/api/v1/chat/stream",
+        json={"message": "write calculator", "study_mode": False},
+    )
+    assert resp.status_code == 200
+    events = parse_sse_events(resp.text)
+    complete_events = [e for e in events if e.get("event") == "complete"]
+    assert len(complete_events) == 1
+    data = complete_events[0]["data"]
+
+    assert data["is_incomplete"] is True
+    assert data["finish_reason"] == "length"
+    assert len(data["code"]) == 1
+    assert data["code"][0]["validation_status"] == "INCOMPLETE"
+
+
+def test_stream_timeout_error_emission(stream_test_env):
+    """Verify OllamaTimeoutError during streaming emits structured SSE error event."""
+    client, mock_llm, _ = stream_test_env
+
+    async def timeout_stream(prompt_spec, options=None):
+        raise OllamaTimeoutError(timeout_seconds=30.0, message="Timed out waiting for Ollama")
+        yield {}
+
+    mock_llm.generate_stream.side_effect = timeout_stream
+
+    resp = client.post(
+        "/api/v1/chat/stream",
+        json={"message": "huge task", "study_mode": False},
+    )
+    assert resp.status_code == 200
+    events = parse_sse_events(resp.text)
+    error_events = [e for e in events if e.get("event") == "error"]
+    assert error_events[0]["data"]["code"] == "EXECUTION_TIMEOUT"
+    assert "timed out" in error_events[0]["data"]["message"].lower()
+
+
+def test_stream_study_mode_with_null_and_missing_viva_questions(stream_test_env):
+    """Verify chat stream with study_mode=True handles missing/null viva_questions without ValidationError."""
+    client, mock_llm, _ = stream_test_env
+
+    async def study_stream_without_viva(prompt_spec, options=None):
+        yield {"token": "### Problem Understanding\nUnderstand stack operations.\n\n", "done": False}
+        yield {"token": "### Algorithm\n1. Push\n2. Pop\n\n", "done": False}
+        yield {"token": "### Code\n```python\nclass Stack:\n    pass\n```\n\n", "done": False}
+        yield {"token": "### Important Points\n- LIFO order.\n", "done": True}
+
+    mock_llm.generate_stream.side_effect = study_stream_without_viva
+
+    resp = client.post(
+        "/api/v1/chat/stream",
+        json={"message": "explain stack", "study_mode": True},
+    )
+    assert resp.status_code == 200
+    events = parse_sse_events(resp.text)
+    error_events = [e for e in events if e.get("event") == "error"]
+    assert len(error_events) == 0, f"Expected no error events, got: {error_events}"
+
+    complete_events = [e for e in events if e.get("event") == "complete"]
+    assert len(complete_events) == 1
+    data = complete_events[0]["data"]
+    assert data["study"] is not None
+    assert data["study"]["viva_questions"] == []
+    assert len(data["study"]["algorithm"]) == 2
+
+
+def test_stream_post_processing_failure_emits_structured_error(stream_test_env):
+    """Verify any unexpected error in post-processing emits a structured SSE error without crashing stream."""
+    from unittest.mock import patch
+
+    client, mock_llm, _ = stream_test_env
+
+    async def simple_stream(prompt_spec, options=None):
+        yield {"token": "hello world", "done": True}
+
+    mock_llm.generate_stream.side_effect = simple_stream
+
+    with patch(
+        "backend.app.api.routes.chat_stream.parse_assistant_response",
+        side_effect=RuntimeError("Simulated internal parser crash"),
+    ):
+        resp = client.post(
+            "/api/v1/chat/stream",
+            json={"message": "test crash", "study_mode": False},
+        )
+        assert resp.status_code == 200
+        events = parse_sse_events(resp.text)
+        error_events = [e for e in events if e.get("event") == "error"]
+        assert len(error_events) == 1
+        err_data = error_events[0]["data"]
+        assert err_data["type"] == "error"
+        assert err_data["code"] == "POST_PROCESSING_ERROR"
+        assert "Simulated internal parser crash" not in err_data["message"]
+        # Ensure complete event was NOT emitted
+        complete_events = [e for e in events if e.get("event") == "complete"]
+        assert len(complete_events) == 0
+

@@ -64,23 +64,31 @@ FOLLOW_UP_PHRASES: list[re.Pattern] = [
 # Explicit standalone topic creation patterns (indicating a brand-new task)
 STANDALONE_PATTERNS: list[re.Pattern] = [
     re.compile(
-        r"^(write|create|implement|build|develop|generate)\s+(a|an|the)?\s*([a-zA-Z0-9_-]+\s+){0,3}(calculator|api|program|app|function|class|script|service|system|algorithm|scraper|crawler|bot|game|server|client|database|crud)\b",
+        r"^(write|create|implement|build|develop|generate|explain|show|give|code)\s+(a|an|the)?\s*([a-zA-Z0-9_-]+\s+){0,3}(calculator|api|program|app|function|class|script|service|system|algorithm|scraper|crawler|bot|game|server|client|database|crud|binary\s+search|linear\s+search|merge\s+sort|quick\s+sort|bubble\s+sort|tree|graph)\b",
         re.IGNORECASE,
     ),
     re.compile(
-        r"^what\s+(is|are)\s+(a|an|the)?\s*([a-zA-Z0-9_-]+\s+){0,2}(polymorphism|inheritance|encapsulation|abstraction|recursion|concurrency|threading|asynchronous|docker|kubernetes|git|sql|nosql|decorator|generator|interface|pointer|garbage\s+collection)\b",
+        r"\b(binary\s+search|linear\s+search|merge\s+sort|quick\s+sort|bubble\s+sort|insertion\s+sort|selection\s+sort|heap\s+sort|dijkstra|bfs|dfs|fibonacci|factorial|prime|palindrome|calculator)\b",
         re.IGNORECASE,
     ),
     re.compile(
-        r".*\b(madhe|mein|me)\s+(calculator|api|program|algorithm|app|script)\s+(bana|banao|banva|tayyar kar)\b",
+        r"^what\s+(is|are)\s+(a|an|the)?\s*([a-zA-Z0-9_-]+\s+){0,2}(polymorphism|inheritance|encapsulation|abstraction|recursion|concurrency|threading|asynchronous|docker|kubernetes|git|sql|nosql|decorator|generator|interface|pointer|garbage\s+collection|binary\s+search|algorithm)\b",
         re.IGNORECASE,
     ),
     re.compile(
-        r".*\b(calculator|api|program|algorithm|app)\s+(liha|likho|bana|banao|banva)\b",
+        r".*\b(madhe|madhye|mein|me)\s+.*(calculator|api|program|algorithm|app|script|binary\s+search)\s+(bana|banao|banva|tayyar kar|de|dya|kara|kar|likho|liha)\b",
         re.IGNORECASE,
     ),
     re.compile(
-        r"^(बाइनरी|मर्ज|क्विक|लिनियर)\s+.*(अल्गोरिदम|शोध)\s+(लिहा|करा|दाखवा)",
+        r".*\b(calculator|api|program|algorithm|app|binary\s+search)\s+(liha|likho|bana|banao|banva|de|dya|kara|kar)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r".*\bcomplete\s+(executable\s+)?(program|code)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"^(बाइनरी|मर्ज|क्विक|लिनियर)\s+.*(अल्गोरिदम|शोध|सर्च)\s*(लिहा|करा|दाखवा)?",
         re.IGNORECASE,
     ),
 ]
@@ -128,8 +136,10 @@ def is_follow_up(message: str, nlp_result: Optional[NLPPipelineResult] = None) -
     if has_mod_verb and (word_count <= 8 or char_len <= 60):
         return True
 
-    # 5. Very short utterances (< 5 words, < 35 chars) that are not simple greetings
+    # 5. Very short utterances (< 5 words, < 35 chars) that are not simple greetings or standalone topics
     if word_count <= 5 and char_len <= 35:
+        if any(pat.search(norm) for pat in STANDALONE_PATTERNS):
+            return False
         if not re.search(r"^(hi|hello|hey|namaste|namaskar|good\s+morning)\b", norm):
             return True
 

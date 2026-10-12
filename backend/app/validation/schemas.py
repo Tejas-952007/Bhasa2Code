@@ -12,6 +12,7 @@ class ValidationStatus(str, Enum):
     INVALID = "INVALID"
     UNSUPPORTED = "UNSUPPORTED"
     NOT_VALIDATED = "NOT_VALIDATED"
+    INCOMPLETE = "INCOMPLETE"
 
 
 class ValidationDiagnostic(BaseModel):

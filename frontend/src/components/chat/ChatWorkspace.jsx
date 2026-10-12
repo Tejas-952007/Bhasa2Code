@@ -15,14 +15,23 @@ export default function ChatWorkspace({
   onSendMessage,
   onStopGeneration = null,
   onUpdateMessageCode = null,
-  activeSessionTitle = 'Python Calculator',
-  contextHint = 'Using current session context',
+  activeSessionTitle = 'Workspace',
+  contextHint = null,
 }) {
+  const scrollContainerRef = useRef(null);
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: scrollContainerRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
   }, [messages, isStudyMode, isLoading, errorMessage]);
+
+  const displayContextHint =
+    contextHint || (messages.length > 2 ? 'Active session history' : 'Fresh conversation context');
 
   return (
     <div
@@ -31,6 +40,7 @@ export default function ChatWorkspace({
         flexDirection: 'column',
         height: '100%',
         width: '100%',
+        minHeight: 0,
         backgroundColor: 'var(--bg-app)',
         position: 'relative',
         overflow: 'hidden',
@@ -56,7 +66,7 @@ export default function ChatWorkspace({
               {activeSessionTitle}
             </span>
             <span>·</span>
-            <span>{contextHint}</span>
+            <span>{displayContextHint}</span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -68,8 +78,10 @@ export default function ChatWorkspace({
 
       {/* Main Scrollable Messages Container */}
       <div
+        ref={scrollContainerRef}
         style={{
           flex: 1,
+          minHeight: 0,
           overflowY: 'auto',
           padding: '20px 24px',
           display: 'flex',
@@ -188,6 +200,7 @@ export default function ChatWorkspace({
           borderTop: '1px solid var(--border-color)',
           display: 'flex',
           justifyContent: 'center',
+          flexShrink: 0,
         }}
       >
         <div

@@ -1,7 +1,7 @@
 """Base class and models for language-specific sandbox execution runners."""
 
 from abc import ABC, abstractmethod
-from typing import Dict, List
+from typing import Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from backend.app.sandbox.config import SandboxConfig
@@ -19,6 +19,18 @@ class LanguageExecutionPlan(BaseModel):
     entrypoint: List[str] = Field(
         ...,
         description="Command argument array to execute inside container workspace.",
+    )
+    is_ml: bool = Field(
+        default=False,
+        description="Flag indicating if workload requires scientific/ML environment profile.",
+    )
+    timeout_seconds: Optional[float] = Field(
+        default=None,
+        description="Recommended timeout for this execution plan.",
+    )
+    memory_limit_mb: Optional[int] = Field(
+        default=None,
+        description="Recommended memory limit for this execution plan.",
     )
 
 

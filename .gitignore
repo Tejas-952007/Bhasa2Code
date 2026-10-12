@@ -50,51 +50,55 @@ venv.bak/
 
 # Node.js / Frontend
 node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+dist-ssr/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 .pnpm-debug.log*
-dist/
-dist-ssr/
 *.local
 
 # Environment variables & secrets
 .env
-.env.local
-.env.*.local
+.env.*
 *.env
+backend/.env
+frontend/.env
 !.env.example
+!frontend/.env.example
 
-# Database / SQLite
+# Database / SQLite (never commit runtime or user databases)
 *.db
-*.db-journal
+*.db-*
 *.sqlite
 *.sqlite3
-data/*.db
-data/*.sqlite
-data/*.sqlite3
+data/*.db*
+backend/*.db*
 
-# Logs
+# Logs & Temporary Files
 logs/
 *.log
+scratch/
 
-# Generated Exports
+# Generated Exports & Backups
 exports/
-*.pdf
-
-# Backups
 backups/
 
-# Model Artifacts
+# Model Artifacts (ignore heavy weights, preserve small local joblib classifiers)
 models/*.bin
-models/*.joblib
 models/*.pkl
 models/*.onnx
 models/*.pt
 models/*.pth
 models/*.safetensors
+!models/intent/intent_classifier.joblib
+!models/intent/metadata.json
+!models/tone/tone_classifier.joblib
+!models/tone/metadata.json
 
 # Operating System & IDE
 .DS_Store

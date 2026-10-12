@@ -22,6 +22,13 @@ export default function ValidationStatus({
       bg: 'var(--status-error-bg)',
       border: 'var(--status-error-border)',
     },
+    INCOMPLETE: {
+      label: 'Incomplete / Truncated',
+      icon: AlertTriangle,
+      color: 'var(--status-warning)',
+      bg: 'var(--status-warning-bg)',
+      border: 'var(--status-warning-border)',
+    },
     VALIDATING: {
       label: 'Validating...',
       icon: Clock,

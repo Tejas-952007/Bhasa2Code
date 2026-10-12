@@ -1,7 +1,7 @@
 """Pydantic schemas for Bhasha2Code FastAPI API endpoints."""
 
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 # ---------------------------------------------------------------------------
@@ -111,14 +111,50 @@ class CodeArtifactResponse(BaseModel):
     filename: str
     content: str
     validation_status: str
+    diagnostics: List[str] = Field(default_factory=list)
 
 
 class StudySectionResponse(BaseModel):
     problem_understanding: Optional[str] = None
     algorithm: List[str] = Field(default_factory=list)
     flowchart: Optional[str] = None
+    flowchart_nodes: Optional[List[Dict[str, Any]]] = None
     important_points: List[str] = Field(default_factory=list)
     viva_questions: List[Dict[str, str]] = Field(default_factory=list)
+
+    @field_validator("algorithm", "important_points", mode="before")
+    @classmethod
+    def normalize_string_lists(cls, v: Any) -> List[str]:
+        if v is None:
+            return []
+        if not isinstance(v, list):
+            return []
+        return [str(item).strip() for item in v if item is not None and str(item).strip()]
+
+    @field_validator("viva_questions", mode="before")
+    @classmethod
+    def normalize_viva_questions(cls, v: Any) -> List[Dict[str, str]]:
+        if v is None:
+            return []
+        if not isinstance(v, list):
+            return []
+        cleaned: List[Dict[str, str]] = []
+        for item in v:
+            if isinstance(item, dict):
+                q = str(item.get("question", "")).strip()
+                a = str(item.get("answer", "")).strip()
+                if q or a:
+                    cleaned.append({"question": q, "answer": a})
+        return cleaned
+
+    @field_validator("flowchart_nodes", mode="before")
+    @classmethod
+    def normalize_flowchart_nodes(cls, v: Any) -> Optional[List[Dict[str, Any]]]:
+        if v is None:
+            return None
+        if not isinstance(v, list):
+            return None
+        return [item for item in v if isinstance(item, dict)]
 
 
 class ChatResponse(BaseModel):
@@ -130,6 +166,8 @@ class ChatResponse(BaseModel):
     code: List[CodeArtifactResponse] = Field(default_factory=list)
     study: Optional[StudySectionResponse] = None
     execution: Optional[Dict[str, Any]] = None
+    is_incomplete: bool = False
+    finish_reason: Optional[str] = "stop"
 
 
 # ---------------------------------------------------------------------------

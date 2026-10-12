@@ -107,15 +107,15 @@ def classify_language(
 
     for h in homo_matches:
         if has_indian_context and not has_english_context:
-            if h in {"in", "is", "me", "us", "do"}:
+            if h in {"in", "is", "me", "us", "do", "the"}:
                 lat_hi_matches.add(h)
         elif has_english_context and not has_indian_context:
             eng_conv_matches.add(h)
         else:
-            if h == "in":
+            if h in {"in", "the"}:
                 eng_conv_matches.add(h)
             elif h in {"is", "do", "me"}:
-                if has_indian_context:
+                if has_indian_context and len(lat_hi_matches) > 1:
                     lat_hi_matches.add(h)
                 else:
                     eng_conv_matches.add(h)
@@ -127,7 +127,7 @@ def classify_language(
         elif len(lat_hi_matches) > len(lat_mr_matches) or len(dev_hi_matches) > len(dev_mr_matches):
             lat_hi_matches.add(w)
         else:
-            if w in {"ha", "kar", "nahi"}:
+            if w in {"ha", "kar", "nahi", "bana"}:
                 lat_mr_matches.add(w)
                 lat_hi_matches.add(w)
 
@@ -228,7 +228,7 @@ def classify_language(
         )
 
     # 2. Hinglish phrase patterns or ambiguous mixed Indian markers
-    if matched_hinglish_phrase or (mr_count > 0 and hi_count > 0 and mr_count == hi_count):
+    if matched_hinglish_phrase or (mr_count > 0 and hi_count > 0 and mr_count == hi_count and len(u_mr_matches) == len(u_hi_matches)):
         evidence.append("Colloquial Hinglish phrase pattern or mixed Indian markers matched")
         return LanguageDetectionResult(
             language=Language.HINGLISH,

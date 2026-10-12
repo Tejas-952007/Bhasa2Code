@@ -242,3 +242,71 @@ def test_llm_service_generate_text():
 
     result = service.generate_text("2 + 2 = ?")
     assert result.text == "Direct answer"
+
+
+def test_resolve_generation_options_by_request_type():
+    """Verify request-type-specific token budget selection."""
+    service = LLMService(client=OllamaClient())
+
+    # Study mode
+    spec_study = PromptSpecification(
+        system_instruction="sys",
+        user_instruction="explain binary search",
+        language_instruction="eng",
+        tone_instruction="formal",
+        intent_instruction="CONCEPT",
+        study_mode=True,
+    )
+    opts_study = service.resolve_generation_options(spec_study)
+    assert opts_study["num_predict"] == 1024
+
+    # Code generation
+    spec_code = PromptSpecification(
+        system_instruction="sys",
+        user_instruction="write a calculator",
+        language_instruction="eng",
+        tone_instruction="formal",
+        intent_instruction="GENERATE_CODE",
+        study_mode=False,
+    )
+    opts_code = service.resolve_generation_options(spec_code)
+    assert opts_code["num_predict"] == 600
+
+    # Debug code
+    spec_debug = PromptSpecification(
+        system_instruction="sys",
+        user_instruction="fix this bug",
+        language_instruction="eng",
+        tone_instruction="formal",
+        intent_instruction="DEBUG_CODE",
+        study_mode=False,
+    )
+    opts_debug = service.resolve_generation_options(spec_debug)
+    assert opts_debug["num_predict"] == 640
+
+    # Concept / Short
+    spec_concept = PromptSpecification(
+        system_instruction="sys",
+        user_instruction="what is recursion",
+        language_instruction="eng",
+        tone_instruction="SHORT",
+        intent_instruction="CONCEPT",
+        study_mode=False,
+    )
+    opts_concept = service.resolve_generation_options(spec_concept)
+    assert opts_concept["num_predict"] == 192
+
+
+def test_resolve_generation_options_env_override(monkeypatch):
+    """Verify OLLAMA_NUM_PREDICT environment variable takes precedence."""
+    monkeypatch.setenv("OLLAMA_NUM_PREDICT", "1024")
+    service = LLMService(client=OllamaClient())
+    spec = PromptSpecification(
+        system_instruction="sys",
+        user_instruction="hello",
+        language_instruction="eng",
+        tone_instruction="formal",
+        intent_instruction="GENERATE_CODE",
+    )
+    opts = service.resolve_generation_options(spec)
+    assert opts["num_predict"] == 1024

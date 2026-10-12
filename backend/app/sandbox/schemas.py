@@ -16,6 +16,7 @@ class ExecutionStatus(str, Enum):
     UNSUPPORTED = "UNSUPPORTED"
     SANDBOX_ERROR = "SANDBOX_ERROR"
     OUTPUT_LIMIT = "OUTPUT_LIMIT"
+    DEPENDENCY_ERROR = "DEPENDENCY_ERROR"
 
 
 class SandboxResult(BaseModel):

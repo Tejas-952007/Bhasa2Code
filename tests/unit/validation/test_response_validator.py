@@ -155,3 +155,47 @@ def test_validate_determinism():
         assert len(next_res.code_blocks) == len(first_res.code_blocks)
         assert next_res.code_blocks[0].code == first_res.code_blocks[0].code
         assert next_res.code_blocks[0].status == first_res.code_blocks[0].status
+
+
+def test_validate_unclosed_fence_incomplete():
+    """Verify that an unclosed markdown fence is flagged as INCOMPLETE."""
+    validator = ResponseValidator()
+    text = (
+        "Here is the calculator:\n"
+        "```python\n"
+        "def add(a, b):\n"
+        "    return a + b\n"
+    )
+    res = validator.validate(text)
+    assert res.has_code is True
+    assert res.status == ValidationStatus.INCOMPLETE
+    assert res.code_blocks[0].status == ValidationStatus.INCOMPLETE
+    assert any("unclosed code fence" in d.message.lower() or "truncated" in d.message.lower() for d in res.diagnostics)
+
+
+def test_validate_done_reason_length_incomplete():
+    """Verify that done_reason='length' marks even closed blocks as INCOMPLETE."""
+    validator = ResponseValidator()
+    text = (
+        "```python\n"
+        "def add(a, b):\n"
+        "    return a + b\n"
+        "```\n"
+    )
+    res = validator.validate(text, done_reason="length")
+    assert res.status == ValidationStatus.INCOMPLETE
+    assert res.code_blocks[0].status == ValidationStatus.INCOMPLETE
+    assert any("token limit" in d.message.lower() for d in res.diagnostics)
+
+
+def test_validate_truncated_eof_syntax_incomplete():
+    """Verify that truncated syntax with unclosed fence is marked INCOMPLETE."""
+    validator = ResponseValidator()
+    text = (
+        "```python\n"
+        "def calculate(a, b):\n"
+        "    items = [1, 2,\n"
+    )
+    res = validator.validate(text)
+    assert res.status == ValidationStatus.INCOMPLETE
+    assert res.code_blocks[0].status == ValidationStatus.INCOMPLETE

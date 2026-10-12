@@ -233,9 +233,22 @@ export async function runCode({ language, code, stdin = '', signal }) {
   });
 }
 
+export function getInteractiveRunWsUrl() {
+  const httpUrl = BASE_URL;
+  const wsUrl = httpUrl.replace(/^http:/i, 'ws:').replace(/^https:/i, 'wss:');
+  return `${wsUrl}/code/interactive-run`;
+}
+
 // ---------------------------------------------------------------------------
 // View Model Adapters
 // ---------------------------------------------------------------------------
+
+function stripCodeBlocks(text) {
+  if (!text) return '';
+  let cleaned = text.replace(/(?:```|~~~)[\s\S]*?(?:```|~~~)/g, '');
+  cleaned = cleaned.replace(/(?:```|~~~)[\s\S]*$/g, '');
+  return cleaned.trim();
+}
 
 /**
  * Adapt a backend message item from GET /sessions/{id} into frontend view model.
@@ -251,6 +264,7 @@ export function adaptBackendMessage(msg) {
       filename: msg.code_block.filename || 'solution.py',
       language: msg.code_block.language || 'python',
       validationStatus: (msg.code_block.validationStatus || msg.code_block.validation_status || 'VALID').toUpperCase(),
+      diagnostics: msg.code_block.diagnostics || [],
       executionStatus: msg.code_block.executionStatus || null,
       output: msg.code_block.output || null,
       durationMs: msg.code_block.durationMs || 0,
@@ -263,19 +277,29 @@ export function adaptBackendMessage(msg) {
       problemUnderstanding: msg.study.problem_understanding || msg.study.problemUnderstanding,
       algorithm: msg.study.algorithm || [],
       flowchart: msg.study.flowchart || null,
+      flowchartNodes: msg.study.flowchart_nodes || msg.study.flowchartNodes || null,
       importantPoints: msg.study.important_points || msg.study.importantPoints || [],
       vivaQuestions: msg.study.viva_questions || msg.study.vivaQuestions || [],
     };
   }
 
+  const cleanContent = isAssistant && msg.content ? stripCodeBlocks(msg.content) : msg.content;
+  const isIncomplete = Boolean(
+    msg.is_incomplete ||
+      msg.finish_reason === 'length' ||
+      (codeBlock && codeBlock.validationStatus === 'INCOMPLETE')
+  );
+
   return {
     id: msg.id,
     role: msg.role,
-    content: msg.content,
+    content: cleanContent,
     codeBlock,
     explanation: msg.explanation || (isAssistant ? [] : undefined),
     example: msg.example || null,
     study,
+    isIncomplete,
+    finishReason: msg.finish_reason || (isIncomplete ? 'length' : 'stop'),
     timestamp: msg.created_at,
   };
 }
@@ -293,6 +317,7 @@ export function adaptChatResponse(chatResp) {
         filename: primaryCode.filename,
         language: primaryCode.language,
         validationStatus: primaryCode.validation_status.toUpperCase(),
+        diagnostics: primaryCode.diagnostics || [],
         executionStatus: null,
         output: null,
         durationMs: 0,
@@ -305,6 +330,7 @@ export function adaptChatResponse(chatResp) {
       problemUnderstanding: chatResp.study.problem_understanding,
       algorithm: chatResp.study.algorithm || [],
       flowchart: chatResp.study.flowchart || null,
+      flowchartNodes: chatResp.study.flowchart_nodes || chatResp.study.flowchartNodes || null,
       importantPoints: chatResp.study.important_points || [],
       vivaQuestions: chatResp.study.viva_questions || [],
     };
@@ -312,13 +338,33 @@ export function adaptChatResponse(chatResp) {
 
   const intent = chatResp.nlp?.intent || '';
   const isFollowUp = intent === 'MODIFY_CODE' || intent === 'DEBUG_CODE';
+  const isIncomplete = Boolean(
+    chatResp.is_incomplete ||
+      chatResp.finish_reason === 'length' ||
+      chatResp.assistant_message?.is_incomplete ||
+      chatResp.assistant_message?.finish_reason === 'length' ||
+      (primaryCode && primaryCode.validation_status.toUpperCase() === 'INCOMPLETE')
+  );
+
+  const isContinuation = Boolean(
+    chatResp.user_message?.content &&
+      /\b(complete\s+(?:the\s+)?code|continue\s+(?:the\s+)?code|finish\s+(?:the\s+)?code|continue\s+from\s+where\s+it\s+stopped)\b/i.test(
+        chatResp.user_message.content
+      )
+  );
 
   // Build subtle, relevant suggestions (max 3-4)
   const suggestions = [];
+  if (isIncomplete && !isContinuation) {
+    suggestions.push('Complete the code');
+    suggestions.push('Continue from where it stopped');
+  }
   if (codeBlock) {
     if (!isFollowUp) {
-      suggestions.push('Add input validation');
-      suggestions.push('Handle division by zero');
+      if (!isIncomplete) {
+        suggestions.push('Add input validation');
+        suggestions.push('Handle division by zero');
+      }
       suggestions.push('Explain this code step by step');
     } else {
       suggestions.push('Add unit tests');
@@ -337,10 +383,14 @@ export function adaptChatResponse(chatResp) {
     });
   }
 
+  const cleanContent = chatResp.assistant_message.content
+    ? stripCodeBlocks(chatResp.assistant_message.content)
+    : '';
+
   const assistantMessage = {
     id: chatResp.assistant_message.id,
     role: 'assistant',
-    content: chatResp.assistant_message.content,
+    content: cleanContent,
     explanation: chatResp.assistant_message.explanation || [],
     example: chatResp.assistant_message.example || null,
     codeBlock,
@@ -349,6 +399,9 @@ export function adaptChatResponse(chatResp) {
     suggestions,
     changes: changes.length > 0 ? changes : undefined,
     isFollowUp,
+    isIncomplete,
+    isContinuation,
+    finishReason: chatResp.finish_reason || chatResp.assistant_message?.finish_reason || (isIncomplete ? 'length' : 'stop'),
     activeContext: isFollowUp && primaryCode ? { filename: primaryCode.filename } : null,
   };
 

@@ -17,6 +17,23 @@ FENCE_PATTERN = re.compile(
 PYTHON_DEF_CLASS = re.compile(r"^\s*(def|class)\s+[a-zA-Z_][a-zA-Z0-9_]*\s*[\(:].*", re.MULTILINE)
 TRACEBACK_PATTERN = re.compile(r"Traceback \(most recent call last\):")
 
+TRAIL_INLINE_INST_PATTERN = re.compile(
+    r"^(?P<code>.+?)\s{1,}(?P<inst>(?:please\s+|can\s+you\s+)?(?:explain|samjhav|samjav|check|debug|fix|run|test|batao|sang|what\s+does|how\s+does|is\s+there)\b.+)$",
+    re.IGNORECASE,
+)
+
+STANDALONE_INST_PATTERN = re.compile(
+    r"^\s*(?:please\s+|can\s+you\s+)?(?:explain|samjhav|samjav|check|debug|fix|run|test|batao|sang|what\s+does|how\s+does|is\s+there|help\s+me)\b",
+    re.IGNORECASE,
+)
+
+CODE_LINE_PATTERN = re.compile(
+    r"^\s*(?:#|//|/\*|\*|import\s+|from\s+|def\s+|class\s+|async\s+def\s+|function\s+|"
+    r"[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*|public\s+|private\s+|protected\s+|void\s+|int\s+|float\s+|"
+    r"const\s+|let\s+|var\s+|#include\s+|if\s+|while\s+|for\s+|try:|except|return\b|print\s*\(|console\.log)",
+    re.IGNORECASE,
+)
+
 
 class TextPreprocessor:
     """Safe multilingual and code-aware text preprocessor for Bhasha2Code.
@@ -163,42 +180,78 @@ class TextPreprocessor:
         original_text: str,
         clean_input: str,
     ) -> PreprocessedText:
-        """Handle unfenced code or stack trace input, separating preceding natural language if present."""
+        """Handle unfenced code or stack trace input, separating preceding and trailing natural language if present."""
         stripped = clean_input.strip()
         lines = stripped.split("\n")
+        post_lines: List[str] = []
 
-        # Find the line index where code or traceback begins
-        split_idx = 0
-        for i, line in enumerate(lines):
-            if TRACEBACK_PATTERN.search(line) or PYTHON_DEF_CLASS.search(line):
-                split_idx = i
+        # 1. Extract inline trailing natural language instruction from last line if present
+        if lines:
+            last_line = lines[-1]
+            m = TRAIL_INLINE_INST_PATTERN.match(last_line)
+            if m and not last_line.strip().startswith("#"):
+                lines[-1] = m.group("code").rstrip()
+                post_lines.append(m.group("inst").strip())
+
+        # 2. Extract standalone trailing natural language instruction lines
+        while lines:
+            last = lines[-1].strip()
+            if not last:
+                lines.pop()
+                continue
+            if STANDALONE_INST_PATTERN.search(last) and not CODE_LINE_PATTERN.search(last):
+                post_lines.insert(0, lines.pop().strip())
+            else:
                 break
 
-        if split_idx > 0:
-            pre_lines = lines[:split_idx]
-            code_lines = lines[split_idx:]
-            norm_pre = self._normalize_whitespace("\n".join(pre_lines))
-            code_content = "\n".join(code_lines).strip()
-            code_segment = CodeSegment(content=code_content, language_hint=None)
-            text_segments = [norm_pre] if norm_pre else []
-            normalized_text = f"{norm_pre}\n\n{code_content}" if norm_pre else code_content
-            classifier_text = norm_pre if norm_pre else code_content
-            return PreprocessedText(
-                original_text=original_text,
-                normalized_text=normalized_text,
-                text_segments=text_segments,
-                code_segments=[code_segment],
-                classifier_text=classifier_text,
-                is_empty=False,
-            )
+        # 3. Handle stack traces or code block preamble
+        code_start_idx = 0
+        if TRACEBACK_PATTERN.search(stripped):
+            for i, line in enumerate(lines):
+                if TRACEBACK_PATTERN.search(line):
+                    code_start_idx = i
+                    break
+        else:
+            # Find the true start of code (first code syntax line or indented body)
+            for i, line in enumerate(lines):
+                if not line.strip():
+                    continue
+                if CODE_LINE_PATTERN.search(line) or line.startswith(("  ", "\t")):
+                    code_start_idx = i
+                    break
 
-        code_segment = CodeSegment(content=stripped, language_hint=None)
+        pre_lines = lines[:code_start_idx]
+        code_lines = lines[code_start_idx:]
+
+        norm_pre = self._normalize_whitespace("\n".join(pre_lines)) if pre_lines else ""
+        norm_post = self._normalize_whitespace(" ".join(post_lines)) if post_lines else ""
+        code_content = "\n".join(code_lines).strip()
+
+        text_segments: List[str] = []
+        if norm_pre:
+            text_segments.append(norm_pre)
+        if norm_post:
+            text_segments.append(norm_post)
+
+        code_segments = [CodeSegment(content=code_content, language_hint=None)] if code_content else []
+
+        normalized_parts: List[str] = []
+        if norm_pre:
+            normalized_parts.append(norm_pre)
+        if code_content:
+            normalized_parts.append(code_content)
+        if norm_post:
+            normalized_parts.append(norm_post)
+        normalized_text = "\n\n".join(normalized_parts) if normalized_parts else stripped
+
+        classifier_text = " ".join(text_segments).strip() if text_segments else (norm_pre or code_content or stripped)
+
         return PreprocessedText(
             original_text=original_text,
-            normalized_text=stripped,
-            text_segments=[],
-            code_segments=[code_segment],
-            classifier_text=stripped,
+            normalized_text=normalized_text,
+            text_segments=text_segments,
+            code_segments=code_segments,
+            classifier_text=classifier_text,
             is_empty=False,
         )
 

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import CodeToolbar from './CodeToolbar';
 import ValidationStatus from './ValidationStatus';
 import ExecutionResult from '../response/ExecutionResult';
-import { Terminal, AlertCircle, ChevronDown, ChevronRight } from 'lucide-react';
+import InteractiveTerminal from './InteractiveTerminal';
+import { Terminal, AlertCircle, AlertTriangle, ChevronDown, ChevronRight } from 'lucide-react';
 import { validateCode, runCode } from '../../services/api';
 
 /**
@@ -36,6 +37,7 @@ export default function CodeArtifact({
   filename = 'solution.py',
   language = 'python',
   initialValidation = 'VALID',
+  initialDiagnostics = [],
   initialExecution = null,
   initialOutput = '',
   durationMs = 0,
@@ -46,11 +48,21 @@ export default function CodeArtifact({
   const [isEditing, setIsEditing] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
-  const [showConsole, setShowConsole] = useState(Boolean(initialOutput || initialExecution));
+  const [showConsole, setShowConsole] = useState(Boolean(initialExecution));
+  const [showTerminal, setShowTerminal] = useState(false);
+  const [terminalSessionKey, setTerminalSessionKey] = useState(0);
+  const [terminalStatus, setTerminalStatus] = useState('IDLE');
 
-  // Stdin state
+  // Stdin state: auto-open if code uses input()
+  const hasInitialInput = Boolean(
+    initialCode && (
+      initialCode.includes('input(') ||
+      initialCode.includes('cin >>') ||
+      initialCode.includes('scanf(')
+    )
+  );
   const [stdin, setStdin] = useState('');
-  const [showStdin, setShowStdin] = useState(false);
+  const [showStdin, setShowStdin] = useState(hasInitialInput);
 
   // Diagnostic expansion
   const [showDiagnostics, setShowDiagnostics] = useState(true);
@@ -63,14 +75,14 @@ export default function CodeArtifact({
   const executedCodeRef = useRef(initialExecution ? initialCode : null);
 
   const [validationStatus, setValidationStatus] = useState(initialValidation);
-  const [validationDiagnostics, setValidationDiagnostics] = useState([]);
+  const [validationDiagnostics, setValidationDiagnostics] = useState(initialDiagnostics);
   const [executionResult, setExecutionResult] = useState(
-    initialOutput || initialExecution
+    initialExecution
       ? {
-          status: initialExecution || 'SUCCESS',
+          status: initialExecution,
           stdout: initialOutput || '',
           stderr: '',
-          exitCode: 0,
+          exitCode: initialExecution === 'SUCCESS' ? 0 : 1,
           durationMs: durationMs,
           diagnostics: [],
           isStale: false,
@@ -88,22 +100,29 @@ export default function CodeArtifact({
     setCode(initialCode);
     setDraftCode(initialCode);
     revisionRef.current += 1;
-    validatedRevisionRef.current = initialValidation === 'VALID' ? revisionRef.current : 0;
+    validatedRevisionRef.current =
+      initialValidation === 'VALID' ||
+      initialValidation === 'INVALID' ||
+      initialValidation === 'INCOMPLETE'
+        ? revisionRef.current
+        : 0;
     validatedCodeRef.current = initialCode;
     setValidationStatus(initialValidation);
     setValidationDiagnostics([]);
-    if (initialOutput || initialExecution) {
+    if (initialExecution) {
       setExecutionResult({
-        status: initialExecution || 'SUCCESS',
+        status: initialExecution,
         stdout: initialOutput || '',
         stderr: '',
-        exitCode: 0,
+        exitCode: initialExecution === 'SUCCESS' ? 0 : 1,
         durationMs: durationMs,
         diagnostics: [],
         isStale: false,
       });
+    } else {
+      setExecutionResult(null);
     }
-  }, [initialCode, initialValidation]);
+  }, [initialCode, initialValidation, initialExecution, initialOutput]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -115,6 +134,13 @@ export default function CodeArtifact({
 
   const activeContent = isEditing ? draftCode : code;
   const lines = activeContent.split('\n');
+  const hasInputRequirement = Boolean(
+    activeContent && (
+      activeContent.includes('input(') ||
+      activeContent.includes('cin >>') ||
+      activeContent.includes('scanf(')
+    )
+  );
 
   // Core validation function tied to target revision
   const triggerValidation = async (codeToValidate, targetRevision) => {
@@ -265,12 +291,34 @@ export default function CodeArtifact({
     triggerValidation(activeContent, revisionRef.current);
   };
 
-  // Run Action
+  // Run Action (Interactive Terminal)
   const handleRun = async () => {
     if (isRunning) return;
 
-    // Check if the current revision was already validated and found INVALID
-    if (validationStatus === 'INVALID' && validatedRevisionRef.current === revisionRef.current) {
+    // Check if the current revision was already validated and found INVALID or INCOMPLETE
+    if (
+      (validationStatus === 'INVALID' || validationStatus === 'INCOMPLETE') &&
+      validatedRevisionRef.current === revisionRef.current
+    ) {
+      setShowTerminal(true);
+      setTerminalStatus('VALIDATION_FAILED');
+      return;
+    }
+
+    executedRevisionRef.current = revisionRef.current;
+    executedCodeRef.current = activeContent;
+    setShowTerminal(true);
+    setTerminalSessionKey((k) => k + 1);
+  };
+
+  // Optional Batch Run via REST API
+  const handleBatchRun = async () => {
+    if (isRunning) return;
+
+    if (
+      (validationStatus === 'INVALID' || validationStatus === 'INCOMPLETE') &&
+      validatedRevisionRef.current === revisionRef.current
+    ) {
       setShowConsole(true);
       setExecutionResult({
         status: 'VALIDATION_FAILED',
@@ -280,7 +328,11 @@ export default function CodeArtifact({
         durationMs: 0,
         diagnostics: validationDiagnostics.length > 0
           ? validationDiagnostics
-          : ['Cannot execute: Code contains syntax or compilation errors.'],
+          : [
+              validationStatus === 'INCOMPLETE'
+                ? 'Cannot execute: Code is incomplete or truncated at output token limit.'
+                : 'Cannot execute: Code contains syntax or compilation errors.'
+            ],
         isStale: false,
       });
       return;
@@ -342,6 +394,33 @@ export default function CodeArtifact({
         diagnostics: [err.message || 'Failed to execute code in sandbox.'],
         isStale: revisionRef.current !== runRev,
       });
+    }
+  };
+
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const handleBookmark = () => {
+    try {
+      const stored = localStorage.getItem('b2c_saved_items');
+      const list = stored ? JSON.parse(stored) : [];
+      const codeSnippet = activeContent || code || '';
+      const newItem = {
+        id: `saved-${Date.now()}`,
+        title: filename || 'Code Snippet',
+        sessionTitle: 'Workspace Code',
+        sessionId: null,
+        date: new Date().toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        }),
+        snippet: codeSnippet,
+      };
+      localStorage.setItem('b2c_saved_items', JSON.stringify([newItem, ...list]));
+      setIsBookmarked(true);
+      setTimeout(() => setIsBookmarked(false), 2000);
+    } catch (err) {
+      console.error('Failed to bookmark snippet:', err);
     }
   };
 
@@ -414,7 +493,12 @@ export default function CodeArtifact({
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           <ValidationStatus type="validation" status={isValidating ? 'VALIDATING' : validationStatus} />
-          {executionResult && executionResult.status !== 'RUNNING' && (
+          {showTerminal && terminalStatus !== 'IDLE' ? (
+            <ValidationStatus
+              type="execution"
+              status={terminalStatus === 'WAITING_FOR_INPUT' ? 'RUNNING' : terminalStatus}
+            />
+          ) : executionResult && executionResult.status !== 'RUNNING' && (
             <ValidationStatus
               type="execution"
               status={executionResult.status}
@@ -443,7 +527,7 @@ export default function CodeArtifact({
                 userSelect: 'none',
                 color: '#64748b',
                 fontFamily: 'var(--font-mono)',
-                fontSize: 'var(--text-xs)',
+                fontSize: 'var(--editor-font-size, var(--text-xs))',
                 lineHeight: '1.55',
                 borderRight: '1px solid var(--border-code)',
                 backgroundColor: 'rgba(0, 0, 0, 0.25)',
@@ -467,7 +551,7 @@ export default function CodeArtifact({
                 flex: 1,
                 padding: '12px 14px',
                 fontFamily: 'var(--font-mono)',
-                fontSize: 'var(--text-xs)',
+                fontSize: 'var(--editor-font-size, var(--text-xs))',
                 lineHeight: '1.55',
                 backgroundColor: 'transparent',
                 border: 'none',
@@ -485,7 +569,7 @@ export default function CodeArtifact({
               display: 'flex',
               padding: '12px 0',
               fontFamily: 'var(--font-mono)',
-              fontSize: 'var(--text-xs)',
+              fontSize: 'var(--editor-font-size, var(--text-xs))',
               lineHeight: '1.55',
             }}
           >
@@ -523,6 +607,28 @@ export default function CodeArtifact({
           </div>
         )}
       </div>
+
+      {/* Incomplete / Truncated Warning Banner */}
+      {validationStatus === 'INCOMPLETE' && (
+        <div
+          style={{
+            padding: '8px 14px',
+            backgroundColor: 'rgba(245, 158, 11, 0.12)',
+            borderTop: '1px solid rgba(245, 158, 11, 0.35)',
+            fontSize: 'var(--text-xs)',
+            fontFamily: 'var(--font-mono)',
+            color: '#fbbf24',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}
+        >
+          <AlertTriangle size={14} color="#f59e0b" style={{ flexShrink: 0 }} />
+          <span>
+            <strong>Code generation was truncated or incomplete.</strong> Direct execution is paused to prevent partial execution errors.
+          </span>
+        </div>
+      )}
 
       {/* Inline Validation Diagnostics Banner */}
       {(validationStatus === 'INVALID' || validationStatus === 'ERROR') && hasDiagnostics && (
@@ -667,6 +773,8 @@ export default function CodeArtifact({
       >
         <CodeToolbar
           onCopy={handleCopy}
+          onBookmark={handleBookmark}
+          isBookmarked={isBookmarked}
           onStartEdit={handleStartEdit}
           onSave={handleSave}
           onCancel={handleCancel}
@@ -674,18 +782,20 @@ export default function CodeArtifact({
           onRun={handleRun}
           onToggleStdin={() => setShowStdin(!showStdin)}
           showStdin={showStdin}
+          hasInputRequirement={hasInputRequirement}
           isEditing={isEditing}
           isRunning={isRunning}
           isValidating={isValidating}
         />
 
-        {executionResult && (
+        {showTerminal ? (
           <button
             type="button"
-            onClick={() => setShowConsole(!showConsole)}
+            data-testid="toggle-terminal-btn"
+            onClick={() => setShowTerminal(false)}
             style={{
               fontSize: 'var(--text-xs)',
-              color: executionResult.isStale ? '#f59e0b' : '#94a3b8',
+              color: executedRevisionRef.current && revisionRef.current !== executedRevisionRef.current ? '#f59e0b' : '#94a3b8',
               backgroundColor: 'transparent',
               border: 'none',
               cursor: 'pointer',
@@ -695,25 +805,61 @@ export default function CodeArtifact({
               padding: '4px 8px',
               borderRadius: 'var(--radius-xs)',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#f1f5f9')}
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.color = executionResult.isStale ? '#f59e0b' : '#94a3b8')
-            }
+          >
+            <Terminal size={12} />
+            <span>Hide Terminal</span>
+          </button>
+        ) : (
+          <button
+            type="button"
+            data-testid="toggle-terminal-btn"
+            onClick={() => setShowTerminal(true)}
+            style={{
+              fontSize: 'var(--text-xs)',
+              color: executedRevisionRef.current && revisionRef.current !== executedRevisionRef.current ? '#f59e0b' : '#94a3b8',
+              backgroundColor: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px',
+              padding: '4px 8px',
+              borderRadius: 'var(--radius-xs)',
+            }}
           >
             <Terminal size={12} />
             <span>
-              {showConsole
-                ? 'Hide Console'
-                : executionResult.isStale
-                ? 'View Console (stale)'
-                : 'View Console'}
+              {executedRevisionRef.current && revisionRef.current !== executedRevisionRef.current
+                ? 'View Terminal (stale)'
+                : 'Terminal'}
             </span>
           </button>
         )}
       </div>
 
+      {/* Interactive Live Terminal */}
+      {showTerminal && (
+        <InteractiveTerminal
+          key={terminalSessionKey}
+          language={language}
+          code={activeContent}
+          isStale={Boolean(executedRevisionRef.current && revisionRef.current !== executedRevisionRef.current)}
+          onClose={() => setShowTerminal(false)}
+          onStatusChange={(newStatus) => {
+            setTerminalStatus(newStatus);
+            setIsRunning(newStatus === 'RUNNING' || newStatus === 'STARTING');
+          }}
+          onValidationFailure={(diags) => {
+            setValidationStatus('INVALID');
+            setValidationDiagnostics(diags);
+            validatedRevisionRef.current = revisionRef.current;
+            validatedCodeRef.current = activeContent;
+          }}
+        />
+      )}
+
       {/* Output Console via ExecutionResult */}
-      {showConsole && executionResult && (
+      {!showTerminal && showConsole && executionResult && (
         <ExecutionResult
           status={executionResult.status}
           stdout={executionResult.stdout}

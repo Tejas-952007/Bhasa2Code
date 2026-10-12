@@ -21,6 +21,7 @@ export default function App() {
   const [sessions, setSessions] = useState([]);
   const [activeSessionId, setActiveSessionId] = useState(null);
   const [activeView, setActiveView] = useState('chat');
+  const [selectedNoteId, setSelectedNoteId] = useState(null);
   const [isStudyMode, setIsStudyMode] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +31,58 @@ export default function App() {
     state: 'loading',
     label: 'Connecting...',
   });
+
+  // Workspace Settings State with LocalStorage Persistence
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem('b2c_theme') || 'light';
+    } catch {
+      return 'light';
+    }
+  });
+
+  const [editorFontSize, setEditorFontSize] = useState(() => {
+    try {
+      return localStorage.getItem('b2c_editor_font_size') || '14px';
+    } catch {
+      return '14px';
+    }
+  });
+
+  const [codingModel, setCodingModel] = useState(() => {
+    try {
+      return localStorage.getItem('b2c_coding_model') || 'qwen2.5-coder:1.5b';
+    } catch {
+      return 'qwen2.5-coder:1.5b';
+    }
+  });
+
+  // Apply Theme to DOM
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem('b2c_theme', theme);
+    } catch {}
+  }, [theme]);
+
+  // Apply Editor Font Size to CSS Variable
+  useEffect(() => {
+    document.documentElement.style.setProperty('--editor-font-size', editorFontSize);
+    try {
+      localStorage.setItem('b2c_editor_font_size', editorFontSize);
+    } catch {}
+  }, [editorFontSize]);
+
+  // Persist Coding Model & Sync Header Status
+  useEffect(() => {
+    try {
+      localStorage.setItem('b2c_coding_model', codingModel);
+    } catch {}
+    setServerStatus((prev) => ({
+      ...prev,
+      label: `Local · ${codingModel}`,
+    }));
+  }, [codingModel]);
 
   // T23: Prevent duplicate requests — only one stream can be in-flight at a time.
   const inflightRef = useRef(false);
@@ -94,6 +147,11 @@ export default function App() {
     setActiveSessionId(sessionId);
     setActiveView('chat');
     setErrorMessage(null);
+    if (!sessionId) {
+      activeSessionIdRef.current = null;
+      setMessages([]);
+      return;
+    }
     try {
       const detail = await getSession(sessionId);
       const adapted = (detail.messages || []).map(adaptBackendMessage);
@@ -104,18 +162,13 @@ export default function App() {
     }
   };
 
-  // + New Chat
-  const handleNewChat = async () => {
-    try {
-      const created = await createSession('New Chat');
-      setSessions((prev) => [created, ...prev]);
-      setActiveSessionId(created.id);
-      setMessages([]);
-      setActiveView('chat');
-      setErrorMessage(null);
-    } catch (err) {
-      setErrorMessage(err.message || 'Could not create new session.');
-    }
+  // + New Chat (lazy creation: session is persisted on first sent message)
+  const handleNewChat = () => {
+    setActiveSessionId(null);
+    activeSessionIdRef.current = null;
+    setMessages([]);
+    setActiveView('chat');
+    setErrorMessage(null);
   };
 
   // Rename Session
@@ -147,6 +200,22 @@ export default function App() {
       }
     } catch (err) {
       setErrorMessage(err.message || 'Failed to delete session.');
+    }
+  };
+
+  // Clear All Sessions (Workspace settings action)
+  const handleClearAllSessions = async () => {
+    try {
+      const allSessions = await listSessions();
+      await Promise.allSettled(allSessions.map((s) => deleteSession(s.id)));
+      setSessions([]);
+      setActiveSessionId(null);
+      activeSessionIdRef.current = null;
+      setMessages([]);
+      return true;
+    } catch (err) {
+      console.error('Failed to clear sessions:', err);
+      throw err;
     }
   };
 
@@ -298,10 +367,15 @@ export default function App() {
     );
   };
 
-  const handleSelectView = (view) => {
+  const handleSelectView = (view, payload = {}) => {
     if (view === 'study') {
       setIsStudyMode(true);
       setActiveView('chat');
+    } else if (view === 'notes') {
+      if (payload?.noteId) {
+        setSelectedNoteId(payload.noteId);
+      }
+      setActiveView('notes');
     } else {
       setActiveView(view);
     }
@@ -322,6 +396,13 @@ export default function App() {
       onSelectView={handleSelectView}
       isStudyMode={isStudyMode}
       onToggleStudyMode={setIsStudyMode}
+      theme={theme}
+      onThemeChange={setTheme}
+      editorFontSize={editorFontSize}
+      onEditorFontSizeChange={setEditorFontSize}
+      codingModel={codingModel}
+      onCodingModelChange={setCodingModel}
+      onClearAllSessions={handleClearAllSessions}
     >
       {activeView === 'chat' && (
         <ChatWorkspace
@@ -339,15 +420,24 @@ export default function App() {
       )}
 
       {activeView === 'notes' && (
-        <NotesPage onBackToChat={() => setActiveView('chat')} />
+        <NotesPage
+          initialNoteId={selectedNoteId}
+          onBackToChat={() => setActiveView('chat')}
+        />
       )}
 
       {activeView === 'saved' && (
-        <SavedPage onOpenSession={handleSelectSession} />
+        <SavedPage
+          onOpenSession={handleSelectSession}
+        />
       )}
 
       {activeView === 'search' && (
-        <SearchPage onSelectSession={handleSelectSession} />
+        <SearchPage
+          sessions={sessions}
+          onSelectSession={handleSelectSession}
+          onSelectView={handleSelectView}
+        />
       )}
     </AppShell>
   );

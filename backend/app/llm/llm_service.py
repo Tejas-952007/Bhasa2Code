@@ -44,37 +44,99 @@ class LLMService:
         prompt_specification: Optional[PromptSpecification] = None,
         override_options: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
-        """Compute dynamic generation options based on T23 token policy and prompt context."""
+        """Compute dynamic generation options based on request type, local CPU budget, and prompt context."""
         opts = self.settings.get_generation_options()
 
         if prompt_specification is not None:
-            num_predict = 384  # NORMAL default
             meta = prompt_specification.metadata or {}
-            tone = (meta.get("detected_tone") or "").upper()
+            tone = (meta.get("detected_tone") or prompt_specification.tone_instruction or "").upper()
+            intent = (meta.get("detected_intent") or prompt_specification.intent_instruction or "").upper()
             constraints = prompt_specification.explicit_constraints or []
             is_study = prompt_specification.study_mode
 
-            if is_study:
-                num_predict = 768
-            elif any("ONLY raw executable code" in c or "extremely brief" in c for c in constraints) or tone == "SHORT":
-                num_predict = 192
+            is_code_intent = intent in (
+                "GENERATE_CODE",
+                "DEBUG_CODE",
+                "MODIFY_CODE",
+                "CONVERT_CODE",
+                "OPTIMIZE_CODE",
+                "TEST_CASE_GENERATION",
+            ) or any("Code" in s for s in (prompt_specification.response_sections or []))
+
+            # Request-type-specific token budgets scaled for local CPU inference (~7-16 tokens/sec)
+            is_explicit_code = any("ONLY" in c or "CONTINUATION TASK" in c for c in constraints)
+            if is_explicit_code:
+                if any("CONTINUATION TASK" in c for c in constraints):
+                    num_predict = 512
+                elif any("simple test cases" in c for c in constraints):
+                    num_predict = 448
+                elif any("ONLY raw executable code" in c for c in constraints):
+                    num_predict = 512
+                else:
+                    num_predict = 512
+            # 1. Study Mode: 8 structured sections (Problem, Algo, Flowchart, Code, Viva, etc.)
+            elif is_study:
+                num_predict = 1024
+            # 2. Detailed explanation requests or explicit algorithm/flowchart/viva constraints
             elif any("detailed" in c or "algorithm" in c or "flowchart" in c or "viva" in c for c in constraints) or tone == "DETAILED":
                 num_predict = 768
-            else:
+            # 3. Code debugging / modification / conversion / optimization (full replacement program + fix explanation)
+            elif intent in ("DEBUG_CODE", "MODIFY_CODE", "CONVERT_CODE", "OPTIMIZE_CODE"):
+                num_predict = 640
+            # 4. Full program code generation (complete executable program with runnable entry point)
+            elif intent == "GENERATE_CODE":
+                num_predict = 600
+            # 5. Short code / snippets / tests
+            elif intent == "TEST_CASE_GENERATION":
+                num_predict = 448
+            # 6. Explanations, code review, errors, concepts, best practices
+            elif intent in (
+                "EXPLAIN_CODE",
+                "CODE_REVIEW",
+                "ERROR_EXPLANATION",
+                "BEST_PRACTICE",
+                "APPROACH_SUGGESTION",
+                "ARCHITECTURE_SUGGESTION",
+                "FEATURE_SUGGESTION",
+                "PERFORMANCE_ANALYSIS",
+            ):
                 num_predict = 384
+            # 7. Simple questions, concepts, search, or concise tone
+            elif intent in ("CONCEPT", "SEARCH") or tone == "SHORT" or any("extremely brief" in c for c in constraints):
+                num_predict = 256 if is_code_intent else 192
+            else:
+                num_predict = 512 if is_code_intent else 384
 
-            # Dynamic context window: short standalone requests use smaller footprint
+            # If user explicitly configured OLLAMA_NUM_PREDICT in environment, only override for unconstrained requests
+            if not is_explicit_code:
+                import os
+                env_predict = os.getenv("OLLAMA_NUM_PREDICT")
+                if env_predict is not None and env_predict.strip():
+                    try:
+                        configured_val = int(env_predict)
+                        if configured_val >= 0:
+                            num_predict = configured_val
+                    except ValueError:
+                        pass
+
+            opts["num_predict"] = num_predict
+
+            # Dynamic context window: short standalone requests use smaller footprint to reduce TTFT on CPU
             is_follow_up = meta.get("is_follow_up", False)
             if not is_follow_up and len(prompt_specification.context_text) < 1500:
                 opts["num_ctx"] = 2048
             else:
                 opts["num_ctx"] = min(self.settings.num_ctx, 4096)
 
-            opts["num_predict"] = num_predict
-
         if override_options:
             opts.update(override_options)
 
+        logger.info(
+            "Selected generation options: num_predict=%s num_ctx=%s temp=%.2f",
+            opts.get("num_predict"),
+            opts.get("num_ctx"),
+            opts.get("temperature", 0.0),
+        )
         return opts
 
     def generate(
@@ -111,6 +173,13 @@ class LLMService:
 
         # 2. Render deterministic prompt
         rendered_prompt = prompt_specification.render()
+
+        # Safe logging of generation constraints without logging user prompt
+        logger.info(
+            "Generating LLM response: model=%s ml_policy=%s",
+            target_model,
+            prompt_specification.get_ml_policy_summary(),
+        )
 
         # 3. Dynamic options
         resolved_opts = self.resolve_generation_options(prompt_specification, options)
@@ -152,6 +221,12 @@ class LLMService:
 
         rendered_prompt = prompt_specification.render()
         resolved_opts = self.resolve_generation_options(prompt_specification, options)
+
+        logger.info(
+            "Streaming LLM response: model=%s ml_policy=%s",
+            target_model,
+            prompt_specification.get_ml_policy_summary(),
+        )
 
         async for chunk in self.client.generate_stream(
             prompt=rendered_prompt,

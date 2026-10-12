@@ -142,6 +142,10 @@ class ContextManager:
                     )
                 )
 
+            # Filter out the active user message if it was already persisted to DB before build_context
+            if context_messages and context_messages[-1].content == current_message and context_messages[-1].role == "user":
+                context_messages.pop()
+
             # Character budget enforcement (drop oldest low-priority messages first)
             total_msg_chars = sum(len(m.content) for m in context_messages)
             while total_msg_chars > active_policy.max_characters and len(context_messages) > 1:
@@ -149,50 +153,51 @@ class ContextManager:
                 total_msg_chars -= len(dropped.content)
                 truncated = True
 
-        # 5. Generated Code Retrieval (Newest first)
-        raw_code_list = self.code_repo.list_code_by_session(
-            session_id=session_id_str,
-            limit=active_policy.max_generated_code_items + 1,
-        )
-
-        if len(raw_code_list) > active_policy.max_generated_code_items:
-            truncated = True
-            raw_code_list = raw_code_list[: active_policy.max_generated_code_items]
-
-        # Enforce code character budget
-        total_code_chars = sum(len(c.code or "") for c in raw_code_list)
-        while total_code_chars > active_policy.max_code_characters and len(raw_code_list) > 1:
-            dropped_code = raw_code_list.pop()
-            total_code_chars -= len(dropped_code.code or "")
-            truncated = True
-
+        # 5. Generated Code Retrieval (Only retained when request is a follow-up to prior code)
         context_codes: List[ContextCode] = []
-        for code_record in raw_code_list:
-            try:
-                code_text = code_record.code or ""
-                # Single artifact truncation if individual snippet exceeds budget
-                if len(code_text) > active_policy.max_code_characters:
-                    code_text = (
-                        code_text[: active_policy.max_code_characters]
-                        + "\n# ... [truncated to fit context budget] ..."
-                    )
-                    truncated = True
+        if follow_up:
+            raw_code_list = self.code_repo.list_code_by_session(
+                session_id=session_id_str,
+                limit=active_policy.max_generated_code_items + 1,
+            )
 
-                context_codes.append(
-                    ContextCode(
-                        generated_code_id=str(code_record.id),
-                        message_id=str(code_record.message_id) if code_record.message_id else None,
-                        language=code_record.language,
-                        code=code_text,
-                        validation_status=code_record.validation_status,
+            if len(raw_code_list) > active_policy.max_generated_code_items:
+                truncated = True
+                raw_code_list = raw_code_list[: active_policy.max_generated_code_items]
+
+            # Enforce code character budget
+            total_code_chars = sum(len(c.code or "") for c in raw_code_list)
+            while total_code_chars > active_policy.max_code_characters and len(raw_code_list) > 1:
+                dropped_code = raw_code_list.pop()
+                total_code_chars -= len(dropped_code.code or "")
+                truncated = True
+
+            for code_record in raw_code_list:
+                try:
+                    code_text = code_record.code or ""
+                    # Single artifact truncation if individual snippet exceeds budget
+                    if len(code_text) > active_policy.max_code_characters:
+                        code_text = (
+                            code_text[: active_policy.max_code_characters]
+                            + "\n# ... [truncated to fit context budget] ..."
+                        )
+                        truncated = True
+
+                    context_codes.append(
+                        ContextCode(
+                            generated_code_id=str(code_record.id),
+                            message_id=str(code_record.message_id) if code_record.message_id else None,
+                            language=code_record.language,
+                            code=code_text,
+                            validation_status=code_record.validation_status,
+                        )
                     )
-                )
-            except Exception as ex:
-                logger.warning(
-                    "Skipping malformed generated code record %s: %s",
-                    getattr(code_record, "id", "unknown"),
-                    ex,
-                )
+                except Exception as ex:
+                    logger.warning(
+                        "Skipping malformed generated code record %s: %s",
+                        getattr(code_record, "id", "unknown"),
+                        ex,
+                    )
 
         # 6. Current Code Segment Extraction
         current_code: Optional[str] = None
@@ -200,7 +205,7 @@ class ContextManager:
             current_code = "\n\n".join(
                 seg.content for seg in nlp_result.preprocessed_text.code_segments if seg.content
             )
-        elif session.current_code:
+        elif follow_up and session.current_code:
             current_code = session.current_code
 
         # 7. Metadata Assembly

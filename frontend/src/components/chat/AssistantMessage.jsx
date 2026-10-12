@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ResponseRenderer from '../response/ResponseRenderer';
-import { Terminal, Copy, Check, Loader2 } from 'lucide-react';
+import { Terminal, Copy, Check, Loader2, Bookmark } from 'lucide-react';
 
 /**
  * AssistantMessage
@@ -16,6 +16,7 @@ export default function AssistantMessage({
   onCodeChange = null,
 }) {
   const [copied, setCopied] = useState(false);
+  const [saved, setSaved] = useState(false);
   const isStreaming = Boolean(message._streaming);
 
   const handleCopyFull = () => {
@@ -29,6 +30,31 @@ export default function AssistantMessage({
     navigator.clipboard?.writeText(fullText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleSaveSnippet = () => {
+    try {
+      const stored = localStorage.getItem('b2c_saved_items');
+      const list = stored ? JSON.parse(stored) : [];
+      const codeSnippet = message.codeBlock?.code || message.content?.slice(0, 300) || '';
+      const newItem = {
+        id: `saved-${Date.now()}`,
+        title: message.codeBlock?.filename || 'Assistant Snippet',
+        sessionTitle: 'Chat Conversation',
+        sessionId: null,
+        date: new Date().toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        }),
+        snippet: codeSnippet,
+      };
+      localStorage.setItem('b2c_saved_items', JSON.stringify([newItem, ...list]));
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err) {
+      console.error('Failed to save snippet:', err);
+    }
   };
 
   return (
@@ -98,6 +124,33 @@ export default function AssistantMessage({
         {/* Quiet Actions — hidden while streaming */}
         {!isStreaming && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <button
+              type="button"
+              onClick={handleSaveSnippet}
+              title="Save snippet to workspace"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+                fontSize: 'var(--text-xs)',
+                color: saved ? 'var(--status-success)' : 'var(--text-muted)',
+                backgroundColor: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '3px 6px',
+                borderRadius: 'var(--radius-xs)',
+              }}
+              onMouseEnter={(e) => {
+                if (!saved) e.currentTarget.style.color = 'var(--text-primary)';
+              }}
+              onMouseLeave={(e) => {
+                if (!saved) e.currentTarget.style.color = 'var(--text-muted)';
+              }}
+            >
+              {saved ? <Check size={12} color="var(--status-success)" /> : <Bookmark size={12} />}
+              <span>{saved ? 'Saved' : 'Save'}</span>
+            </button>
+
             <button
               type="button"
               onClick={handleCopyFull}

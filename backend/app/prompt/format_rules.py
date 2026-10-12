@@ -1,7 +1,7 @@
 """Explicit format detection and dynamic response section planning for Bhasha2Code."""
 
 import re
-from typing import List, Set
+from typing import List, Optional, Set
 from pydantic import BaseModel, Field
 
 
@@ -9,6 +9,9 @@ class ExplicitFormatRequirements(BaseModel):
     """Encapsulates formatting structures explicitly requested by the user."""
 
     code_only: bool = False
+    code_and_tests_only: bool = False
+    num_test_cases: Optional[int] = None
+    num_samples: Optional[int] = None
     algorithm: bool = False
     flowchart: bool = False
     viva_questions: bool = False
@@ -29,6 +32,7 @@ class ExplicitFormatRequirements(BaseModel):
         return any(
             [
                 self.code_only,
+                self.code_and_tests_only,
                 self.algorithm,
                 self.flowchart,
                 self.viva_questions,
@@ -51,13 +55,33 @@ class ExplicitFormatRequirements(BaseModel):
 
 PATTERNS_CODE_ONLY: list[re.Pattern] = [
     re.compile(r"\b(only\s+code|code\s+only|just\s+code|just\s+the\s+code|pure\s+code)\b", re.IGNORECASE),
+    re.compile(r"\b(only|just|pure)\s+(?:complete\s+|full\s+|raw\s+)?(?:python|c\+\+|cpp|c|java|javascript|js|sql)?\s*code\b", re.IGNORECASE),
     re.compile(r"\b(no\s+explanation|without\s+explanation|without\s+any\s+text)\b", re.IGNORECASE),
     # Marathi: fakt code de, fakt code, fakta code, etc.
-    re.compile(r"\b(fakt|fakta|fakth|faktach|फक्त|केवळ)\s+code\b", re.IGNORECASE),
+    re.compile(r"\b(fakt|fakta|fakth|faktach|फक्त|केवळ)\s+(?:complete\s+|purna\s+)?code\b", re.IGNORECASE),
     re.compile(r"\bcode\s+(fakt|fakta|fakth|ch|फक्त|केवळ)\b", re.IGNORECASE),
     # Hindi: sirf code do, bas code, keval code
-    re.compile(r"\b(sirf|bas|keval|सिर्फ|बस|केवल)\s+code\b", re.IGNORECASE),
+    re.compile(r"\b(sirf|bas|keval|सिर्फ|बस|केवल)\s+(?:complete\s+|pura\s+)?code\b", re.IGNORECASE),
     re.compile(r"\bcode\s+(sirf|bas|hi|केवळ)\b", re.IGNORECASE),
+]
+
+PATTERNS_CODE_AND_TESTS: list[re.Pattern] = [
+    re.compile(
+        r"\b(?:only|just|pure|give\s+only)\s+(?:complete\s+|full\s+|raw\s+)?(?:python|c\+\+|cpp|c|java|javascript|js|sql)?\s*code\s+(?:and|\+|along\s+with)\s+(?:(?P<count>one|two|three|four|five|\d+|do|don|ek|teen)\s+)?(?:simple\s+)?test\s*cases?\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bcode\s+(?:and|\+|along\s+with)\s+(?:(?P<count>one|two|three|four|five|\d+|do|don|ek|teen)\s+)?(?:simple\s+)?test\s*cases?\s+(?:only|just)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:sirf|fakt)\s+(?:complete\s+)?code\s+(?:aur|ani|\+)\s+(?:(?P<count>\d+|do|don|ek|two)\s+)?(?:simple\s+)?test\s*cases?\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:only|just)\s+(?:complete\s+)?(?:python\s+)?code\s+and\s+(?:(?P<count>one|two|three|\d+)\s+)?(?:simple\s+)?tests?\b",
+        re.IGNORECASE,
+    ),
 ]
 
 PATTERNS_ALGORITHM: list[re.Pattern] = [
@@ -113,12 +137,50 @@ def detect_explicit_format_requirements(user_message: str) -> ExplicitFormatRequ
 
     norm = user_message.strip()
 
-    # Code Only
-    for pat in PATTERNS_CODE_ONLY:
-        if pat.search(norm):
-            req.code_only = True
-            req.matched_patterns.append("code_only")
+    WORD_TO_NUM = {
+        "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+        "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+        "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15,
+        "ek": 1, "do": 2, "don": 2, "teen": 3, "char": 4, "chaar": 4,
+        "paanch": 5, "panch": 5, "saha": 6, "chhe": 6, "saat": 7,
+        "aath": 8, "nau": 9, "das": 10, "dah": 10, "akra": 11, "gyarah": 11,
+        "barah": 12, "bara": 12,
+    }
+
+    # Explicit sample dataset count detection
+    sample_match = re.search(
+        r"\b(?P<count>\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|do|don|teen|char|paanch|saha|saat|aath|nau|das|dah|akra|barah|bara)\s+(?:samples|examples|records|data\s*points|sentences|reviews)\b",
+        norm,
+        re.IGNORECASE,
+    )
+    if sample_match:
+        c_str = sample_match.group("count").lower()
+        num_val = WORD_TO_NUM.get(c_str, int(c_str) if c_str.isdigit() else None)
+        if num_val:
+            req.num_samples = num_val
+            req.matched_patterns.append(f"samples_{num_val}")
+
+    # Code and Tests Only (prioritized over pure code_only)
+    for pat in PATTERNS_CODE_AND_TESTS:
+        m = pat.search(norm)
+        if m:
+            req.code_and_tests_only = True
+            count_str = m.groupdict().get("count")
+            if count_str:
+                count_lower = count_str.lower()
+                req.num_test_cases = WORD_TO_NUM.get(count_lower, int(count_lower) if count_lower.isdigit() else 2)
+            else:
+                req.num_test_cases = 2
+            req.matched_patterns.append("code_and_tests_only")
             break
+
+    # Code Only (only if code_and_tests_only not triggered)
+    if not req.code_and_tests_only:
+        for pat in PATTERNS_CODE_ONLY:
+            if pat.search(norm):
+                req.code_only = True
+                req.matched_patterns.append("code_only")
+                break
 
     # Algorithm
     for pat in PATTERNS_ALGORITHM:
@@ -508,7 +570,10 @@ def select_response_sections(
     4. Explicit additions (algorithm, flowchart, viva, etc.).
     5. Tone adjustments (SHORT vs. DETAILED vs. SIMPLE).
     """
-    # 1. Highest Priority: Code Only constraint
+    # 1. Highest Priority: Explicit User Constraints (code_only or code_and_tests_only trump Study Mode)
+    if explicit_requirements.code_and_tests_only:
+        return ["Code with Test Cases"]
+
     if explicit_requirements.code_only:
         return ["Code only"]
 

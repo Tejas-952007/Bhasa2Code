@@ -85,9 +85,22 @@ export default function MarkdownContent({ content = '', className = '', style = 
     }
   };
 
+  let inCodeFence = false;
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const trimmed = line.trim();
+
+    if (trimmed.startsWith('```') || trimmed.startsWith('~~~')) {
+      inCodeFence = !inCodeFence;
+      flushList();
+      continue;
+    }
+
+    if (inCodeFence) {
+      // Do not render raw code lines as markdown paragraphs
+      continue;
+    }
 
     if (!trimmed) {
       flushList();

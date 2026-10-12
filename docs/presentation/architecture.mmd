@@ -1,0 +1,64 @@
+flowchart TB
+    subgraph Client["Presentation Tier (Client - Browser)"]
+        UI["React 18 + Vite SPA"]
+        ChatUI["Chat Interface & SSE Stream Listener"]
+        Editor["Monaco / Code Workspace & Diff Viewer"]
+        StudyUI["Study Mode Scaffolding (Visual Flowchart, Algorithms, Viva Q&A)"]
+        TerminalUI["Interactive Terminal & Execution Viewer"]
+        
+        UI --> ChatUI
+        UI --> Editor
+        UI --> StudyUI
+        UI --> TerminalUI
+    end
+
+    subgraph BackendGateway["Application Tier (FastAPI Backend - 127.0.0.1:8000)"]
+        Router["FastAPI ASGI Router & Dependency Injection"]
+        SessionMgr["Session & Context Manager (Sliding History & State)"]
+        
+        subgraph NLPPipeline["Deterministic Offline NLP Pipeline"]
+            P1["Stage 1: TextPreprocessor\n• Unicode NFC Normalization\n• Code / Text Block Segregation"]
+            P2["Stage 2: LanguageDetector\n• Devanagari & Latin Scripts\n• Lexical Lookups & Homograph Disambiguation\n(English, Hindi, Marathi, Hinglish, Marathi-English, Hindi-English)"]
+            P3["Stage 3: ToneClassifier\n• TF-IDF + Logistic Regression (C=3.0)\n• 6 Classes (Casual, Formal, Simple, Technical, Short, Detailed)"]
+            P4["Stage 4: IntentClassifier\n• TF-IDF (Word [1,2] + Char [3,5]) + Logistic Regression\n• 18 Classes (Generate, Debug, Explain, Concept, Algorithm, etc.)"]
+            
+            P1 --> P2 --> P3 --> P4
+        end
+
+        PromptBuilder["Prompt Builder & Policy Engine\n• Code Preservation Mandate (ASCII Keywords)\n• Task-Specific Formatting Guidelines\n• Truncation & Token Budgeting"]
+        
+        subgraph Persistence["Local SQLite Database (SQLAlchemy)"]
+            DB[(bhasha2code.db\nUsers, Sessions, Messages,\nGeneratedCode, Notes, DebugHistory)]
+        end
+    end
+
+    subgraph InferenceTier["Local Inference Tier (Offline LLM)"]
+        OllamaDaemon["Ollama Local Daemon (127.0.0.1:11434)"]
+        LLMModel["Qwen2.5-Coder:1.5b / 3b\n(4-bit GGUF Quantized, Temperature=0.2, Context=8192)"]
+        OllamaDaemon --- LLMModel
+    end
+
+    subgraph VerificationTier["Validation & Sandbox Execution Tier"]
+        RespValidator["Response Validator & Diagnostic Parser\n• Markdown Extraction\n• Python AST Validation (ast.parse)\n• JS/Java/C/C++ Host Compiler Checkers & SQL Regex"]
+        
+        subgraph DockerSandbox["Isolated Ephemeral Docker Sandbox"]
+            DockerRun["Docker Container Runtime (b2c-run-*)\n• Non-root User (UID 1000:1000)\n• Strict Network Isolation (--network none)\n• Memory Capped (256MB Std / 768MB ML)\n• CPU Capped (0.5 cores), PIDs Capped (64)\n• Read-only rootfs + tmpfs (/tmp: 64MB)\n• Timeout Hard Limit (3.0s Std / 10.0s ML)"]
+            RunnerImgs["Multi-Language Sandbox Images\n• Python 3 / Python ML (NumPy, SciPy, Pandas, Sklearn)\n• GCC/G++ (C/C++)\n• OpenJDK (Java)\n• Node.js (JavaScript)"]
+            DockerRun --- RunnerImgs
+        end
+    end
+
+    %% Interaction Paths
+    ChatUI -->|"POST /api/v1/chat/stream (SSE Event Stream)"| Router
+    Router --> SessionMgr
+    SessionMgr <--> DB
+    SessionMgr --> P1
+    P4 --> PromptBuilder
+    PromptBuilder -->|"HTTP REST API (/api/generate)"| OllamaDaemon
+    OllamaDaemon -.->|"Real-time SSE token chunks"| ChatUI
+    OllamaDaemon -->|"Completed Response Text"| RespValidator
+    RespValidator -->|"Validated Code Artifact & Study Payload (complete event)"| ChatUI
+    
+    Editor -->|"POST /api/v1/code/validate"| RespValidator
+    TerminalUI -->|"POST /api/v1/code/run OR WebSocket /api/v1/code/interactive-run"| DockerRun
+    DockerRun -->|"Captured stdout / stderr / exit_code"| TerminalUI

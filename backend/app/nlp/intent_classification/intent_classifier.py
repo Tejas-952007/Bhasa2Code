@@ -1,4 +1,5 @@
 import os
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 import joblib
@@ -113,8 +114,149 @@ class IntentClassifier:
         }
         confidence = float(max(prob_matrix))
 
+        # Disambiguation: Detect concept / library / definitional inquiries
+        is_code_present = False
+        if isinstance(input_data, PreprocessedText):
+            is_code_present = input_data.has_code
+        else:
+            is_code_present = bool(
+                re.search(
+                    r"```|def\s+\w+\s*\(|class\s+\w+|for\s+\w+\s+in|while\s+|=>|;\s*$|<[a-zA-Z0-9]+.*>|import\s+\w+",
+                    stripped,
+                )
+            )
+
+        explicit_code_request = bool(
+            re.search(
+                r"\b(code|function|script|snippet|program|implementation|line\s+by\s+line|"
+                r"हा\s+कोड|या\s+कोड|हा\s+प्रोग्राम|हे\s+फंक्शन|फंक्शन|प्रोग्राम|कोड)\b",
+                stripped,
+                re.IGNORECASE,
+            )
+        )
+
+        excluded_signals = bool(
+            re.search(
+                r"\b(best\s*practice|recommended\s*way|search|find\s+our|previous\s+discussion|"
+                r"taking\s*so\s*long|why\s+is\s+(?:this|my).*(?:slow|taking)|profile|faster)\b",
+                stripped,
+                re.IGNORECASE,
+            )
+        )
+
+        algorithm_inquiry = bool(
+            re.search(
+                r"\b(binary\s*search|linear\s*search|dijkstra|bubble\s*sort|merge\s*sort|"
+                r"quick\s*sort|insertion\s*sort|selection\s*sort|heap\s*sort|bfs|dfs|"
+                r"algorithm|अल्गोरिदम)\b",
+                stripped,
+                re.IGNORECASE,
+            )
+        )
+
+        definitional_inquiry = bool(
+            re.search(
+                r"\b(mhanje\s+kay|mhnje\s+kay|म्हणजे\s*काय|काय\s*आहे|kay\s+ahe|kaay\s+aahe|kya\s+hai|kya\s+hota\s+hai|arth\s+kay)\b|"
+                r"^\s*what\s+is\s+(?:a\s+|an\s+|the\s+)?[a-zA-Z0-9_\-\s]+\??$",
+                stripped,
+                re.IGNORECASE,
+            )
+        )
+
+        concept_library_inquiry = bool(
+            re.search(
+                r"\b(library|package|module|framework|concept|api|sdk|toolkit|tool|"
+                r"recursion|polymorphism|inheritance|encapsulation|abstraction|oops|oop|"
+                r"badal\s+sang|vishayi\s+sang|baddal\s+sang|baddal\s+bol|vishayi\s+bol|"
+                r"matplotlib|numpy|pandas|scipy|sklearn|seaborn|tensorflow|pytorch|keras|"
+                r"flask|django|fastapi|react|vue|angular|express|docker|kubernetes|git)\b",
+                stripped,
+                re.IGNORECASE,
+            )
+        )
+
+        raw_full = ""
+        if isinstance(input_data, PreprocessedText):
+            raw_full = input_data.original_text.strip()
+        elif isinstance(input_data, str):
+            raw_full = input_data.strip()
+        search_target = f"{raw_full} {stripped}".strip()
+
+        explain_code_inquiry = bool(
+            re.search(
+                r"\b("
+                r"(?:please\s+|can\s+you\s+)?explain\s+(?:me\s+)?(?:this\s+|the\s+)?(?:code|program|script|function|snippet|implementation|algorithm)?"
+                r"|(?:code|program|script|function)\s*(?:ko\s*)?(?:explain|samjhao|samjha|batao|samjav|samjhav|sang|sanga)"
+                r"|(?:ha|he|ya|ye|is)\s*(?:code|program|function|script)\s*(?:la\s*)?(?:explain|samjav|samjhav|samjhao|sang|sanga)"
+                r"|(?:code|program)\s*(?:explain\s*(?:karr*|kr|kara|karo|batao|sang|sanga)|samjav|samjhav)"
+                r"|what\s+does\s+this\s+(?:code|program|script|function)\s+do"
+                r"|how\s+does\s+this\s+(?:code|program|script|function)\s+work"
+                r"|walk\s*(?:me\s*)?through\s+this\s+(?:code|program)"
+                r"|line\s+by\s+line\s+explanation"
+                r"|हा\s+कोड\s+(?:समजाव|समजावून\s+सांग|explain\s+कर)"
+                r"|ये\s+कोड\s+(?:समझाओ|explain\s+करो)"
+                r")\b",
+                search_target,
+                re.IGNORECASE,
+            )
+        )
+
+        debug_inquiry = bool(
+            re.search(
+                r"\b(fix|bug|debug|error|exception|crash|traceback|syntaxerror|nameerror|typeerror)\b",
+                search_target,
+                re.IGNORECASE,
+            )
+        )
+
+        optimize_inquiry = bool(
+            re.search(
+                r"\b(optimize|faster|slow|speed\s+up|reduce\s+memory|performance)\b",
+                search_target,
+                re.IGNORECASE,
+            )
+        )
+
+        search_signal = bool(
+            re.search(
+                r"\b(search|find\s+(?:my|our|the|a)?\s*previous|previous\s+(?:chat|conversation|discussion|message|code)|earlier\s+(?:chat|discussion|conversation)|history|खोज|शोध)\b",
+                search_target,
+                re.IGNORECASE,
+            )
+        )
+
+        # Override to EXPLAIN_CODE when code explanation intent is explicitly requested
+        if explain_code_inquiry and not debug_inquiry and not optimize_inquiry and not excluded_signals and not search_signal:
+            pred_label = Intent.EXPLAIN_CODE.value
+            confidence = max(confidence, 0.92)
+            probabilities[Intent.EXPLAIN_CODE.value] = confidence
+
+        # Guard against spurious SEARCH intent when no search signals exist
+        elif pred_label == Intent.SEARCH.value and not search_signal:
+            if is_code_present or explicit_code_request:
+                pred_label = Intent.EXPLAIN_CODE.value
+                confidence = max(confidence, 0.88)
+                probabilities[Intent.EXPLAIN_CODE.value] = confidence
+            else:
+                pred_label = Intent.CONCEPT.value
+                confidence = max(confidence, 0.85)
+                probabilities[Intent.CONCEPT.value] = confidence
+
+        elif not is_code_present and not explicit_code_request and not excluded_signals and not algorithm_inquiry:
+            if definitional_inquiry or (pred_label == Intent.EXPLAIN_CODE.value and concept_library_inquiry):
+                pred_label = Intent.CONCEPT.value
+                concept_prob = probabilities.get(Intent.CONCEPT.value, 0.0)
+                confidence = max(confidence, concept_prob, 0.88)
+                probabilities[Intent.CONCEPT.value] = confidence
+
+        # Normalize probabilities to ensure they sum to 1.0
+        total_p = sum(probabilities.values())
+        if total_p > 0:
+            probabilities = {k: v / total_p for k, v in probabilities.items()}
+
         return IntentClassificationResult(
             intent=pred_label,
             confidence=confidence,
             probabilities=probabilities,
         )
+

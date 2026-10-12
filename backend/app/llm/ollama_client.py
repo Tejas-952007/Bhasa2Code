@@ -1,7 +1,9 @@
 """Transport client for local Ollama HTTP API."""
 
+import asyncio
 import json
 import logging
+import time
 from typing import Any, AsyncIterator, Dict, Iterator, List, Optional
 import httpx
 
@@ -223,11 +225,19 @@ class OllamaClient:
                 len(prompt),
             )
 
+        start_time = time.time()
         try:
             resp = self._client.post("/api/generate", json=payload)
         except (httpx.ConnectError, httpx.ConnectTimeout, httpx.NetworkError) as exc:
             raise OllamaUnavailableError(cause=exc) from exc
         except httpx.TimeoutException as exc:
+            elapsed_s = time.time() - start_time
+            logger.warning(
+                "Ollama generate timed out after %.2fs (timeout limit: %.1fs): %s",
+                elapsed_s,
+                self.settings.timeout_seconds,
+                exc,
+            )
             raise OllamaTimeoutError(
                 timeout_seconds=self.settings.timeout_seconds,
                 cause=exc,
@@ -262,32 +272,43 @@ class OllamaClient:
         # Convert nanoseconds to milliseconds
         total_duration_ns = data.get("total_duration")
         total_duration_ms = (
-            float(total_duration_ns) / 1_000_000.0 if total_duration_ns is not None else None
+            float(total_duration_ns) / 1_000_000.0 if total_duration_ns is not None else (time.time() - start_time) * 1000.0
+        )
+        prompt_eval_ns = data.get("prompt_eval_duration")
+        ttft_ms = (
+            float(prompt_eval_ns) / 1_000_000.0 if prompt_eval_ns is not None else None
         )
 
         prompt_tokens = data.get("prompt_eval_count")
         completion_tokens = data.get("eval_count")
         done = data.get("done", True)
+        done_reason = data.get("done_reason", "stop" if done else "unknown")
 
         logger.info(
-            "Ollama generation succeeded: model=%s duration_ms=%.1f prompt_tokens=%s completion_tokens=%s",
+            "Ollama generation completed: model=%s duration_ms=%.1f ttft_ms=%s prompt_tokens=%s completion_tokens=%s done_reason=%s num_predict=%s",
             target_model,
             total_duration_ms or 0.0,
+            f"{ttft_ms:.1f}" if ttft_ms is not None else "N/A",
             prompt_tokens,
             completion_tokens,
+            done_reason,
+            generation_options.get("num_predict"),
         )
 
         return LLMResponse(
             text=generated_text.strip(),
             model=data.get("model", target_model),
             total_duration_ms=total_duration_ms,
+            time_to_first_token_ms=ttft_ms,
             prompt_tokens=prompt_tokens,
             completion_tokens=completion_tokens,
             done=done,
+            done_reason=done_reason,
             raw_metadata={
                 "load_duration_ns": data.get("load_duration"),
                 "prompt_eval_duration_ns": data.get("prompt_eval_duration"),
                 "eval_duration_ns": data.get("eval_duration"),
+                "done_reason": done_reason,
             },
         )
 
@@ -337,6 +358,9 @@ class OllamaClient:
             payload["system"] = system
 
         url = f"{self.settings.base_url}/api/generate"
+        start_time = time.time()
+        first_token_time = None
+        ttft_ms = None
 
         try:
             async with httpx.AsyncClient(timeout=self.settings.timeout_seconds) as async_client:
@@ -363,20 +387,52 @@ class OllamaClient:
                         token_text = chunk.get("response", "")
                         is_done = chunk.get("done", False)
 
+                        if token_text and first_token_time is None:
+                            first_token_time = time.time()
+                            ttft_ms = (first_token_time - start_time) * 1000.0
+
                         if is_done:
                             total_ns = chunk.get("total_duration")
-                            total_ms = float(total_ns) / 1_000_000.0 if total_ns else None
+                            total_ms = (
+                                float(total_ns) / 1_000_000.0
+                                if total_ns
+                                else (time.time() - start_time) * 1000.0
+                            )
+                            done_reason = chunk.get("done_reason", "stop")
+                            prompt_tokens = chunk.get("prompt_eval_count")
+                            completion_tokens = chunk.get("eval_count")
+
+                            logger.info(
+                                "Ollama stream completed: model=%s duration_ms=%.1f ttft_ms=%s prompt_tokens=%s completion_tokens=%s done_reason=%s num_predict=%s",
+                                target_model,
+                                total_ms or 0.0,
+                                f"{ttft_ms:.1f}" if ttft_ms is not None else "N/A",
+                                prompt_tokens,
+                                completion_tokens,
+                                done_reason,
+                                generation_options.get("num_predict"),
+                            )
+
                             yield {
                                 "done": True,
                                 "token": token_text,
                                 "model": chunk.get("model", target_model),
                                 "total_duration_ms": total_ms,
-                                "prompt_tokens": chunk.get("prompt_eval_count"),
-                                "completion_tokens": chunk.get("eval_count"),
+                                "time_to_first_token_ms": ttft_ms,
+                                "prompt_tokens": prompt_tokens,
+                                "completion_tokens": completion_tokens,
+                                "done_reason": done_reason,
                             }
                         else:
                             yield {"done": False, "token": token_text}
 
+        except (GeneratorExit, asyncio.CancelledError):
+            logger.info(
+                "Ollama streaming cancelled by client after %.2fs for model=%s",
+                (time.time() - start_time),
+                target_model,
+            )
+            raise
         except OllamaModelNotFoundError:
             raise
         except OllamaGenerationError:
@@ -384,6 +440,13 @@ class OllamaClient:
         except (httpx.ConnectError, httpx.ConnectTimeout, httpx.NetworkError) as exc:
             raise OllamaUnavailableError(cause=exc) from exc
         except httpx.TimeoutException as exc:
+            elapsed_s = time.time() - start_time
+            logger.warning(
+                "Ollama streaming timed out after %.2fs (inactivity limit: %.1fs): %s",
+                elapsed_s,
+                self.settings.timeout_seconds,
+                exc,
+            )
             raise OllamaTimeoutError(
                 timeout_seconds=self.settings.timeout_seconds,
                 cause=exc,

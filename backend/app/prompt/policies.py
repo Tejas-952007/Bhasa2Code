@@ -169,3 +169,43 @@ class SecurityPolicy:
         "import, public, static, void), library names, and variable identifiers must remain in standard English ASCII syntax. "
         "Never translate code tokens into Devanagari or other regional scripts."
     )
+
+
+class MLPolicy:
+    """Best practice guidelines and invariants for machine learning and data science tasks."""
+
+    ML_INSTRUCTION = (
+        "MACHINE LEARNING SPECIFICATION & PIPELINE INVARIANTS [CRITICAL]:\n"
+        "1. Strictly Distinguish Features (X) and Target Labels (y):\n"
+        "   - Input features (X) and ground-truth target labels (y) MUST be separate variables.\n"
+        "   - Train the model to predict the target labels (y), NEVER the input features or text (X).\n"
+        "   - NEVER call pipeline.fit(X, text) or pipeline.fit(X, X).\n"
+        "2. Pipeline Inputs with Text Vectorizers:\n"
+        "   - When using a scikit-learn Pipeline with a text vectorizer (such as TfidfVectorizer or CountVectorizer) and classifier:\n"
+        "   - Pass a 1D list of raw text strings directly to pipeline.fit(raw_texts, labels).\n"
+        "   - NEVER pre-transform X with TF-IDF before passing to a Pipeline that already contains a vectorizer step (no duplicate vectorization).\n"
+        "3. Prediction Input Format:\n"
+        "   - When calling pipeline.predict(), supply a 1D list of raw strings (e.g., pipeline.predict(['sample text'])), NEVER nested lists like [['sample text']].\n"
+        "4. Dataset Size & Explicit Ground-Truth Labels:\n"
+        "   - If a specific dataset size (e.g. N samples) is requested, generate exactly N samples in X and exactly N corresponding target labels in y (len(X) == len(y) == N).\n"
+        "   - Explicitly specify requested class labels (e.g. 'positive' and 'negative' strings). Do NOT use arbitrary numeric labels (0/1) when text sentiment classes were requested.\n"
+        "5. Test Assertions:\n"
+        "   - Assert and compare predictions directly against the actual trained target labels (e.g., assert pipeline.predict(['Great!'])[0] == 'positive' or assert pred[0] in ['positive', 'negative'])."
+    )
+
+    @classmethod
+    def get_instruction(cls, explicit_req=None, user_text: str = "") -> str:
+        """Generate structured ML policy directive tailored to user constraints."""
+        parts = [cls.ML_INSTRUCTION]
+        u_lower = (user_text or "").lower()
+        if explicit_req and explicit_req.num_samples:
+            parts.append(
+                f"\nEXACT DATASET SIZE REQUIREMENT: You MUST generate exactly {explicit_req.num_samples} samples in X "
+                f"and exactly {explicit_req.num_samples} corresponding target labels in y. Ensure len(X) == len(y) == {explicit_req.num_samples}."
+            )
+        if "sentiment" in u_lower or "positive" in u_lower or "negative" in u_lower:
+            parts.append(
+                "\nSENTIMENT TARGET LABELS REQUIREMENT: Use explicit 'positive' and 'negative' string labels for y. "
+                "Do NOT use numeric labels (0/1). All test assertions must test against 'positive' or 'negative' strings."
+            )
+        return "\n".join(parts)

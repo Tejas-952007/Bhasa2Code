@@ -129,8 +129,12 @@ class DockerRuntime:
         plan: LanguageExecutionPlan,
         volume_name: str,
         container_name: str,
+        memory_limit_mb: Optional[int] = None,
     ) -> List[str]:
         """Construct secure, non-privileged Docker execution command argument array."""
+        effective_memory_mb = memory_limit_mb if (memory_limit_mb and memory_limit_mb > 0) else (
+            plan.memory_limit_mb if plan.memory_limit_mb else self.config.memory_limit_mb
+        )
         args: List[str] = [
             self.config.docker_binary,
             "run",
@@ -156,7 +160,7 @@ class DockerRuntime:
             "--tmpfs",
             f"/tmp:rw,noexec,nosuid,size={self.config.workspace_limit_mb}m",
             "--memory",
-            f"{self.config.memory_limit_mb}m",
+            f"{effective_memory_mb}m",
             "--cpus",
             str(self.config.cpu_limit),
             "--pids-limit",
@@ -205,7 +209,14 @@ class DockerRuntime:
                 diagnostics=["Docker runtime is unavailable or daemon is not accessible."],
             )
 
-        effective_timeout = timeout_seconds if (timeout_seconds and timeout_seconds > 0) else self.config.timeout_seconds
+        effective_timeout = (
+            timeout_seconds if (timeout_seconds and timeout_seconds > 0)
+            else (plan.timeout_seconds if plan.timeout_seconds else self.config.timeout_seconds)
+        )
+        effective_memory = (
+            memory_limit_mb if (memory_limit_mb and memory_limit_mb > 0)
+            else (plan.memory_limit_mb if plan.memory_limit_mb else self.config.memory_limit_mb)
+        )
         uid = uuid.uuid4().hex[:12]
         vol_name = f"b2c-vol-{uid}"
         cid_name = f"b2c-run-{uid}"
@@ -268,7 +279,7 @@ class DockerRuntime:
                 )
 
             # 3. Build container execution command
-            run_cmd = self.build_docker_run_args(plan, vol_name, cid_name)
+            run_cmd = self.build_docker_run_args(plan, vol_name, cid_name, memory_limit_mb=effective_memory)
             self.security_policy.validate_security_invariants(run_cmd)
 
             # 4. Execute container process with monitoring threads
@@ -404,8 +415,22 @@ class DockerRuntime:
                 status = ExecutionStatus.SUCCESS
                 diagnostics = []
             else:
-                status = ExecutionStatus.RUNTIME_ERROR
-                diagnostics = [f"Process exited with non-zero status code: {exit_code}"]
+                import re
+
+                dep_match = re.search(
+                    r"(?:ModuleNotFoundError|ImportError):\s*No module named ['\"]?([a-zA-Z0-9_\.]+)['\"]?",
+                    err_text,
+                )
+                if dep_match:
+                    missing_pkg = dep_match.group(1)
+                    status = ExecutionStatus.DEPENDENCY_ERROR
+                    diagnostics = [
+                        f"[DEPENDENCY_ERROR] Missing dependency in sandbox environment: '{missing_pkg}'. "
+                        f"Supported pre-installed ML packages: scikit-learn, numpy, scipy, pandas."
+                    ]
+                else:
+                    status = ExecutionStatus.RUNTIME_ERROR
+                    diagnostics = [f"Process exited with non-zero status code: {exit_code}"]
 
             return SandboxResult(
                 status=status,

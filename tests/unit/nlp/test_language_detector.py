@@ -95,7 +95,7 @@ class TestLanguageDetectorHinglish:
         [
             "mujhe ek python program banana hai",
             "python me ye error kaise fix kare",
-            "python madhe calculator bana",
+            "python me calculator banao",
         ],
     )
     def test_hinglish(self, detector: LanguageDetector, text: str) -> None:
@@ -110,6 +110,7 @@ class TestLanguageDetectorCodeMixed:
         [
             "mala Python function explain kar",
             "ya code madhe error aahe",
+            "python madhe calculator bana",
             "mala हा program debug karaycha aahe",
             "मला calculator चा program पाहिजे",
             "mala Python function debug kar",

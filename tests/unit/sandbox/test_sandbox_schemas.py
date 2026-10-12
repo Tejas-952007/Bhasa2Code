@@ -19,6 +19,7 @@ def test_execution_status_enum_values():
         "UNSUPPORTED",
         "SANDBOX_ERROR",
         "OUTPUT_LIMIT",
+        "DEPENDENCY_ERROR",
     }
     actual = {s.value for s in ExecutionStatus}
     assert actual == expected

@@ -8,6 +8,7 @@ from backend.app.sandbox.exceptions import SandboxConfigurationError
 
 DEFAULT_IMAGE_TAGS: Dict[str, str] = {
     "python": "bhasha2code-sandbox-python:1.0.0",
+    "python_ml": "bhasha2code-sandbox-python-ml:1.0.0",
     "c": "bhasha2code-sandbox-cpp:1.0.0",
     "cpp": "bhasha2code-sandbox-cpp:1.0.0",
     "java": "bhasha2code-sandbox-java:1.0.0",
@@ -20,11 +21,19 @@ class SandboxConfig(BaseModel):
 
     timeout_seconds: float = Field(
         default=float(os.getenv("BHASHA2CODE_SANDBOX_TIMEOUT", "3.0")),
-        description="Execution wall-clock timeout in seconds.",
+        description="Execution wall-clock timeout in seconds for standard code.",
     )
     memory_limit_mb: int = Field(
         default=int(os.getenv("BHASHA2CODE_SANDBOX_MEMORY_MB", "256")),
-        description="Maximum memory allocated to container in megabytes.",
+        description="Maximum memory allocated to container in megabytes for standard code.",
+    )
+    ml_timeout_seconds: float = Field(
+        default=float(os.getenv("BHASHA2CODE_SANDBOX_ML_TIMEOUT", "10.0")),
+        description="Execution wall-clock timeout in seconds for ML workloads.",
+    )
+    ml_memory_limit_mb: int = Field(
+        default=int(os.getenv("BHASHA2CODE_SANDBOX_ML_MEMORY_MB", "768")),
+        description="Maximum memory allocated to container in megabytes for ML workloads.",
     )
     cpu_limit: float = Field(
         default=float(os.getenv("BHASHA2CODE_SANDBOX_CPU", "0.5")),
@@ -81,6 +90,10 @@ class SandboxConfig(BaseModel):
             raise SandboxConfigurationError("timeout_seconds must be positive.")
         if self.memory_limit_mb < 16:
             raise SandboxConfigurationError("memory_limit_mb must be at least 16 MB.")
+        if self.ml_timeout_seconds <= 0:
+            raise SandboxConfigurationError("ml_timeout_seconds must be positive.")
+        if self.ml_memory_limit_mb < 64:
+            raise SandboxConfigurationError("ml_memory_limit_mb must be at least 64 MB.")
         if self.cpu_limit <= 0 or self.cpu_limit > 16.0:
             raise SandboxConfigurationError("cpu_limit must be between 0.1 and 16.0.")
         if self.pids_limit < 4:

@@ -128,12 +128,22 @@ NON_CODE_LANGUAGES = {
 
 FLOWCHART_SIGNALS = [
     "+---",
+    "+--",
+    "|--",
+    "/--",
+    "\\--",
     "|   ",
     "+===",
     "|===",
+    "+---+",
+    "|---|",
+    "+===+",
+    "|===|",
     "-->",
     "<--",
     "==>",
+    "->",
+    "<-",
     "├──",
     "└──",
     "│",
@@ -141,6 +151,9 @@ FLOWCHART_SIGNALS = [
     "┐",
     "└",
     "┘",
+    "┬",
+    "┴",
+    "┼",
     "↓",
     "↑",
     "←",
@@ -160,12 +173,30 @@ def is_flowchart_or_diagram(text: str) -> bool:
     if marker_hits >= 2:
         return True
     lines = [l.strip().lower() for l in cleaned.splitlines() if l.strip()]
+    if any(re.search(r"^[vV|^│↓]\s*$", l) for l in lines) and any("-" in l or "+" in l or "|" in l for l in lines):
+        return True
     flow_steps = sum(
         1
         for l in lines
         if l in ("start", "stop", "end", "input", "output", "process", "decision", "yes", "no")
+        or bool(re.match(r"^\[?(?:start|end|stop|initialize|loop|midpoint|condition)\]?$", l))
     )
     if flow_steps >= 2:
+        return True
+    if any(re.search(r"\[.+\]\s*(?:-->|->|│|↓)\s*\[.+\]", l) for l in lines):
+        return True
+    return False
+
+
+def is_markdown_table(text: str) -> bool:
+    """Identify if text is a Markdown table."""
+    cleaned = text.strip()
+    if not cleaned:
+        return False
+    lines = [l.strip() for l in cleaned.splitlines() if l.strip()]
+    table_lines = [l for l in lines if l.startswith("|") and l.endswith("|") and "|" in l[1:-1]]
+    has_separator = any(re.match(r"^\|(?:\s*:?-+:?\s*\|)+$", l) for l in lines)
+    if has_separator or len(table_lines) >= 2:
         return True
     return False
 
@@ -210,6 +241,20 @@ def has_code_signals(code: str, lang: str) -> bool:
     return False
 
 
+def is_prose_or_explanation(text: str) -> bool:
+    """Identify if text is prose/explanation rather than code."""
+    cleaned = text.strip()
+    if not cleaned:
+        return False
+    # If code contains syntax characters like brackets, assignment, semicolon, keywords, it's code
+    if re.search(r"[{};=()<>\[\]]|def |class |public |const |let |var |import |SELECT |int ", cleaned):
+        return False
+    words = re.findall(r"\b[a-zA-Z]+\b", cleaned)
+    if len(words) >= 5:
+        return True
+    return False
+
+
 def resolve_language(
     declared_language: Optional[str],
     code: str,
@@ -220,10 +265,12 @@ def resolve_language(
     Priority:
     1. Filter out explicit non-code declared languages (text, flowchart, ascii, etc.)
     2. Filter out ASCII diagrams and flowcharts
-    3. Markdown fence language (normalized)
-    4. Strong deterministic code heuristics
-    5. Upstream language hint (normalized) ONLY if code signals match
-    6. None (if unknown/unresolved/diagram)
+    3. Filter out Markdown tables
+    4. Filter out Prose/explanations
+    5. Markdown fence language (normalized, validated for basic code signals)
+    6. Strong deterministic code heuristics
+    7. Upstream language hint (normalized) only if code signals match
+    8. None (if unknown/unresolved/diagram/table)
     """
     # 1. Non-code declared languages
     if declared_language and declared_language.strip().lower() in NON_CODE_LANGUAGES:
@@ -233,18 +280,27 @@ def resolve_language(
     if is_flowchart_or_diagram(code):
         return None
 
-    # 3. Markdown fence language (normalized)
+    # 3. Markdown table filter
+    if is_markdown_table(code):
+        return None
+
+    # 4. Prose or explanation filter
+    if is_prose_or_explanation(code):
+        return None
+
+    # 5. Markdown fence language (normalized)
     if declared_language:
         normalized = normalize_language_name(declared_language)
         if normalized:
-            return normalized
+            if has_code_signals(code, normalized) or len(code.strip().splitlines()) <= 2:
+                return normalized
 
-    # 4. Strong code heuristics
+    # 6. Strong code heuristics
     heuristic_lang = detect_language_heuristics(code)
     if heuristic_lang:
         return heuristic_lang
 
-    # 5. Upstream language hint (normalized)
+    # 7. Upstream language hint (normalized)
     if language_hint:
         normalized_hint = normalize_language_name(language_hint)
         if normalized_hint:
